@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DjToKey.Models;
 using Midi;
+using Newtonsoft.Json;
 using Binding = DjToKey.Models.Binding;
 using Action = DjToKey.Models.Action;
+using System.IO;
 
 namespace DjToKey
 {
@@ -23,16 +25,8 @@ namespace DjToKey
 
         public MainForm()
         {
-            InitializeComponent();
-            bindings = new List<Binding>();
-
-            bindings.Add(new Binding()
-            {
-                KeyId = "49",
-                KeyName = "Deck B",
-                Action = new Action() { Command = "MessageBox Hello{VAL}" },
-                Type = ControlType.Digital
-            });
+            InitializeComponent();            
+            bindings = JsonConvert.DeserializeObject<List<Binding>>(File.ReadAllText("bindings.json"));
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -59,7 +53,7 @@ namespace DjToKey
                     tlpBindings.Controls.Add(new Label()
                     {
                         Text = c.KeyName
-                    }, 0, tlpBindings.RowCount -1);
+                    }, 0, tlpBindings.RowCount - 1);
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
@@ -103,13 +97,15 @@ namespace DjToKey
         {
             foreach (var c in tlpBindings.Controls)
             {
-                if (c.GetType() == typeof (TextBox))
+                if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    var b = bindings.Find(x => x.KeyId == cc.Tag);
+                    var b = bindings.Find(x => x.KeyId == cc.Tag.ToString());
                     b.Action.Command = cc.Text;
                 }
             }
+
+            File.WriteAllText("bindings.json", JsonConvert.SerializeObject(bindings));
         }
     }
 }
