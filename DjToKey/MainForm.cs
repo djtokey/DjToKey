@@ -81,7 +81,16 @@ namespace DjToKey
         {
             var b = bindings.Find(x => x.KeyId == msg.Control.ToString());
             if (b != null)
-                b.Action.Execute(msg.Value);
+            {
+                try
+                {
+                    b.Action.Execute(msg.Value);
+                }
+                catch (ArgumentException e)
+                {
+                    MessageBox.Show("Wystąpił błąd: " + e.Message);
+                }
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

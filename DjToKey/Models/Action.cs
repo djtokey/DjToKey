@@ -23,15 +23,32 @@ namespace DjToKey.Models
                     if (par0 != null)
                         Simulator.Input.Mouse.VerticalScroll(int.Parse(par0));
                     else
-                        throw new ArgumentException("Wheel wymaga parametru!");
+                        throw new ArgumentException("VerticalWheel wymaga parametru!");
+                    break;
+
+                case "HorizontalScroll":
+                    if (par0 != null)
+                        Simulator.Input.Mouse.HorizontalScroll(int.Parse(par0));
+                    else
+                        throw new ArgumentException("HorizontalWheel wymaga parametru!");
+                    break;
+
+                case "MouseMoveBy":
+                    if (par0 != null)
+                        Simulator.Input.Mouse.MoveMouseBy(int.Parse(par0), int.Parse(par1));
+                    else
+                        throw new ArgumentException("MouseMoveBy wymaga parametrów!");
                     break;
 
                 case "MessageBox":
                     MessageBox.Show(String.Format("{0} {1}", par0, par1));
                     break;
 
-                default:
+                case "<brak>":
                     return;
+
+                default:
+                    throw new ArgumentException("Nierozpoznane polecenie!");
             }
         }
     }
