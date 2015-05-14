@@ -82,7 +82,7 @@ namespace DjToKey
                 }
                 catch (ArgumentException e)
                 {
-                    MessageBox.Show("Wystąpił błąd: " + e.Message);
+                    MessageBox.Show("Wystąpił błąd w obsłudze " + b.KeyName + ": " + e.Message);
                 }
             }
         }

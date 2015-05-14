@@ -13,34 +13,39 @@ namespace DjToKey.Models
 
         public void Execute(int? val = null)
         {
-            var act = Command.Replace("{VAL}", val.ToString()).Split(' ');
-            string par0 = (act.Length > 1) ? act[1] : null;
-            string par1 = (act.Length > 2) ? act[2] : null;            
+            string command = Command.Trim();
+            command = command.Replace("{VAL}", val.ToString());
+            command = command.Replace("{VALD}", (val == 127)? "1" : "-1");
 
-            switch (act[0])
+            var act = command.Split(' ');
+            string par0 = (act.Length > 1) ? act[1] : null;
+            string par1 = (act.Length > 2) ? act[2] : null;
+            var cmd = act[0].ToLower();
+
+            switch (cmd)
             {
-                case "VerticalWheel":
+                case "verticalwheel":
                     if (par0 != null)
                         Simulator.Input.Mouse.VerticalScroll(int.Parse(par0));
                     else
                         throw new ArgumentException("VerticalWheel wymaga parametru!");
                     break;
 
-                case "HorizontalScroll":
+                case "horizontalwheel":
                     if (par0 != null)
                         Simulator.Input.Mouse.HorizontalScroll(int.Parse(par0));
                     else
                         throw new ArgumentException("HorizontalWheel wymaga parametru!");
                     break;
 
-                case "MouseMoveBy":
-                    if (par0 != null)
+                case "mousemoveby":
+                    if (par0 != null && par1 != null)
                         Simulator.Input.Mouse.MoveMouseBy(int.Parse(par0), int.Parse(par1));
                     else
                         throw new ArgumentException("MouseMoveBy wymaga parametrów!");
                     break;
 
-                case "MessageBox":
+                case "messagebox":
                     MessageBox.Show(String.Format("{0} {1}", par0, par1));
                     break;
 
