@@ -34,6 +34,7 @@
             this.cbMidiDevices = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tlpBindings = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +73,7 @@
             this.groupBox1.Controls.Add(this.tlpBindings);
             this.groupBox1.Location = new System.Drawing.Point(13, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(427, 209);
+            this.groupBox1.Size = new System.Drawing.Size(427, 176);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Konfiguracja klawiszy";
@@ -89,18 +90,31 @@
             this.tlpBindings.Name = "tlpBindings";
             this.tlpBindings.RowCount = 1;
             this.tlpBindings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpBindings.Size = new System.Drawing.Size(414, 189);
+            this.tlpBindings.Size = new System.Drawing.Size(414, 150);
             this.tlpBindings.TabIndex = 0;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnSave.Location = new System.Drawing.Point(365, 226);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Zapisz";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 261);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbMidiDevices);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(468, 300);
             this.Name = "MainForm";
             this.Text = "DjToKey";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -117,5 +131,6 @@
         private System.Windows.Forms.ComboBox cbMidiDevices;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tlpBindings;
+        private System.Windows.Forms.Button btnSave;
     }
 }

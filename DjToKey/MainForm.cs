@@ -38,7 +38,12 @@ namespace DjToKey
             foreach (var item in InputDevice.InstalledDevices)
             {
                 cbMidiDevices.Items.Add(item.Name);
+                if (item.Name.Contains("MP3 LE MIDI"))
+                    cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
             }
+
+            
+
         }
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
