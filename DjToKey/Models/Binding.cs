@@ -13,9 +13,9 @@ namespace DjToKey.Models
 
     class Binding
     {
-        public int KeyId { get; set; }
+        public string KeyId { get; set; }
         public string KeyName { get; set; }
-        public string Action { get; set; }
+        public Action Action { get; set; }
         public ControlType Type { get; set; }
     }
 }

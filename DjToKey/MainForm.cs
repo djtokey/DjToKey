@@ -10,25 +10,27 @@ using System.Windows.Forms;
 using DjToKey.Models;
 using Midi;
 using Binding = DjToKey.Models.Binding;
+using Action = DjToKey.Models.Action;
 
 namespace DjToKey
 {
-    
+
 
     public partial class MainForm : Form
     {
-        private List<Binding> controls;
+        private List<Binding> bindings;
+        private InputDevice dev;
 
         public MainForm()
         {
             InitializeComponent();
-            controls = new List<Binding>();
+            bindings = new List<Binding>();
 
-            controls.Add(new Binding()
+            bindings.Add(new Binding()
             {
-                KeyId = 50,
-                KeyName = "50",
-                Action = "<brak>",
+                KeyId = "49",
+                KeyName = "Deck B",
+                Action = new Action() { Command = "MessageBox Hello" },
                 Type = ControlType.Digital
             });
         }
@@ -42,17 +44,17 @@ namespace DjToKey
                     cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
             }
 
-            
-
         }
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex].Name.Contains("MP3 LE MIDI"))
+            dev = InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex];
+
+            if (!dev.Name.Contains("MP3 LE MIDI"))
                 MessageBox.Show("Ta aplikacja obsługuje tylko Hercules DJControl MP3 LE MIDI!");
             else
             {
-                foreach (var c in controls)
+                foreach (var c in bindings)
                 {
                     tlpBindings.Controls.Add(new Label()
                     {
@@ -61,13 +63,30 @@ namespace DjToKey
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Text = c.Action
+                        Text = c.Action.Command
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
                 }
+
+                dev.ControlChange += dev_ControlChange;
+                if (!dev.IsOpen) dev.Open();
+                dev.StartReceiving(null);
             }
 
+        }
+
+        void dev_ControlChange(ControlChangeMessage msg)
+        {
+            var b = bindings.Find(x => x.KeyId == msg.Control.ToString());
+            if (b != null)
+                b.Action.Execute(msg.Value);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            dev.StopReceiving();
+            if (dev.IsOpen) dev.Close();
         }
     }
 }

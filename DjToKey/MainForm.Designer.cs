@@ -117,6 +117,7 @@
             this.MinimumSize = new System.Drawing.Size(468, 300);
             this.Name = "MainForm";
             this.Text = "DjToKey";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
