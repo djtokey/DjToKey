@@ -7,25 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DjToKey.Models;
 using Midi;
+using Binding = DjToKey.Models.Binding;
 
 namespace DjToKey
 {
-    public enum ControlType
-    {
-        Analog, Digital
-    }
+    
 
     public partial class MainForm : Form
     {
-        private Dictionary<int, ControlType> controls;
+        private List<Binding> controls;
 
         public MainForm()
         {
             InitializeComponent();
-            controls = new Dictionary<int, ControlType>();
+            controls = new List<Binding>();
 
-            controls.Add(50, ControlType.Digital);
+            controls.Add(new Binding()
+            {
+                KeyId = 50,
+                KeyName = "50",
+                Action = "<brak>",
+                Type = ControlType.Digital
+            });
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -46,12 +51,12 @@ namespace DjToKey
                 {
                     tlpBindings.Controls.Add(new Label()
                     {
-                        Text = c.Key.ToString()
+                        Text = c.KeyName
                     }, 0, tlpBindings.RowCount -1);
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Text = "<brak>"
+                        Text = c.Action
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
