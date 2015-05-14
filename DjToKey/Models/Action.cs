@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NCalc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,20 @@ namespace DjToKey.Models
             string par0 = (act.Length > 1) ? act[1] : null;
             string par1 = (act.Length > 2) ? act[2] : null;
             var cmd = act[0].ToLower();
+
+            if (par0 != null && par0.StartsWith("#") && par0.EndsWith("#"))
+            {
+                par0 = par0.Replace("#", "");
+                Expression e = new Expression(par0);
+                par0 = e.Evaluate().ToString();
+            }
+
+            if (par1 != null && par1.StartsWith("#") && par1.EndsWith("#"))
+            {
+                par1 = par1.Replace("#", "");
+                Expression e = new Expression(par1);
+                par1 = e.Evaluate().ToString();
+            }
 
             switch (cmd)
             {
