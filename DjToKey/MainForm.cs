@@ -98,5 +98,18 @@ namespace DjToKey
             dev.StopReceiving();
             if (dev.IsOpen) dev.Close();
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            foreach (var c in tlpBindings.Controls)
+            {
+                if (c.GetType() == typeof (TextBox))
+                {
+                    var cc = (c as TextBox);
+                    var b = bindings.Find(x => x.KeyId == cc.Tag);
+                    b.Action.Command = cc.Text;
+                }
+            }
+        }
     }
 }
