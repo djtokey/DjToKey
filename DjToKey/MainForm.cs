@@ -30,7 +30,7 @@ namespace DjToKey
             {
                 KeyId = "49",
                 KeyName = "Deck B",
-                Action = new Action() { Command = "MessageBox Hello" },
+                Action = new Action() { Command = "MessageBox Hello{VAL}" },
                 Type = ControlType.Digital
             });
         }
@@ -63,7 +63,8 @@ namespace DjToKey
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Text = c.Action.Command
+                        Text = c.Action.Command,
+                        Tag = c.KeyId
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;

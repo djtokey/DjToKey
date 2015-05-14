@@ -13,7 +13,7 @@ namespace DjToKey.Models
 
         public void Execute(int? val = null)
         {
-            var act = Command.Split(' ');
+            var act = Command.Replace("{VAL}", val.ToString()).Split(' ');
             string par0 = (act.Length > 1) ? act[1] : null;
             string par1 = (act.Length > 2) ? act[2] : null;            
 
@@ -27,7 +27,7 @@ namespace DjToKey.Models
                     break;
 
                 case "MessageBox":
-                    MessageBox.Show(String.Format("{0} {1} {2}", par0, par1, val));
+                    MessageBox.Show(String.Format("{0} {1}", par0, par1));
                     break;
 
                 default:
