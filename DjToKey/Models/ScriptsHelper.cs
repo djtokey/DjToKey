@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using WindowsInput;
 
 namespace Ktos.DjToKey.Models
 {
@@ -7,6 +8,7 @@ namespace Ktos.DjToKey.Models
     {       
         public static Document Document = new Document();
         public static Console Console = new Console();
+        public static InputSimulator Simulator = new InputSimulator();
     }
 
     public class Document

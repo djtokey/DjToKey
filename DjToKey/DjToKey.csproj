@@ -75,7 +75,6 @@
     <Compile Include="Models\ScriptsHelper.cs" />
     <Compile Include="Models\Script.cs" />
     <Compile Include="Models\MidiControl.cs" />
-    <Compile Include="Models\Simulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidFileName.cs" />

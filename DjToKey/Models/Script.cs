@@ -8,8 +8,8 @@ namespace Ktos.DjToKey.Models
 
         public void Execute(int val, MidiControl ctrl, V8ScriptEngine eng)
         {
-            eng.AddHostObject("Keyboard", Simulator.Input.Keyboard);
-            eng.AddHostObject("Mouse", Simulator.Input.Mouse);
+            eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
+            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
             eng.AddHostObject("Document", ScriptsHelper.Document);
             eng.AddHostObject("Console", ScriptsHelper.Console);
             eng.AddHostObject("Control", ctrl);
