@@ -34,9 +34,8 @@ using Midi;
 using Newtonsoft.Json;
 using Ktos.DjToKey.Models;
 using System.IO;
+using System.Reflection;
 using Microsoft.ClearScript.V8;
-
-//TODO: https://icons8.com/
 
 namespace Ktos.DjToKey
 {
@@ -298,6 +297,23 @@ namespace Ktos.DjToKey
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+                saveBindings();
+        }
+
+        private void linkLabel1_Click(object sender, EventArgs e)
+        {
+            var version = Assembly.GetExecutingAssembly()
+                .GetCustomAttributes(typeof (AssemblyInformationalVersionAttribute), false)[0] as
+                AssemblyInformationalVersionAttribute;
+
+            var mess = String.Format("{0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/", APPNAME, version.InformationalVersion);
+
+            MessageBox.Show(mess, APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
