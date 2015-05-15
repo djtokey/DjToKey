@@ -10,6 +10,8 @@ namespace Ktos.DjToKey.Models
         {
             eng.AddHostObject("Keyboard", Simulator.Input.Keyboard);
             eng.AddHostObject("Mouse", Simulator.Input.Mouse);
+            eng.AddHostObject("Document", ScriptsHelper.Document);
+            eng.AddHostObject("Console", ScriptsHelper.Console);
             eng.AddHostObject("Control", ctrl);
             eng.AddHostObject("Value", new { Raw = val, Transformed = (val == 127) ? 1 : -1 });
 
