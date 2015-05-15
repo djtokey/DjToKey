@@ -109,4 +109,4 @@ UpgradeLog*.XML
 
 *.v12.suo
 *.sln.ide
-
+.vs/
