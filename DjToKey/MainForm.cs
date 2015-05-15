@@ -13,6 +13,7 @@ namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
+        private const string AppName = "DjToKey";
         private List<MidiControl> controls;
         private Dictionary<string, Script> bindings;
 
@@ -44,6 +45,9 @@ namespace Ktos.DjToKey
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (dev != null && InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex].Name == dev.Name)
+                return;
+
             dev = InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex];
 
             try
@@ -58,15 +62,15 @@ namespace Ktos.DjToKey
             }
             catch (JsonReaderException)
             {
-                MessageBox.Show("Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!", AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (DeviceException)
             {
-                MessageBox.Show("Błąd urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Błąd urządzenia MIDI!", AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -90,7 +94,6 @@ namespace Ktos.DjToKey
                     Text = v,
                     Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
                     Multiline = true,
-                    Height = 60,
                     ScrollBars = ScrollBars.Vertical
                 }, 1, tlpBindings.RowCount - 1);
 
@@ -100,7 +103,7 @@ namespace Ktos.DjToKey
 
         private void loadControls()
         {
-            trayIcon.Text = "DJToKey " + dev.Name;
+            trayIcon.Text = AppName + dev.Name;
             this.Text = trayIcon.Text;
 
             string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
