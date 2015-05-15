@@ -10,18 +10,16 @@ using System.Windows.Forms;
 using DjToKey.Models;
 using Midi;
 using Newtonsoft.Json;
-using Binding = DjToKey.Models.Binding;
-using Action = DjToKey.Models.Action;
+using DjControl = DjToKey.Models.DjControl;
+using Script = DjToKey.Models.Script;
 using System.IO;
 using Microsoft.ClearScript.V8;
 
 namespace DjToKey
 {
-
-
     public partial class MainForm : Form
     {
-        private List<Binding> bindings;
+        private Dictionary<DjControl, Script> bindings;
         private InputDevice dev;
         private V8ScriptEngine eng;
 
@@ -31,12 +29,15 @@ namespace DjToKey
 
             try
             {
-                bindings = JsonConvert.DeserializeObject<List<Binding>>(File.ReadAllText("bindings.json"));
+                bindings = JsonConvert.DeserializeObject<Dictionary<DjControl, Script>>(File.ReadAllText("bindings.json"));
                 eng = new V8ScriptEngine();
             }
             catch (FileNotFoundException)
             {
-                bindings = new List<Binding>();
+                bindings = new Dictionary<DjControl, Script>();
+
+                bindings.Add(new DjControl() { ControlId = "48", ControlName = "Deck B", Type = ControlType.Digital }, new Script() { Text = "alert('Here');" });
+
                 MessageBox.Show("Błąd wczytywania pliku z przypisaniami.");
             }
         }
@@ -73,13 +74,13 @@ namespace DjToKey
                 {
                     tlpBindings.Controls.Add(new Label()
                     {
-                        Text = c.KeyName
+                        Text = c.Key.ControlName
                     }, 0, tlpBindings.RowCount - 1);
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Text = c.Action.Command,
-                        Tag = c.KeyId
+                        Text = c.Value.Text,
+                        Tag = c.Key.ControlId
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
@@ -94,16 +95,16 @@ namespace DjToKey
 
         void dev_ControlChange(ControlChangeMessage msg)
         {
-            var b = bindings.Find(x => x.KeyId == msg.Control.ToString());
+            var b = bindings.Keys.First(x => x.ControlId == msg.Control.ToString());
             if (b != null)
             {
                 try
                 {
-                    b.Action.Execute(msg.Value, eng);
+                    bindings[b].Execute(msg.Value, b, eng);                   
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Wystąpił błąd w obsłudze " + b.KeyName + ": " + e.Message);
+                    MessageBox.Show("Wystąpił błąd w obsłudze " + b.ControlName + ": " + e.Message);
                 }
             }
         }
@@ -121,11 +122,11 @@ namespace DjToKey
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    var b = bindings.Find(x => x.KeyId == cc.Tag.ToString());
-                    b.Action.Command = cc.Text;
+                    var b = bindings.Keys.First(x => x.ControlId == cc.Tag.ToString());
+                    bindings[b].Text = cc.Text;                    
                 }
             }
-
+            
             File.WriteAllText("bindings.json", JsonConvert.SerializeObject(bindings));
         }
 

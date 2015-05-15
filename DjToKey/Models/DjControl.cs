@@ -11,11 +11,10 @@ namespace DjToKey.Models
         Analog, Digital
     }
 
-    class Binding
+    class DjControl
     {
-        public string KeyId { get; set; }
-        public string KeyName { get; set; }
-        public Action Action { get; set; }
+        public string ControlId { get; set; }
+        public string ControlName { get; set; }
         public ControlType Type { get; set; }
     }
 }

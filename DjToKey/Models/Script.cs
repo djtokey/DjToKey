@@ -8,18 +8,19 @@ using System.Windows.Forms;
 
 namespace DjToKey.Models
 {
-    class Action
+    class Script
     {
-        public string Command { get; set; }
+        public string Text { get; set; }
 
-        public void Execute(int val, V8ScriptEngine eng)
+        public void Execute(int val, DjControl ctrl, V8ScriptEngine eng)
         {
             eng.AddHostObject("Keyboard", Simulator.Input.Keyboard);
             eng.AddHostObject("Mouse", Simulator.Input.Mouse);
+            eng.AddHostObject("Control", ctrl);
             eng.AddHostObject("val", val);
             eng.AddHostObject("Value", new { Raw = val, Transformed = (val == 127)? 1 : -1 });
 
-            eng.Execute(this.Command);            
+            eng.Execute(this.Text);            
         }
     }
 }
