@@ -57,6 +57,7 @@ namespace Ktos.DjToKey
                 createEditor();
 
                 dev.ControlChange += dev_ControlChange;
+                dev.NoteOn += dev_NoteOn;
                 if (!dev.IsOpen) dev.Open();
                 dev.StartReceiving(null);
             }
@@ -72,6 +73,11 @@ namespace Ktos.DjToKey
             {
                 MessageBox.Show("Błąd urządzenia MIDI!", AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void dev_NoteOn(NoteOnMessage msg)
+        {
+            handleControl(((int)msg.Pitch).ToString(), msg.Velocity);
         }
 
         private void createEditor()
@@ -129,17 +135,17 @@ namespace Ktos.DjToKey
 
         void dev_ControlChange(ControlChangeMessage msg)
         {
-            handleControl(msg);
+            handleControl(msg.Control.ToString(), msg.Value);
         }
 
-        private void handleControl(ControlChangeMessage msg)
+        private void handleControl(string control, int value)
         {
             Script s;
-            if (bindings.TryGetValue(msg.Control.ToString(), out s))
+            if (bindings.TryGetValue(control.ToString(), out s))
             {
                 try
                 {
-                    s.Execute(msg.Value, controls.Find(x => x.ControlId == msg.Control.ToString()), eng);
+                    s.Execute(value, controls.Find(x => x.ControlId == control.ToString()), eng);
                 }
                 catch (Exception e)
                 {

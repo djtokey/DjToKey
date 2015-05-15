@@ -2,7 +2,7 @@
 {
     public enum ControlType
     {
-        Analog, Digital
+        Analog, Digital, Button
     }
 
     class MidiControl

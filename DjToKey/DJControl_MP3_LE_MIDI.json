@@ -11,5 +11,56 @@
     { "ControlId": 55, "ControlName": "Bass A", "ControlType": 1 },
     { "ControlId": 58, "ControlName": "Treble B", "ControlType": 1 },
     { "ControlId": 59, "ControlName": "Medium B", "ControlType": 1 },
-    { "ControlId": 60, "ControlName": "Bass B", "ControlType": 1 }
+    { "ControlId": 60, "ControlName": "Bass B", "ControlType": 1 },
+
+    { "ControlId": 46, "ControlName": "Magic", "ControlType": 3 },
+    { "ControlId": 45, "ControlName": "Vinyl", "ControlType": 3 },
+    { "ControlId": 41, "ControlName": "Up", "ControlType": 3 },
+    { "ControlId": 42, "ControlName": "Down", "ControlType": 3 },
+    { "ControlId": 44, "ControlName": "Load", "ControlType": 3 },
+    { "ControlId": 43, "ControlName": "Files", "ControlType": 3 },
+
+    { "ControlId": 16, "ControlName": "Listen A", "ControlType": 3 },
+    { "ControlId": 17, "ControlName": "Load A", "ControlType": 3 },
+    { "ControlId": 37, "ControlName": "Load B", "ControlType": 3 },
+    { "ControlId": 36, "ControlName": "Listen B", "ControlType": 3 },
+
+    { "ControlId": 32, "ControlName": "Rev B", "ControlType": 3 },
+    { "ControlId": 33, "ControlName": "Ffv B", "ControlType": 3 },
+    { "ControlId": 34, "ControlName": "Cue B", "ControlType": 3 },
+    { "ControlId": 35, "ControlName": "Eject B", "ControlType": 3 },
+
+    { "ControlId": 30, "ControlName": "Pitch B-", "ControlType": 3 },
+    { "ControlId": 31, "ControlName": "Pitch B+", "ControlType": 3 },
+    { "ControlId": 38, "ControlName": "Pitch B Sync", "ControlType": 3 },
+    { "ControlId": 39, "ControlName": "Pitch B Reset", "ControlType": 3 },
+
+    { "ControlId": 21, "ControlName": "Effect B 1", "ControlType": 3 },
+    { "ControlId": 22, "ControlName": "Effect B 2", "ControlType": 3 },
+    { "ControlId": 23, "ControlName": "Effect B 3", "ControlType": 3 },
+    { "ControlId": 24, "ControlName": "Effect B 4", "ControlType": 3 },
+    { "ControlId": 25, "ControlName": "Effect B 5", "ControlType": 3 },
+    { "ControlId": 26, "ControlName": "Effect B 6", "ControlType": 3 },
+    { "ControlId": 27, "ControlName": "Effect B 7", "ControlType": 3 },
+    { "ControlId": 28, "ControlName": "Effect B 8", "ControlType": 3 },
+
+    { "ControlId": 12, "ControlName": "Rev A", "ControlType": 3 },
+    { "ControlId": 13, "ControlName": "Ffv A", "ControlType": 3 },
+    { "ControlId": 14, "ControlName": "Cue A", "ControlType": 3 },
+    { "ControlId": 15, "ControlName": "Eject A", "ControlType": 3 },
+
+    { "ControlId": 10, "ControlName": "Pitch A-", "ControlType": 3 },
+    { "ControlId": 11, "ControlName": "Pitch A+", "ControlType": 3 },
+    { "ControlId": 18, "ControlName": "Pitch A Sync", "ControlType": 3 },
+    { "ControlId": 19, "ControlName": "Pitch A Reset", "ControlType": 3 },
+
+    { "ControlId": 1, "ControlName": "Effect A 1", "ControlType": 3 },
+    { "ControlId": 2, "ControlName": "Effect A 2", "ControlType": 3 },
+    { "ControlId": 3, "ControlName": "Effect A 3", "ControlType": 3 },
+    { "ControlId": 4, "ControlName": "Effect A 4", "ControlType": 3 },
+    { "ControlId": 5, "ControlName": "Effect A 5", "ControlType": 3 },
+    { "ControlId": 6, "ControlName": "Effect A 6", "ControlType": 3 },
+    { "ControlId": 7, "ControlName": "Effect A 7", "ControlType": 3 },
+    { "ControlId": 8, "ControlName": "Effect A 8", "ControlType": 3 }
+
 ]

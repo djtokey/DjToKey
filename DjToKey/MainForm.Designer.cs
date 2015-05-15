@@ -126,7 +126,6 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1126, 646);
             this.Name = "MainForm";
             this.Text = "DjToKey";
