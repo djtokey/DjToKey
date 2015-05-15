@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Binding = DjToKey.Models.Binding;
 using Action = DjToKey.Models.Action;
 using System.IO;
+using Microsoft.ClearScript.V8;
 
 namespace DjToKey
 {
@@ -22,6 +23,7 @@ namespace DjToKey
     {
         private List<Binding> bindings;
         private InputDevice dev;
+        private V8ScriptEngine eng;
 
         public MainForm()
         {
@@ -30,6 +32,7 @@ namespace DjToKey
             try
             {
                 bindings = JsonConvert.DeserializeObject<List<Binding>>(File.ReadAllText("bindings.json"));
+                eng = new V8ScriptEngine();
             }
             catch (FileNotFoundException)
             {
@@ -87,9 +90,9 @@ namespace DjToKey
             {
                 try
                 {
-                    b.Action.Execute(msg.Value);
+                    b.Action.Execute(msg.Value, eng);
                 }
-                catch (ArgumentException e)
+                catch (Exception e)
                 {
                     MessageBox.Show("Wystąpił błąd w obsłudze " + b.KeyName + ": " + e.Message);
                 }
@@ -99,7 +102,7 @@ namespace DjToKey
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             dev.StopReceiving();
-            if (dev.IsOpen) dev.Close();
+            if (dev.IsOpen) dev.Close();          
         }
 
         private void btnSave_Click(object sender, EventArgs e)
