@@ -39,11 +39,10 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TrayIcon
+            // trayIcon
             // 
             this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.trayIcon.BalloonTipText = "DjToKey pracuje w tle";
-            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "DjToKey";
             this.trayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
@@ -65,7 +64,7 @@
             this.cbMidiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMidiDevices.FormattingEnabled = true;
             this.cbMidiDevices.Location = new System.Drawing.Point(145, 16);
-            this.cbMidiDevices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbMidiDevices.Margin = new System.Windows.Forms.Padding(4);
             this.cbMidiDevices.Name = "cbMidiDevices";
             this.cbMidiDevices.Size = new System.Drawing.Size(440, 24);
             this.cbMidiDevices.TabIndex = 1;
@@ -78,9 +77,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tlpBindings);
             this.groupBox1.Location = new System.Drawing.Point(17, 49);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(569, 217);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -95,7 +94,7 @@
             this.tlpBindings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpBindings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpBindings.Location = new System.Drawing.Point(9, 25);
-            this.tlpBindings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpBindings.Margin = new System.Windows.Forms.Padding(4);
             this.tlpBindings.Name = "tlpBindings";
             this.tlpBindings.RowCount = 1;
             this.tlpBindings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -107,7 +106,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnSave.Location = new System.Drawing.Point(487, 278);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 28);
             this.btnSave.TabIndex = 3;
@@ -125,7 +124,7 @@
             this.Controls.Add(this.cbMidiDevices);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(618, 358);
             this.Name = "MainForm";

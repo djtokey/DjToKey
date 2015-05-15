@@ -62,8 +62,6 @@ namespace DjToKey
             if (!select)
                 MessageBox.Show("Nie znaleziono odpowiedniego urządzenia MIDI!");
 
-            trayIcon.Visible = true;
-
         }
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
