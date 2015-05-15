@@ -112,7 +112,7 @@ namespace Ktos.DjToKey
 
         private void loadControls()
         {
-            trayIcon.Text = AppName + dev.Name;
+            trayIcon.Text = AppName + " - " + dev.Name;
             this.Text = trayIcon.Text;
 
             string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";

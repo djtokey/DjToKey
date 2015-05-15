@@ -13,7 +13,7 @@ namespace Ktos.DjToKey.Models
 
     public class Document
     {
-        public static void Alert(string message)
+        public void Alert(string message)
         {
             MessageBox.Show(message);
         }
@@ -21,7 +21,7 @@ namespace Ktos.DjToKey.Models
 
     public class Console
     {
-        public static void Log(string message)
+        public void Log(string message)
         {
             Debug.WriteLine(message);
         }
