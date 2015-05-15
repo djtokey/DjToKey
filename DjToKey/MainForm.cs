@@ -15,11 +15,15 @@ using Script = DjToKey.Models.Script;
 using System.IO;
 using Microsoft.ClearScript.V8;
 
+//TODO: https://icons8.com/
+
 namespace DjToKey
 {
     public partial class MainForm : Form
     {
-        private Dictionary<DjControl, Script> bindings;
+        private List<DjControl> controls;
+        private Dictionary<string, Script> bindings;
+
         private InputDevice dev;
         private V8ScriptEngine eng;
 
@@ -29,14 +33,14 @@ namespace DjToKey
 
             try
             {
-                bindings = JsonConvert.DeserializeObject<Dictionary<DjControl, Script>>(File.ReadAllText("bindings.json"));
+                
                 eng = new V8ScriptEngine();
             }
             catch (FileNotFoundException)
             {
-                bindings = new Dictionary<DjControl, Script>();
+                bindings = new Dictionary<string, Script>();
 
-                bindings.Add(new DjControl() { ControlId = "48", ControlName = "Deck B", Type = ControlType.Digital }, new Script() { Text = "alert('Here');" });
+                bindings.Add("48", new Script() { Text = "alert('Here');" });
 
                 MessageBox.Show("Błąd wczytywania pliku z przypisaniami.");
             }
@@ -66,45 +70,52 @@ namespace DjToKey
         {
             dev = InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex];
 
-            if (!dev.Name.Contains("MP3 LE MIDI"))
-                MessageBox.Show("Ta aplikacja obsługuje tylko Hercules DJControl MP3 LE MIDI!");
-            else
+            try
             {
-                foreach (var c in bindings)
+                controls = JsonConvert.DeserializeObject<List<DjControl>>(ValidFileName.MakeValidFileName(dev.Name + ".json"));
+                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + dev.Name + ".json"));
+
+                foreach (var c in controls)
                 {
                     tlpBindings.Controls.Add(new Label()
                     {
-                        Text = c.Key.ControlName
+                        Text = c.ControlName
                     }, 0, tlpBindings.RowCount - 1);
 
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Text = c.Value.Text,
-                        Tag = c.Key.ControlId
+                        Tag = c.ControlId
+                        // szukanie w bindingach
+                        //Text = ,                        
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
-                }
 
-                dev.ControlChange += dev_ControlChange;
-                if (!dev.IsOpen) dev.Open();
-                dev.StartReceiving(null);
+
+
+                    dev.ControlChange += dev_ControlChange;
+                    if (!dev.IsOpen) dev.Open();
+                    dev.StartReceiving(null);
+                }                
             }
-
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI.");
+            }
         }
 
         void dev_ControlChange(ControlChangeMessage msg)
         {
-            var b = bindings.Keys.First(x => x.ControlId == msg.Control.ToString());
-            if (b != null)
-            {
+            Script s;
+            if (bindings.TryGetValue(msg.Control.ToString(), out s))
+            { 
                 try
                 {
-                    bindings[b].Execute(msg.Value, b, eng);                   
+                    s.Execute(msg.Value, controls.Find(x => x.ControlId == msg.Control.ToString()), eng);                   
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Wystąpił błąd w obsłudze " + b.ControlName + ": " + e.Message);
+                    MessageBox.Show("Wystąpił błąd w obsłudze zdarzenia: " + e.Message);
                 }
             }
         }
@@ -121,13 +132,12 @@ namespace DjToKey
             {
                 if (c.GetType() == typeof(TextBox))
                 {
-                    var cc = (c as TextBox);
-                    var b = bindings.Keys.First(x => x.ControlId == cc.Tag.ToString());
-                    bindings[b].Text = cc.Text;                    
+                    var cc = (c as TextBox);                    
+                    bindings[cc.Tag.ToString()] = new Script() { Text = cc.Text };
                 }
             }
             
-            File.WriteAllText("bindings.json", JsonConvert.SerializeObject(bindings));
+            File.WriteAllText("bindings - " + dev.Name + ".json", (JsonConvert.SerializeObject(bindings)));
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
