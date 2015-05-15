@@ -62,7 +62,7 @@ namespace DjToKey
             if (!select)
                 MessageBox.Show("Nie znaleziono odpowiedniego urządzenia MIDI!");
 
-            TrayIcon.Visible = true;
+            trayIcon.Visible = true;
 
         }
 
@@ -72,6 +72,9 @@ namespace DjToKey
 
             try
             {
+                trayIcon.Text = "DJToKey " + dev.Name;
+                this.Text = trayIcon.Text;
+
                 controls = JsonConvert.DeserializeObject<List<DjControl>>(ValidFileName.MakeValidFileName(dev.Name + ".json"));
                 bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + dev.Name + ".json"));
 
@@ -144,12 +147,12 @@ namespace DjToKey
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                TrayIcon.Visible = true;
+                trayIcon.Visible = true;
                 this.ShowInTaskbar = false;                
             }
             else
             {
-                TrayIcon.Visible = false;
+                trayIcon.Visible = false;
                 this.ShowInTaskbar = true;
             }
         }
