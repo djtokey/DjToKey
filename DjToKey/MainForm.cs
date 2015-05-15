@@ -76,7 +76,15 @@ namespace DjToKey
                 this.Text = trayIcon.Text;
 
                 controls = JsonConvert.DeserializeObject<List<DjControl>>(ValidFileName.MakeValidFileName(dev.Name + ".json"));
-                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + dev.Name + ".json"));
+
+                try
+                {
+                    bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + dev.Name + ".json"));
+                }
+                catch (FileNotFoundException)
+                {
+                    bindings = new Dictionary<string, Script>();
+                }
 
                 foreach (var c in controls)
                 {
@@ -93,8 +101,6 @@ namespace DjToKey
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
-
-
 
                     dev.ControlChange += dev_ControlChange;
                     if (!dev.IsOpen) dev.Open();

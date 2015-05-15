@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.cbMidiDevices = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -41,11 +41,11 @@
             // 
             // TrayIcon
             // 
-            this.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.TrayIcon.BalloonTipText = "DjToKey pracuje w tle";
-            this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
-            this.TrayIcon.Text = "DjToKey";
-            this.TrayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
+            this.trayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.trayIcon.BalloonTipText = "DjToKey pracuje w tle";
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
+            this.trayIcon.Text = "DjToKey";
+            this.trayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
             // label1
             // 
@@ -141,7 +141,7 @@
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon TrayIcon;
+        private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbMidiDevices;
         private System.Windows.Forms.GroupBox groupBox1;
