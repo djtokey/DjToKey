@@ -4,7 +4,7 @@
     { "ControlId": 52, "ControlName": "Volume A", "ControlType": 1 },
     { "ControlId": 57, "ControlName": "Volume B", "ControlType": 1 },
     { "ControlId": 56, "ControlName": "Balance", "ControlType": 1 },
-    { "ControlId": 49, "ControlName": "Pitch A", "ControlType": 2 },
+    { "ControlId": 50, "ControlName": "Pitch A", "ControlType": 2 },
     { "ControlId": 51, "ControlName": "Pitch B", "ControlType": 2 },
     { "ControlId": 53, "ControlName": "Treble A", "ControlType": 1 },
     { "ControlId": 54, "ControlName": "Medium A", "ControlType": 1 },

@@ -166,12 +166,15 @@ namespace Ktos.DjToKey
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    bindings[cc.Tag.ToString()] = new Script() { Text = cc.Text };
+                    if (bindings.ContainsKey(cc.Tag.ToString()))
+                        bindings[cc.Tag.ToString()].Text = cc.Text;
+                    else
+                        bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
                 }
             }
 
             string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            File.WriteAllText(f, (JsonConvert.SerializeObject(bindings)));
+            File.WriteAllText(f, JsonConvert.SerializeObject(bindings));
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
