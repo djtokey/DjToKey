@@ -1,0 +1,15 @@
+[
+    { "ControlId": 48, "ControlName": "Deck A", "ControlType": 2 },
+    { "ControlId": 49, "ControlName": "Deck B", "ControlType": 2 },
+    { "ControlId": 52, "ControlName": "Volume A", "ControlType": 1 },
+    { "ControlId": 57, "ControlName": "Volume B", "ControlType": 1 },
+    { "ControlId": 56, "ControlName": "Balance", "ControlType": 1 },
+    { "ControlId": 49, "ControlName": "Pitch A", "ControlType": 2 },
+    { "ControlId": 51, "ControlName": "Pitch B", "ControlType": 2 },
+    { "ControlId": 53, "ControlName": "Treble A", "ControlType": 1 },
+    { "ControlId": 54, "ControlName": "Medium A", "ControlType": 1 },
+    { "ControlId": 55, "ControlName": "Bass A", "ControlType": 1 },
+    { "ControlId": 58, "ControlName": "Treble B", "ControlType": 1 },
+    { "ControlId": 59, "ControlName": "Medium B", "ControlType": 1 },
+    { "ControlId": 60, "ControlName": "Bass B", "ControlType": 1 }
+]

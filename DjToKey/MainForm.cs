@@ -103,18 +103,18 @@ namespace DjToKey
                     {
                         Tag = c.ControlId,
                         Text = v,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
                         Multiline = true,
                         Height = 60,
                         ScrollBars = ScrollBars.Vertical                  
                     }, 1, tlpBindings.RowCount - 1);
 
-                    tlpBindings.RowCount++;
+                    tlpBindings.RowCount++;                    
+                }
 
-                    dev.ControlChange += dev_ControlChange;
-                    if (!dev.IsOpen) dev.Open();
-                    dev.StartReceiving(null);
-                }                
+                dev.ControlChange += dev_ControlChange;
+                if (!dev.IsOpen) dev.Open();
+                dev.StartReceiving(null);
             }
             catch (JsonReaderException)
             {
@@ -123,6 +123,10 @@ namespace DjToKey
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (DeviceException)
+            {
+                MessageBox.Show("Błąd urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
