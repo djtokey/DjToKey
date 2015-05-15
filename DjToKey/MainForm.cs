@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DjToKey.Models;
 using Midi;
 using Newtonsoft.Json;
-using DjControl = DjToKey.Models.DjControl;
-using Script = DjToKey.Models.Script;
+using DjToKey.Models;
 using System.IO;
 using Microsoft.ClearScript.V8;
 
@@ -30,37 +22,20 @@ namespace DjToKey
         public MainForm()
         {
             InitializeComponent();
-
-            try
-            {
-                
-                eng = new V8ScriptEngine();
-            }
-            catch (FileNotFoundException)
-            {
-                bindings = new Dictionary<string, Script>();
-
-                bindings.Add("48", new Script() { Text = "alert('Here');" });
-
-                MessageBox.Show("Błąd wczytywania pliku z przypisaniami.");
-            }
+            eng = new V8ScriptEngine();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            bool select = false;
             foreach (var item in InputDevice.InstalledDevices)
             {
-                cbMidiDevices.Items.Add(item.Name);
-                if (item.Name.Contains("MP3 LE MIDI"))
-                {
-                    cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
-                    select = true;
-                }
+                cbMidiDevices.Items.Add(item.Name);                
             }
 
-            if (!select)
-                MessageBox.Show("Nie znaleziono odpowiedniego urządzenia MIDI!");
+            if (InputDevice.InstalledDevices.Count == 0)
+                MessageBox.Show("Nie znaleziono urządzeń MIDI!");
+            else
+                cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
 
         }
 
@@ -70,45 +45,9 @@ namespace DjToKey
 
             try
             {
-                trayIcon.Text = "DJToKey " + dev.Name;
-                this.Text = trayIcon.Text;
-
-                string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
-                controls = JsonConvert.DeserializeObject<List<DjControl>>(File.ReadAllText(f));
-
-                try
-                {
-                    bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + f));
-                }
-                catch (FileNotFoundException)
-                {
-                    bindings = new Dictionary<string, Script>();
-                }
-
-                foreach (var c in controls)
-                {
-                    tlpBindings.Controls.Add(new Label()
-                    {
-                        Text = c.ControlName
-                    }, 0, tlpBindings.RowCount - 1);
-
-                    Script s;
-                    string v = "";
-                    if (bindings.TryGetValue(c.ControlId, out s))
-                        v = s.Text;
-
-                    tlpBindings.Controls.Add(new TextBox()
-                    {
-                        Tag = c.ControlId,
-                        Text = v,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
-                        Multiline = true,
-                        Height = 60,
-                        ScrollBars = ScrollBars.Vertical                  
-                    }, 1, tlpBindings.RowCount - 1);
-
-                    tlpBindings.RowCount++;                    
-                }
+                loadControls();
+                loadBindings();
+                createEditor();
 
                 dev.ControlChange += dev_ControlChange;
                 if (!dev.IsOpen) dev.Open();
@@ -128,14 +67,70 @@ namespace DjToKey
             }
         }
 
+        private void createEditor()
+        {
+            foreach (var c in controls)
+            {
+                tlpBindings.Controls.Add(new Label()
+                {
+                    Text = c.ControlName
+                }, 0, tlpBindings.RowCount - 1);
+
+                Script s;
+                string v = "";
+                if (bindings.TryGetValue(c.ControlId, out s))
+                    v = s.Text;
+
+                tlpBindings.Controls.Add(new TextBox()
+                {
+                    Tag = c.ControlId,
+                    Text = v,
+                    Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
+                    Multiline = true,
+                    Height = 60,
+                    ScrollBars = ScrollBars.Vertical
+                }, 1, tlpBindings.RowCount - 1);
+
+                tlpBindings.RowCount++;
+            }
+        }
+
+        private void loadControls()
+        {
+            trayIcon.Text = "DJToKey " + dev.Name;
+            this.Text = trayIcon.Text;
+
+            string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
+            controls = JsonConvert.DeserializeObject<List<DjControl>>(File.ReadAllText(f));            
+        }
+
+        private void loadBindings()
+        {
+            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
+
+            try
+            {
+                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + f));
+            }
+            catch (FileNotFoundException)
+            {
+                bindings = new Dictionary<string, Script>();
+            }
+        }
+
         void dev_ControlChange(ControlChangeMessage msg)
+        {
+            handleControl(msg);
+        }
+
+        private void handleControl(ControlChangeMessage msg)
         {
             Script s;
             if (bindings.TryGetValue(msg.Control.ToString(), out s))
-            { 
+            {
                 try
                 {
-                    s.Execute(msg.Value, controls.Find(x => x.ControlId == msg.Control.ToString()), eng);                   
+                    s.Execute(msg.Value, controls.Find(x => x.ControlId == msg.Control.ToString()), eng);
                 }
                 catch (Exception e)
                 {
@@ -152,11 +147,16 @@ namespace DjToKey
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            saveBindings();
+        }
+
+        private void saveBindings()
+        {
             foreach (var c in tlpBindings.Controls)
             {
                 if (c.GetType() == typeof(TextBox))
                 {
-                    var cc = (c as TextBox);                    
+                    var cc = (c as TextBox);
                     bindings[cc.Tag.ToString()] = new Script() { Text = cc.Text };
                 }
             }
