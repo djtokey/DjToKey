@@ -75,11 +75,12 @@ namespace DjToKey
                 trayIcon.Text = "DJToKey " + dev.Name;
                 this.Text = trayIcon.Text;
 
-                controls = JsonConvert.DeserializeObject<List<DjControl>>(ValidFileName.MakeValidFileName(dev.Name + ".json"));
+                string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
+                controls = JsonConvert.DeserializeObject<List<DjControl>>(File.ReadAllText(f));
 
                 try
                 {
-                    bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + dev.Name + ".json"));
+                    bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + f));
                 }
                 catch (FileNotFoundException)
                 {
@@ -101,7 +102,11 @@ namespace DjToKey
                     tlpBindings.Controls.Add(new TextBox()
                     {
                         Tag = c.ControlId,
-                        Text = v
+                        Text = v,
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                        Multiline = true,
+                        Height = 60,
+                        ScrollBars = ScrollBars.Vertical                  
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
@@ -111,9 +116,13 @@ namespace DjToKey
                     dev.StartReceiving(null);
                 }                
             }
+            catch (JsonReaderException)
+            {
+                MessageBox.Show("Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI.");
+                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", "DjToKey", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -149,8 +158,9 @@ namespace DjToKey
                     bindings[cc.Tag.ToString()] = new Script() { Text = cc.Text };
                 }
             }
-            
-            File.WriteAllText("bindings - " + dev.Name + ".json", (JsonConvert.SerializeObject(bindings)));
+
+            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
+            File.WriteAllText(f, (JsonConvert.SerializeObject(bindings)));
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

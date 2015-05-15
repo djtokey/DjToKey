@@ -23,6 +23,9 @@ namespace DjToKey
         {
             StringBuilder sb = new StringBuilder(text.Length);
             var invalids = _invalids ?? (_invalids = Path.GetInvalidFileNameChars());
+            Array.Resize(ref invalids, invalids.Length + 1);
+            invalids[invalids.Length - 1] = ' ';
+
             bool changed = false;
             for (int i = 0; i < text.Length; i++)
             {
