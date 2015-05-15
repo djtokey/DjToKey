@@ -5,7 +5,7 @@
         Analog, Digital
     }
 
-    class DjControl
+    class MidiControl
     {
         public string ControlId { get; set; }
         public string ControlName { get; set; }

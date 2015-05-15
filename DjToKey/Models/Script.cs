@@ -6,7 +6,7 @@ namespace Ktos.DjToKey.Models
     {
         public string Text { get; set; }
 
-        public void Execute(int val, DjControl ctrl, V8ScriptEngine eng)
+        public void Execute(int val, MidiControl ctrl, V8ScriptEngine eng)
         {
             eng.AddHostObject("Keyboard", Simulator.Input.Keyboard);
             eng.AddHostObject("Mouse", Simulator.Input.Mouse);

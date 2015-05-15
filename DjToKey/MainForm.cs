@@ -13,7 +13,7 @@ namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
-        private List<DjControl> controls;
+        private List<MidiControl> controls;
         private Dictionary<string, Script> bindings;
 
         private InputDevice dev;
@@ -33,7 +33,10 @@ namespace Ktos.DjToKey
             }
 
             if (InputDevice.InstalledDevices.Count == 0)
+            {
                 MessageBox.Show("Nie znaleziono urządzeń MIDI!");
+                btnSave.Enabled = false;
+            }
             else
                 cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
 
@@ -101,7 +104,7 @@ namespace Ktos.DjToKey
             this.Text = trayIcon.Text;
 
             string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            controls = JsonConvert.DeserializeObject<List<DjControl>>(File.ReadAllText(f));            
+            controls = JsonConvert.DeserializeObject<List<MidiControl>>(File.ReadAllText(f));            
         }
 
         private void loadBindings()

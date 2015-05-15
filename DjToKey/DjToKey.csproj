@@ -73,7 +73,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Script.cs" />
-    <Compile Include="Models\DjControl.cs" />
+    <Compile Include="Models\MidiControl.cs" />
     <Compile Include="Models\Simulator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
