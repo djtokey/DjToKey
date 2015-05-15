@@ -25,8 +25,17 @@ namespace DjToKey
 
         public MainForm()
         {
-            InitializeComponent();            
-            bindings = JsonConvert.DeserializeObject<List<Binding>>(File.ReadAllText("bindings.json"));
+            InitializeComponent();
+
+            try
+            {
+                bindings = JsonConvert.DeserializeObject<List<Binding>>(File.ReadAllText("bindings.json"));
+            }
+            catch (FileNotFoundException)
+            {
+                bindings = new List<Binding>();
+                MessageBox.Show("Błąd wczytywania pliku z przypisaniami.");
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)

@@ -1,5 +1,4 @@
-﻿using NCalc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +22,7 @@ namespace DjToKey.Models
             string par1 = (act.Length > 2) ? act[2] : null;
             var cmd = act[0].ToLower();
 
+            /*
             if (par0 != null && par0.StartsWith("#") && par0.EndsWith("#"))
             {
                 par0 = par0.Replace("#", "");
@@ -35,7 +35,7 @@ namespace DjToKey.Models
                 par1 = par1.Replace("#", "");
                 Expression e = new Expression(par1);
                 par1 = e.Evaluate().ToString();
-            }
+            }*/
 
             switch (cmd)
             {
