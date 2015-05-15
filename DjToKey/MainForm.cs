@@ -92,6 +92,7 @@ namespace Ktos.DjToKey
                 {
                     Tag = c.ControlId,
                     Text = v,
+                    Height = 50,
                     Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom,
                     Multiline = true,
                     ScrollBars = ScrollBars.Vertical
@@ -99,6 +100,8 @@ namespace Ktos.DjToKey
 
                 tlpBindings.RowCount++;
             }
+
+            tlpBindings.PerformLayout();
         }
 
         private void loadControls()
@@ -116,7 +119,7 @@ namespace Ktos.DjToKey
 
             try
             {
-                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText("bindings-" + f));
+                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText(f));
             }
             catch (FileNotFoundException)
             {
