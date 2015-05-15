@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.cbMidiDevices = new System.Windows.Forms.ComboBox();
@@ -40,15 +41,19 @@
             // 
             // TrayIcon
             // 
+            this.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.TrayIcon.BalloonTipText = "DjToKey pracuje w tle";
+            this.TrayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayIcon.Icon")));
             this.TrayIcon.Text = "DjToKey";
-            this.TrayIcon.Visible = true;
+            this.TrayIcon.DoubleClick += new System.EventHandler(this.TrayIcon_DoubleClick);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(17, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.Size = new System.Drawing.Size(115, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Urządzenie MIDI:";
             // 
@@ -59,9 +64,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbMidiDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMidiDevices.FormattingEnabled = true;
-            this.cbMidiDevices.Location = new System.Drawing.Point(109, 13);
+            this.cbMidiDevices.Location = new System.Drawing.Point(145, 16);
+            this.cbMidiDevices.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbMidiDevices.Name = "cbMidiDevices";
-            this.cbMidiDevices.Size = new System.Drawing.Size(331, 21);
+            this.cbMidiDevices.Size = new System.Drawing.Size(440, 24);
             this.cbMidiDevices.TabIndex = 1;
             this.cbMidiDevices.SelectedIndexChanged += new System.EventHandler(this.cbMidiDevices_SelectedIndexChanged);
             // 
@@ -71,9 +77,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.tlpBindings);
-            this.groupBox1.Location = new System.Drawing.Point(13, 40);
+            this.groupBox1.Location = new System.Drawing.Point(17, 49);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(427, 176);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(569, 217);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Konfiguracja klawiszy";
@@ -86,20 +94,22 @@
             this.tlpBindings.ColumnCount = 2;
             this.tlpBindings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpBindings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpBindings.Location = new System.Drawing.Point(7, 20);
+            this.tlpBindings.Location = new System.Drawing.Point(9, 25);
+            this.tlpBindings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tlpBindings.Name = "tlpBindings";
             this.tlpBindings.RowCount = 1;
             this.tlpBindings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpBindings.Size = new System.Drawing.Size(414, 150);
+            this.tlpBindings.Size = new System.Drawing.Size(552, 185);
             this.tlpBindings.TabIndex = 0;
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSave.Location = new System.Drawing.Point(365, 226);
+            this.btnSave.Location = new System.Drawing.Point(487, 278);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(100, 28);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Zapisz";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -107,19 +117,22 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 261);
+            this.ClientSize = new System.Drawing.Size(603, 321);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbMidiDevices);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(468, 300);
+            this.MinimumSize = new System.Drawing.Size(618, 358);
             this.Name = "MainForm";
             this.Text = "DjToKey";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

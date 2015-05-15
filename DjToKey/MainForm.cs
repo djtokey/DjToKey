@@ -43,12 +43,21 @@ namespace DjToKey
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            bool select = false;
             foreach (var item in InputDevice.InstalledDevices)
             {
                 cbMidiDevices.Items.Add(item.Name);
                 if (item.Name.Contains("MP3 LE MIDI"))
+                {
                     cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
+                    select = true;
+                }
             }
+
+            if (!select)
+                MessageBox.Show("Nie znaleziono odpowiedniego urządzenia MIDI!");
+
+            TrayIcon.Visible = true;
 
         }
 
@@ -118,6 +127,25 @@ namespace DjToKey
             }
 
             File.WriteAllText("bindings.json", JsonConvert.SerializeObject(bindings));
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                TrayIcon.Visible = true;
+                this.ShowInTaskbar = false;                
+            }
+            else
+            {
+                TrayIcon.Visible = false;
+                this.ShowInTaskbar = true;
+            }
+        }
+
+        private void TrayIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
         }
     }
 }
