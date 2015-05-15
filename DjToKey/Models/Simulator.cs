@@ -1,6 +1,6 @@
 ﻿using WindowsInput;
 
-namespace DjToKey.Models
+namespace Ktos.DjToKey.Models
 {
     static class Simulator
     {

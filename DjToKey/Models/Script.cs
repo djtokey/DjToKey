@@ -1,6 +1,6 @@
 ﻿using Microsoft.ClearScript.V8;
 
-namespace DjToKey.Models
+namespace Ktos.DjToKey.Models
 {
     class Script
     {

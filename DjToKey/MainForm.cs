@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Midi;
 using Newtonsoft.Json;
-using DjToKey.Models;
+using Ktos.DjToKey.Models;
 using System.IO;
 using Microsoft.ClearScript.V8;
 
 //TODO: https://icons8.com/
 
-namespace DjToKey
+namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {

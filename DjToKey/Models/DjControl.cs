@@ -1,4 +1,4 @@
-﻿namespace DjToKey.Models
+﻿namespace Ktos.DjToKey.Models
 {
     public enum ControlType
     {

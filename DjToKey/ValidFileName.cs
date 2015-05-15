@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DjToKey
+namespace Ktos.DjToKey
 {
     public static class ValidFileName
     {
