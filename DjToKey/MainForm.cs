@@ -93,11 +93,15 @@ namespace DjToKey
                         Text = c.ControlName
                     }, 0, tlpBindings.RowCount - 1);
 
+                    Script s;
+                    string v = "";
+                    if (bindings.TryGetValue(c.ControlId, out s))
+                        v = s.Text;
+
                     tlpBindings.Controls.Add(new TextBox()
                     {
-                        Tag = c.ControlId
-                        // szukanie w bindingach
-                        //Text = ,                        
+                        Tag = c.ControlId,
+                        Text = v
                     }, 1, tlpBindings.RowCount - 1);
 
                     tlpBindings.RowCount++;
