@@ -31,15 +31,27 @@ using System.Collections.Generic;
 
 namespace Ktos.DjToKey.Models
 {
+    /// <summary>
+    /// A global object accessible for all scripts on a page. It wraps
+    /// a typical Dictionary of string as a key and object as a value.
+    /// </summary>
     public class GlobalDictionary
     {
         private Dictionary<string, object> dict;
 
+        /// <summary>
+        /// Initializes a new instance of GlobalDictionary
+        /// </summary>
         public GlobalDictionary()
         {
             dict = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// Sets a value for a given key. If key does not exist, it is added.
+        /// </summary>
+        /// <param name="key">A key</param>
+        /// <param name="value">Any value for this key</param>
         public void Set(string key, object value)
         {
             if (dict.ContainsKey(key))
@@ -48,6 +60,11 @@ namespace Ktos.DjToKey.Models
                 dict.Add(key, value);
         }
 
+        /// <summary>
+        /// Gets a value for a given key
+        /// </summary>
+        /// <param name="key">A key to be retrieved value for</param>
+        /// <returns></returns>
         public object Get(string key)
         {
             return dict[key];
