@@ -72,6 +72,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\GlobalDictionary.cs" />
     <Compile Include="Models\ScriptsHelper.cs" />
     <Compile Include="Models\Script.cs" />
     <Compile Include="Models\MidiControl.cs" />

@@ -87,6 +87,7 @@ namespace Ktos.DjToKey
             eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
             eng.AddHostObject("Document", ScriptsHelper.Document);
             eng.AddHostObject("Console", ScriptsHelper.Console);
+            eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
 
             // addind useful types
             eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
