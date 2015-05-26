@@ -231,6 +231,11 @@ Value object.
 ### Value object
 Value is an object with value send from MIDI device
 
+### Global object
+`Global` is an object with two functions: `Set(key, value)` and `Get(key)`. It is common between
+all scripts in application, so you can set some value and use it in other scripts. It is preserved
+during whole application life.
+
 * `Value.Raw` - raw value send from the interface
 * `Value.Transformed` - if the value is 127, this returns 1, else -1. It is useful in situations
 where there is some control returning only Digital values (127 and 0 or 127 and 1), you don't
