@@ -1,6 +1,8 @@
 DjToKey
 =======
 
+[![Build status](https://ci.appveyor.com/api/projects/status/0sb4u0damy7p1x79/branch/master?svg=true)](https://ci.appveyor.com/project/ktos/djtokey/branch/master)
+
 This is a very basic MIDI-controller to script mapper. It allows you to prepare
 custom scripts for moving mouse, pressing keys and similar things, fired every 
 time some action on your MIDI device occurs. For example, you can bind your 
