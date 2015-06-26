@@ -52,7 +52,6 @@ namespace Ktos.DjToKey
         /// </summary>
         private const int ERRORTIME = 10;
 
-
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
@@ -104,6 +103,7 @@ namespace Ktos.DjToKey
             eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
             eng.AddHostObject("Document", ScriptsHelper.Document);
             eng.AddHostObject("Console", ScriptsHelper.Console);
+            eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
 
             // addind useful types
             eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
@@ -272,8 +272,16 @@ namespace Ktos.DjToKey
         {
             if (dev != null)
             {
-                dev.StopReceiving();
-                if (dev.IsOpen) dev.Close();
+                try
+                {
+                    dev.StopReceiving();
+                    if (dev.IsOpen) dev.Close();
+                }
+                catch (Midi.DeviceException)
+                {
+                    // device was removed while application was running or cannot be closed
+                    // we cannot do much about it, so we are just closing
+                }
             }
         }
 

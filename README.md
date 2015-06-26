@@ -236,6 +236,14 @@ Value is an object with value send from MIDI device
 where there is some control returning only Digital values (127 and 0 or 127 and 1), you don't
 have to work on value to get meaning, it is done automatically.
 
+### Global object
+`Global` is an object with two functions: 
+* `Set(key, value)` - sets (or adds) a key with a given value,
+* `Get(key)` - retrieves a value for a given key.
+
+It is common between all scripts in application, so you can set some value and use it in other
+scripts. It is preserved during whole application life, emptied at startup.
+
 ## Hardware
 This software was made for Hercules DJControl MP3 LE MIDI device and has mappings only for
 this device. If you would like to use it for another device, there is a need to prepare
