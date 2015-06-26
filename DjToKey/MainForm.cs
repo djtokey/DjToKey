@@ -272,8 +272,16 @@ namespace Ktos.DjToKey
         {
             if (dev != null)
             {
-                dev.StopReceiving();
-                if (dev.IsOpen) dev.Close();
+                try
+                {
+                    dev.StopReceiving();
+                    if (dev.IsOpen) dev.Close();
+                }
+                catch (Midi.DeviceException)
+                {
+                    // device was removed while application was running or cannot be closed
+                    // we cannot do much about it, so we are just closing
+                }
             }
         }
 
