@@ -53,6 +53,11 @@ namespace Ktos.DjToKey.Models
         /// Instance of a InputSimulator class
         /// </summary>
         public static InputSimulator Simulator = new InputSimulator();
+
+        /// <summary>
+        /// A global dictionary usable by all scripts
+        /// </summary>
+        public static GlobalDictionary GlobalDictionary = new GlobalDictionary();
     }
 
     /// <summary>
