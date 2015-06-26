@@ -67,7 +67,14 @@ namespace Ktos.DjToKey.Models
         /// <returns></returns>
         public object Get(string key)
         {
-            return dict[key];
+            try
+            {
+                return dict[key];
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
         }
     }
 }
