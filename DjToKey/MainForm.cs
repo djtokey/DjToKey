@@ -36,6 +36,7 @@ using Ktos.DjToKey.Models;
 using System.IO;
 using System.Reflection;
 using Microsoft.ClearScript.V8;
+using Microsoft.ClearScript;
 
 namespace Ktos.DjToKey
 {
@@ -45,6 +46,12 @@ namespace Ktos.DjToKey
         /// Application name
         /// </summary>
         private const string APPNAME = "DjToKey";
+
+        /// <summary>
+        /// Time to ignore errors for the same control
+        /// </summary>
+        private const int ERRORTIME = 10;
+
 
         /// <summary>
         /// List of possible controls in connected MIDI device
@@ -65,6 +72,16 @@ namespace Ktos.DjToKey
         /// Instance of script engine
         /// </summary>
         private V8ScriptEngine eng;
+
+        /// <summary>
+        /// When last control error was shown
+        /// </summary>
+        private DateTime lastErrorTime = DateTime.MinValue;
+
+        /// <summary>
+        /// Which control ID was last mentioned in error message
+        /// </summary>
+        private string lastControlError = "";
 
         /// <summary>
         /// Form constructor
@@ -238,9 +255,15 @@ namespace Ktos.DjToKey
                 {
                     s.Execute(value, controls.Find(x => x.ControlId == control.ToString()), eng);
                 }
-                catch (Exception e)
+                catch (ScriptEngineException e)
                 {
-                    MessageBox.Show("Wystąpił błąd w obsłudze zdarzenia: " + e.Message);
+                    string err = string.Format("Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}", control, e.Message);
+                    if ((lastControlError != control) || (DateTime.Now - lastErrorTime > TimeSpan.FromSeconds(ERRORTIME)))
+                    {
+                        lastErrorTime = DateTime.Now;
+                        lastControlError = control;
+                        MessageBox.Show(err);
+                    }                                       
                 }
             }
         }
