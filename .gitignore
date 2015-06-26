@@ -110,3 +110,4 @@ UpgradeLog*.XML
 *.v12.suo
 *.sln.ide
 .vs/
+/DjToKey/Properties/AssemblyInfo.cs
