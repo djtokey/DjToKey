@@ -52,7 +52,6 @@ namespace Ktos.DjToKey
         /// </summary>
         private const int ERRORTIME = 10;
 
-
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
