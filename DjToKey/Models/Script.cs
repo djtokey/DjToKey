@@ -39,6 +39,9 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public string Text { get; set; }
 
-
+        /// <summary>
+        /// Path to a script file
+        /// </summary>
+        public string Path { get; set; }
     }
 }

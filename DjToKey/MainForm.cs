@@ -145,7 +145,12 @@ namespace Ktos.DjToKey
                 Script s;
                 string v = "";
                 if (dev.Bindings.TryGetValue(c.ControlId, out s))
-                    v = s.Text;
+                {
+                    if (s.Text != null)
+                        v = s.Text;
+                    else
+                        v = @"file://" + s.Path;
+                }
 
                 tlpBindings.Controls.Add(new TextBox()
                 {
@@ -170,6 +175,34 @@ namespace Ktos.DjToKey
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            foreach (var c in tlpBindings.Controls)
+            {
+                if (c.GetType() == typeof(TextBox))
+                {
+                    var cc = (c as TextBox);
+                    if (dev.Bindings.ContainsKey(cc.Tag.ToString()))
+                    {
+                        if (cc.Text.StartsWith("file://"))
+                        {
+                            dev.Bindings[cc.Tag.ToString()].Path = cc.Text.Remove(0, "file://".Length);
+                            dev.Bindings[cc.Tag.ToString()].Text = null;
+                        }
+                        else
+                        {
+                            dev.Bindings[cc.Tag.ToString()].Text = cc.Text;
+                            dev.Bindings[cc.Tag.ToString()].Path = null;
+                        }
+                    }
+                    else
+                    {
+                        if (cc.Text.StartsWith("file://"))
+                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Path = cc.Text.Remove(0, "file://".Length) });
+                        else
+                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
+                    }
+                }
+            }
+
             dev.SaveBindings();
         }
 
