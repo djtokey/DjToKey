@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\GitVersion.cs" />
+    <Compile Include="Models\MidiDevice.cs" />
     <Compile Include="Plugins\Importer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

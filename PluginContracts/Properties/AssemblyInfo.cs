@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: System.Reflection.AssemblyTitle("Ktos.DjToKey.PluginContracts")]
+[assembly: System.Reflection.AssemblyTitle("Ktos.DjToKey.Plugins.Contracts")]
 [assembly: System.Reflection.AssemblyDescription("DjToKey Plugins Contracts")]
 [assembly: System.Reflection.AssemblyCompany("Marcin Badurowicz")]
 [assembly: System.Reflection.AssemblyProduct("DjToKey")]

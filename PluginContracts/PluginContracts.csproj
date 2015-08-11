@@ -7,8 +7,8 @@
     <ProjectGuid>{975A6A00-7514-4D3F-9520-3370880E29CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ktos.DjToKey.PluginContracts</RootNamespace>
-    <AssemblyName>Ktos.DjToKey.PluginContracts</AssemblyName>
+    <RootNamespace>Ktos.DjToKey.Plugins</RootNamespace>
+    <AssemblyName>Ktos.DjToKey.Plugins.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
