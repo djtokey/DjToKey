@@ -32,7 +32,7 @@ namespace Ktos.DjToKey.Models
     /// <summary>
     /// Class encapsulating Script to be run when event occured
     /// </summary>
-    class Script
+    public class Script
     {
         /// <summary>
         /// Source code of a script

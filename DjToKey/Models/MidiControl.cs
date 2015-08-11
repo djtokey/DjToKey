@@ -51,7 +51,7 @@ namespace Ktos.DjToKey.Models
     /// <summary>
     /// A control which can cause events in application
     /// </summary>
-    class MidiControl
+    public class MidiControl
     {
         /// <summary>
         /// Internal Control ID, usually numerical
