@@ -37,7 +37,6 @@
             this.tlpBindings = new System.Windows.Forms.TableLayoutPanel();
             this.btnSave = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,7 +95,7 @@
             this.tlpBindings.Name = "tlpBindings";
             this.tlpBindings.RowCount = 1;
             this.tlpBindings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tlpBindings.Size = new System.Drawing.Size(793, 375);
+            this.tlpBindings.Size = new System.Drawing.Size(793, 353);
             this.tlpBindings.TabIndex = 0;
             // 
             // btnSave
@@ -120,16 +119,14 @@
             this.linkLabel1.Size = new System.Drawing.Size(35, 13);
             this.linkLabel1.TabIndex = 4;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "About";
+            this.linkLabel1.Text = "About";            
             this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
-                        
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 493);
-            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox1);
@@ -158,6 +155,5 @@
         private System.Windows.Forms.TableLayoutPanel tlpBindings;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
     }
 }

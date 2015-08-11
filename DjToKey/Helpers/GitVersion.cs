@@ -23,8 +23,8 @@ namespace Ktos.Build
             get
             {
                 return (Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof(AssemblyVersionAttribute), false)[0] as
-                AssemblyVersionAttribute).Version;
+                .GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0] as
+                AssemblyFileVersionAttribute).Version;
             }
         }
     }
