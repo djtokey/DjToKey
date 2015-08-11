@@ -28,7 +28,7 @@
 #endregion
 
 
-using Ktos.DjToKey.PluginContracts;
+using Ktos.DjToKey.Plugins.Contracts;
 using System.ComponentModel.Composition;
 
 namespace TestPlugin

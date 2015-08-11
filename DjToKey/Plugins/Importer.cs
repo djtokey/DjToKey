@@ -27,14 +27,14 @@
  */
 #endregion
 
-using Ktos.DjToKey.PluginContracts;
+using Ktos.DjToKey.Plugins.Contracts;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 
-namespace Ktos.DjToKey.Extensions
+namespace Ktos.DjToKey.Plugins
 {
     /// <summary>
     /// This class is responsible for finding and loading all plugins from the their subdirectory

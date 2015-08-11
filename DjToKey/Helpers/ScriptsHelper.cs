@@ -27,11 +27,12 @@
  */
 #endregion
 
+using Ktos.DjToKey.Models;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WindowsInput;
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Helpers
 {
     /// <summary>
     /// Small static class which is a container for a few objects which

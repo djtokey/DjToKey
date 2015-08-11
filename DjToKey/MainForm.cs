@@ -35,9 +35,7 @@ using Newtonsoft.Json;
 using Ktos.DjToKey.Models;
 using System.IO;
 using System.Reflection;
-using Microsoft.ClearScript.V8;
-using Microsoft.ClearScript;
-using Ktos.DjToKey.Extensions;
+using Ktos.DjToKey.Helpers;
 
 namespace Ktos.DjToKey
 {
@@ -69,11 +67,6 @@ namespace Ktos.DjToKey
         private InputDevice dev;
 
         /// <summary>
-        /// Instance of script engine
-        /// </summary>
-        private V8ScriptEngine eng;
-
-        /// <summary>
         /// When last control error was shown
         /// </summary>
         private DateTime lastErrorTime = DateTime.MinValue;
@@ -84,43 +77,22 @@ namespace Ktos.DjToKey
         private string lastControlError = "";
 
         /// <summary>
+        /// A script engine which will be used when executing scripts
+        /// </summary>
+        private ScriptEngine eng;
+
+        /// <summary>
         /// Form constructor
         /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
-            configureEngine();
+            eng = new ScriptEngine();
+            eng.Configure();
         }
 
-        /// <summary>
-        /// Configures script engine
-        /// </summary>
-        private void configureEngine()
-        {
-            // adding set of static object which will be available for scripts
-            eng = new V8ScriptEngine();
-            eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
-            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
-            eng.AddHostObject("Document", ScriptsHelper.Document);
-            eng.AddHostObject("Console", ScriptsHelper.Console);
-            eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
-
-            // addind useful types
-            eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
-
-            // adding objects coming from additional extensions
-            PluginImporter i = new PluginImporter();
-            i.Import();
-
-            if (i.ScriptPlugins != null)
-            {
-                foreach (var p in i.ScriptPlugins)
-                {
-                    eng.AddHostObject(p.Name, p.Object);
-                }
-            }
-        }
+        
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -266,9 +238,9 @@ namespace Ktos.DjToKey
             {
                 try
                 {
-                    s.Execute(value, controls.Find(x => x.ControlId == control.ToString()), eng);
+                    eng.Execute(s, value, controls.Find(x => x.ControlId == control.ToString()));
                 }
-                catch (ScriptEngineException e)
+                catch (Microsoft.ClearScript.ScriptEngineException e)
                 {
                     string err = string.Format("Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}", control, e.Message);
                     if ((lastControlError != control) || (DateTime.Now - lastErrorTime > TimeSpan.FromSeconds(ERRORTIME)))
@@ -364,7 +336,7 @@ namespace Ktos.DjToKey
         {
             Script s = new Script();
             s.Text = "Document.Alert(TestPlugin.DoWork())";
-            s.Execute(0, new MidiControl(), eng);
+            eng.Execute(s, 0, null);
         }
     }
 }

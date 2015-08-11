@@ -27,8 +27,6 @@
  */
 #endregion
 
-using Microsoft.ClearScript.V8;
-
 namespace Ktos.DjToKey.Models
 {
     /// <summary>
@@ -41,20 +39,6 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public string Text { get; set; }
 
-        /// <summary>
-        /// Executes script giving it also values of Control event which caused it and
-        /// its value.
-        /// </summary>
-        /// <param name="val">Value in numerical form</param>
-        /// <param name="ctrl">Object of MidiControl with name and type of control which caused event</param>
-        /// <param name="eng">Instance of script engine</param>
-        public void Execute(int val, MidiControl ctrl, V8ScriptEngine eng)
-        {
-            
-            eng.AddHostObject("Control", ctrl);
-            eng.AddHostObject("Value", new { Raw = val, Transformed = (val == 127) ? 1 : -1 });
 
-            eng.Execute(Text);
-        }
     }
 }

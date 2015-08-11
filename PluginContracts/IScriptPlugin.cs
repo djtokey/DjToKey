@@ -28,7 +28,7 @@
 #endregion
 
 
-namespace Ktos.DjToKey.PluginContracts
+namespace Ktos.DjToKey.Plugins.Contracts
 {
     /// <summary>
     /// An interface defining a basic plugin for DjToKey allowing to add a new global object
