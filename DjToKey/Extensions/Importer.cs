@@ -34,7 +34,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Extensions
 {
     /// <summary>
     /// This class is responsible for finding and loading all plugins from the their subdirectory

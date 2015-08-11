@@ -37,6 +37,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.ClearScript.V8;
 using Microsoft.ClearScript;
+using Ktos.DjToKey.Extensions;
 
 namespace Ktos.DjToKey
 {
@@ -108,7 +109,7 @@ namespace Ktos.DjToKey
             // addind useful types
             eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
 
-            // adding objects coming from additional plugins
+            // adding objects coming from additional extensions
             PluginImporter i = new PluginImporter();
             i.Import();
 
