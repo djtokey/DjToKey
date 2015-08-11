@@ -107,6 +107,18 @@ namespace Ktos.DjToKey
 
             // addind useful types
             eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
+
+            // adding objects coming from additional plugins
+            PluginImporter i = new PluginImporter();
+            i.Import();
+
+            if (i.ScriptPlugins != null)
+            {
+                foreach (var p in i.ScriptPlugins)
+                {
+                    eng.AddHostObject(p.Name, p.Object);
+                }
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -345,6 +357,13 @@ namespace Ktos.DjToKey
             var mess = String.Format("{0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/", APPNAME, version.InformationalVersion);
 
             MessageBox.Show(mess, APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Script s = new Script();
+            s.Text = "Document.Alert(TestPlugin.DoWork())";
+            s.Execute(0, new MidiControl(), eng);
         }
     }
 }
