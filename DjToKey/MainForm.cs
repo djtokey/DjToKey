@@ -223,7 +223,7 @@ namespace Ktos.DjToKey
             trayIcon.Text = APPNAME + " - " + dev.Name;
             this.Text = trayIcon.Text;
 
-            string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
+            string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
             controls = JsonConvert.DeserializeObject<List<MidiControl>>(File.ReadAllText(f));            
         }
 

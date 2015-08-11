@@ -95,7 +95,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="DJControl_MP3_LE_MIDI.json">
+    <None Include="devices\DJControl_MP3_LE_MIDI.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
