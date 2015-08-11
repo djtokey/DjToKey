@@ -30,6 +30,7 @@
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
 using Microsoft.ClearScript.V8;
+using System.IO;
 
 namespace Ktos.DjToKey.Models
 {
@@ -93,7 +94,12 @@ namespace Ktos.DjToKey.Models
             eng.AddHostObject("Control", ctrl);
             eng.AddHostObject("Value", new { Raw = val, Transformed = (val == 127) ? 1 : -1 });
 
-            eng.Execute(s.Text);
+            string script = s.Text;
+
+            if (s.Path != null)
+                script = File.ReadAllText(s.Path);
+
+            eng.Execute(script);
         }        
     }
 }
