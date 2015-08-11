@@ -84,10 +84,10 @@ namespace Ktos.DjToKey.Models
             eng = new ScriptEngine();
             eng.Configure();
 
-            this.AvailableDevices = new List<string>();
+            AvailableDevices = new List<string>();
             foreach (var d in InputDevice.InstalledDevices)
             {
-                this.AvailableDevices.Add(d.Name);
+                AvailableDevices.Add(d.Name);
             }
         }
 
@@ -180,22 +180,9 @@ namespace Ktos.DjToKey.Models
         /// Saves bindings to file
         /// </summary>
         public void SaveBindings()
-        {
-            throw new NotImplementedException();
-            /*foreach (var c in tlpBindings.Controls)
-            {
-                if (c.GetType() == typeof(TextBox))
-                {
-                    var cc = (c as TextBox);
-                    if (bindings.ContainsKey(cc.Tag.ToString()))
-                        bindings[cc.Tag.ToString()].Text = cc.Text;
-                    else
-                        bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
-                }
-            }
-
+        {            
             string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            File.WriteAllText(f, JsonConvert.SerializeObject(bindings));*/
+            File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
         }
 
         /// <summary>
