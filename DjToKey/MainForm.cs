@@ -184,7 +184,7 @@ namespace Ktos.DjToKey
                     {
                         if (cc.Text.StartsWith("file://"))
                         {
-                            dev.Bindings[cc.Tag.ToString()].Path = cc.Text;
+                            dev.Bindings[cc.Tag.ToString()].Path = cc.Text.Remove(0, "file://".Length);
                             dev.Bindings[cc.Tag.ToString()].Text = null;
                         }
                         else
@@ -196,7 +196,7 @@ namespace Ktos.DjToKey
                     else
                     {
                         if (cc.Text.StartsWith("file://"))
-                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Path = cc.Text });
+                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Path = cc.Text.Remove(0, "file://".Length) });
                         else
                             dev.Bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
                     }
