@@ -119,7 +119,9 @@ namespace Ktos.DjToKey.Plugins
                 {
                     // loads assembly again, only for reflection information, to get their metadata
                     var ass = Assembly.ReflectionOnlyLoadFrom(f);
-                    loadedPlugins.Add(ass.GetMetadata());
+                    var metadata = ass.GetMetadata();
+                    if (metadata != null)
+                        loadedPlugins.Add(metadata);
                 }
             }
             catch (DirectoryNotFoundException)

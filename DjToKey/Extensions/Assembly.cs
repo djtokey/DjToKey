@@ -28,6 +28,7 @@
 #endregion
 
 using System;
+using System.IO;
 using System.Linq;
 
 /// <summary>
@@ -111,13 +112,20 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>Plugin metadata - title, description, version and copyright information for a plugin</returns>
         public static Plugins.Metadata GetMetadata(this System.Reflection.Assembly assembly)
         {
-            return new Plugins.Metadata()
+            try
             {
-                Title = assembly.GetTitle(),
-                Copyright = assembly.GetCopyright(),
-                Description = assembly.GetDescription(),
-                Version = assembly.GetVersion()                
-            };
+                return new Plugins.Metadata()
+                {
+                    Title = assembly.GetTitle(),
+                    Copyright = assembly.GetCopyright(),
+                    Description = assembly.GetDescription(),
+                    Version = assembly.GetVersion()
+                };
+            }
+            catch (FileLoadException)
+            {
+                return null;
+            }
         }
     }
 }
