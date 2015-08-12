@@ -27,6 +27,7 @@
  */
 #endregion
 
+using Ktos.DjToKey.Models;
 using System;
 using System.Windows.Forms;
 
@@ -34,12 +35,17 @@ namespace Ktos.DjToKey
 {
     static class Program
     {
+        public static ScriptEngine ScriptEngine;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            ScriptEngine = new ScriptEngine();
+            ScriptEngine.Configure();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

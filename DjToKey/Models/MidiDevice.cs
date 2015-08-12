@@ -67,7 +67,7 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// A script engine which will be used when executing scripts
         /// </summary>
-        private ScriptEngine eng;
+        public ScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
         /// An event invoked when script error occured when handling
@@ -79,10 +79,9 @@ namespace Ktos.DjToKey.Models
         /// A constructor, intializing script engine and setting list of
         /// available input devices
         /// </summary>
-        public MidiDevice()
+        public MidiDevice(ScriptEngine engine)
         {
-            eng = new ScriptEngine();
-            eng.Configure();
+            this.ScriptEngine = engine;
 
             AvailableDevices = new List<string>();
             foreach (var d in InputDevice.InstalledDevices)
@@ -158,7 +157,7 @@ namespace Ktos.DjToKey.Models
             {
                 try
                 {
-                    eng.Execute(s, value, Controls.Find(x => x.ControlId == control.ToString()));
+                    this.ScriptEngine.Execute(s, value, Controls.Find(x => x.ControlId == control.ToString()));
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {

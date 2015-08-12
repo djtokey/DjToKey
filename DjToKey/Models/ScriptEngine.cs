@@ -30,12 +30,15 @@
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
 using Microsoft.ClearScript.V8;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Ktos.DjToKey.Models
 {
-    class ScriptEngine
+    public class ScriptEngine
     {
+        public IEnumerable<string> Plugins { get; private set; }
+
         /// <summary>
         /// Instance of script engine
         /// </summary>
@@ -73,11 +76,14 @@ namespace Ktos.DjToKey.Models
             PluginImporter i = new PluginImporter();
             i.Import();
 
+            var pl = new List<string>();
+
             if (i.Objects != null)
             {
                 foreach (var p in i.Objects)
                 {
                     eng.AddHostObject(p.Name, p.Object);
+                    pl.Add(p.Description);
                 }
             }
 
@@ -85,9 +91,12 @@ namespace Ktos.DjToKey.Models
             {
                 foreach (var p in i.Types)
                 {
-                    eng.AddHostType(p.Name, p.Type);                    
+                    eng.AddHostType(p.Name, p.Type);
+                    pl.Add(p.Description);
                 }
             }
+
+            Plugins = pl;
         }
 
         /// <summary>
