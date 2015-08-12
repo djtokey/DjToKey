@@ -44,9 +44,8 @@ namespace Ktos.DjToKey
         static void Main()
         {
             ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure();
+            ScriptEngine.Configure();                       
 
-            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }

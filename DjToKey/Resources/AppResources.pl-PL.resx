@@ -118,42 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>{0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/</value>
+    <value>{0} {1}\n\nDjToKey to aplikacja do mapowania kontrolek z kontrolera MIDI do własnych skryptów. Pozwala ona na przygotowanie skryptów imitujący poruszanie myszą i naciskanie klawiszy, uruchamianych gdy użyjesz pewnych opcji swojego kontrolera MIDI. Na przykład możliwe jest powiązanie ruchu stołu DJskiego z przewijaniem kółkiem myszy.\n\nCopyright (c0 Marcin Badurowicz 2015\nIkona pochodzi z: htps://icons8.com</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>DjToKey</value>
   </data>
   <data name="btnSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Zapisz</value>
   </data>
   <data name="ControlFileError" xml:space="preserve">
-    <value>Error when reading device description file!</value>
+    <value>Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!</value>
   </data>
   <data name="ControlFileNotFound" xml:space="preserve">
-    <value>No description file found for this MIDI device!</value>
+    <value>Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!</value>
   </data>
   <data name="gbBindings" xml:space="preserve">
-    <value>Control bindings:</value>
+    <value>Konfiguracja klawiszy</value>
   </data>
   <data name="lbAbout" xml:space="preserve">
-    <value>About</value>
+    <value>O programie</value>
   </data>
   <data name="lbDevice" xml:space="preserve">
-    <value>MIDI device:</value>
+    <value>Urządzenie MIDI:</value>
   </data>
   <data name="lbPlugins" xml:space="preserve">
-    <value>Plugins</value>
+    <value>Wtyczki</value>
   </data>
   <data name="MidiError" xml:space="preserve">
-    <value>MIDI device error!</value>
+    <value>Błąd urządzenia MIDI!</value>
   </data>
   <data name="NoMidiMessage" xml:space="preserve">
-    <value>No MIDI devices found!</value>
+    <value>Nie znaleziono urządzeń MIDI!</value>
   </data>
   <data name="PluginsMessage" xml:space="preserve">
-    <value>Plugins loaded:</value>
+    <value>Załadowane wtyczki:</value>
   </data>
   <data name="ScriptErrorMessage" xml:space="preserve">
-    <value>Error occured when handling control {0}: {1}</value>
+    <value>Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}</value>
   </data>
 </root>

@@ -61,7 +61,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/&quot;.
+        ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/.
         /// </summary>
         internal static string About {
             get {
@@ -79,7 +79,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zapisz.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string btnSave {
             get {
@@ -88,7 +88,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!.
+        ///   Looks up a localized string similar to Error when reading device description file!.
         /// </summary>
         internal static string ControlFileError {
             get {
@@ -97,7 +97,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!.
+        ///   Looks up a localized string similar to No description file found for this MIDI device!.
         /// </summary>
         internal static string ControlFileNotFound {
             get {
@@ -106,7 +106,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Konfiguracja klawiszy.
+        ///   Looks up a localized string similar to Control bindings:.
         /// </summary>
         internal static string gbBindings {
             get {
@@ -124,7 +124,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Urządzenie MIDI:.
+        ///   Looks up a localized string similar to MIDI device:.
         /// </summary>
         internal static string lbDevice {
             get {
@@ -142,7 +142,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Błąd urządzenia MIDI!.
+        ///   Looks up a localized string similar to MIDI device error!.
         /// </summary>
         internal static string MidiError {
             get {
@@ -151,7 +151,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nie znaleziono urządzeń MIDI!.
+        ///   Looks up a localized string similar to No MIDI devices found!.
         /// </summary>
         internal static string NoMidiMessage {
             get {
@@ -169,7 +169,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}.
+        ///   Looks up a localized string similar to Error occured when handling control {0}: {1}.
         /// </summary>
         internal static string ScriptErrorMessage {
             get {
