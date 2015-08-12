@@ -44,11 +44,6 @@ namespace Ktos.DjToKey.Plugins.Contracts
         string Name { get; }
 
         /// <summary>
-        /// The plugin description which will be shown in about box
-        /// </summary>
-        string Description { get; }
-
-        /// <summary>
         /// The plugin-defined type which will be registered in script engine under name <see cref="Name"/>
         /// </summary>
         Type Type { get; }
