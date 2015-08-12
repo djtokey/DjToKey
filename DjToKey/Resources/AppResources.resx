@@ -123,11 +123,26 @@
   <data name="AppName" xml:space="preserve">
     <value>DjToKey</value>
   </data>
+  <data name="btnSave" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
   <data name="ControlFileError" xml:space="preserve">
     <value>Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!</value>
   </data>
   <data name="ControlFileNotFound" xml:space="preserve">
     <value>Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!</value>
+  </data>
+  <data name="gbBindings" xml:space="preserve">
+    <value>Konfiguracja klawiszy</value>
+  </data>
+  <data name="lbAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="lbDevice" xml:space="preserve">
+    <value>Urządzenie MIDI:</value>
+  </data>
+  <data name="lbPlugins" xml:space="preserve">
+    <value>Plugins</value>
   </data>
   <data name="MidiError" xml:space="preserve">
     <value>Błąd urządzenia MIDI!</value>

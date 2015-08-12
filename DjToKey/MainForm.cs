@@ -62,6 +62,12 @@ namespace Ktos.DjToKey
         {
             InitializeComponent();
 
+            lbAbout.Text = Resources.AppResources.lbAbout;
+            lbDevice.Text = Resources.AppResources.lbDevice;
+            lbPlugins.Text = Resources.AppResources.lbPlugins;
+            gbBindings.Text = Resources.AppResources.gbBindings;
+            btnSave.Text = Resources.AppResources.btnSave;
+
             dev = new MidiDevice(Program.ScriptEngine);
             dev.ScriptErrorOccured += OnScriptError;
         }

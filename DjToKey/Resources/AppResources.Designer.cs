@@ -79,6 +79,15 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zapisz.
+        /// </summary>
+        internal static string btnSave {
+            get {
+                return ResourceManager.GetString("btnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!.
         /// </summary>
         internal static string ControlFileError {
@@ -93,6 +102,42 @@ namespace Ktos.DjToKey.Resources {
         internal static string ControlFileNotFound {
             get {
                 return ResourceManager.GetString("ControlFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Konfiguracja klawiszy.
+        /// </summary>
+        internal static string gbBindings {
+            get {
+                return ResourceManager.GetString("gbBindings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string lbAbout {
+            get {
+                return ResourceManager.GetString("lbAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Urządzenie MIDI:.
+        /// </summary>
+        internal static string lbDevice {
+            get {
+                return ResourceManager.GetString("lbDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        internal static string lbPlugins {
+            get {
+                return ResourceManager.GetString("lbPlugins", resourceCulture);
             }
         }
         
