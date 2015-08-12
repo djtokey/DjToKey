@@ -37,12 +37,7 @@ using System.Text;
 namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
-    {
-        /// <summary>
-        /// Application name
-        /// </summary>
-        private const string APPNAME = "DjToKey";
-
+    {        
         private MidiDevice dev;
 
         /// <summary>
@@ -67,6 +62,12 @@ namespace Ktos.DjToKey
         {
             InitializeComponent();
 
+            lbAbout.Text = Resources.AppResources.lbAbout;
+            lbDevice.Text = Resources.AppResources.lbDevice;
+            lbPlugins.Text = Resources.AppResources.lbPlugins;
+            gbBindings.Text = Resources.AppResources.gbBindings;
+            btnSave.Text = Resources.AppResources.btnSave;
+
             dev = new MidiDevice(Program.ScriptEngine);
             dev.ScriptErrorOccured += OnScriptError;
         }
@@ -78,7 +79,7 @@ namespace Ktos.DjToKey
         /// <param name="e"></param>
         private void OnScriptError(object sender, ScriptErrorEventArgs e)
         {
-            string err = string.Format("Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}", e.Control, e.Message);
+            string err = string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message);
             if ((lastControlError != e.Control) || (DateTime.Now - lastErrorTime > TimeSpan.FromSeconds(ERRORTIME)))
             {
                 lastErrorTime = DateTime.Now;
@@ -99,7 +100,7 @@ namespace Ktos.DjToKey
             // if there are some - set first of them as active
             if (dev.AvailableDevices.Count == 0)
             {
-                MessageBox.Show("Nie znaleziono urządzeń MIDI!");
+                MessageBox.Show(Resources.AppResources.NoMidiMessage);
                 btnSave.Enabled = false;
             }
             else
@@ -112,21 +113,21 @@ namespace Ktos.DjToKey
             try
             {
                 dev.Load(cbMidiDevices.SelectedText);
-                trayIcon.Text = APPNAME + " - " + dev.Name;
+                trayIcon.Text = Resources.AppResources.AppName + " - " + dev.Name;
                 this.Text = trayIcon.Text;
                 createEditor();
             }
             catch (JsonReaderException)
             {
-                MessageBox.Show("Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.ControlFileError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.ControlFileNotFound, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Midi.DeviceException)
             {
-                MessageBox.Show("Błąd urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -240,15 +241,15 @@ namespace Ktos.DjToKey
             var version = Build.GitVersion.SemVer;
 #endif
 
-            var mess = String.Format("{0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/", APPNAME, version);
+            var mess = String.Format(Resources.AppResources.About, Resources.AppResources.AppName, version);
 
-            MessageBox.Show(mess, APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Plugins loaded: ");
+            sb.AppendLine(Resources.AppResources.PluginsMessage);
             
             foreach (var p in Program.ScriptEngine.Plugins)
             {
