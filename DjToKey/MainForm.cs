@@ -100,7 +100,7 @@ namespace Ktos.DjToKey
 
             // if there is none, show message
             // if there are some - set first of them as active
-            if (dev.AvailableDevices.Count == 0)
+            if (dev.AvailableDevices.Count() == 0)
             {
                 MessageBox.Show(Resources.AppResources.NoMidiMessage);
                 btnSave.Enabled = false;
@@ -114,7 +114,7 @@ namespace Ktos.DjToKey
             try
             {
                 dev.Load(cbMidiDevices.SelectedText);
-                trayIcon.Text = Resources.AppResources.AppName + " - " + dev.Name;
+                trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
                 this.Text = trayIcon.Text;
                 createEditor();
             }

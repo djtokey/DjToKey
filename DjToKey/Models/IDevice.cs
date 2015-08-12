@@ -29,47 +29,42 @@
 
 #endregion Licence
 
+using System;
+using System.Collections.Generic;
+
 namespace Ktos.DjToKey.Models
 {
-    /// <summary>
-    /// Available types of controls
-    /// </summary>
-    public enum ControlType
+    public interface IDevice
     {
         /// <summary>
-        /// Analog control (values from 0 to 127)
+        /// A list of names of available input devices
         /// </summary>
-        Analog,
+        IEnumerable<string> AvailableDevices { get; }
 
         /// <summary>
-        /// Digital control (values in [0;127] or [1;127])
+        /// The name of a selected device
         /// </summary>
-        Digital,
+        string ActiveDevice { get; }
 
         /// <summary>
-        /// Button control
+        /// List of scripts bound to controls
         /// </summary>
-        Button
-    }
-
-    /// <summary>
-    /// A control which can cause events in application
-    /// </summary>
-    public class MidiControl : IControl
-    {
-        /// <summary>
-        /// Internal Control ID, usually numerical
-        /// </summary>
-        public string ControlId { get; set; }
+        IList<ControlBinding> Bindings { get; set; }
 
         /// <summary>
-        /// Control name visible for user for fast identification
+        /// List of possible controls in connected MIDI device
         /// </summary>
-        public string ControlName { get; set; }
+        IEnumerable<MidiControl> Controls { get; }
 
         /// <summary>
-        /// Type of this particular control
+        /// A script engine which will be used when executing scripts
         /// </summary>
-        public ControlType Type { get; set; }
+        ScriptEngine ScriptEngine { get; set; }
+
+        /// <summary>
+        /// An event invoked when script error occured when handling
+        /// control
+        /// </summary>
+        EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
     }
 }

@@ -37,17 +37,17 @@ using System.Linq;
 
 namespace Ktos.DjToKey.Models
 {
-    public class MidiDevice
+    public class MidiDevice : IDevice
     {
         /// <summary>
         /// A list of names of available input devices
         /// </summary>
-        public List<string> AvailableDevices { get; private set; }
+        public IEnumerable<string> AvailableDevices { get; private set; }
 
         /// <summary>
         /// The name of a selected device
         /// </summary>
-        public string Name { get; private set; }
+        public string ActiveDevice { get; private set; }
 
         /// <summary>
         /// Instance of MIDI input device
@@ -73,7 +73,7 @@ namespace Ktos.DjToKey.Models
         /// An event invoked when script error occured when handling
         /// control
         /// </summary>
-        public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured;
+        public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
         /// <summary>
         /// A constructor, intializing script engine and setting list of
@@ -86,7 +86,7 @@ namespace Ktos.DjToKey.Models
             AvailableDevices = new List<string>();
             foreach (var d in InputDevice.InstalledDevices)
             {
-                AvailableDevices.Add(d.Name);
+                ((List<string>)AvailableDevices).Add(d.Name);
             }
         }
 

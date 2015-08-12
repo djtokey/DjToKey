@@ -61,6 +61,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
       <HintPath>..\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +71,9 @@
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Models\ControlBinding.cs" />
+    <Compile Include="Models\DevicePackage.cs" />
+    <Compile Include="Models\IControl.cs" />
+    <Compile Include="Models\IDevice.cs" />
     <Compile Include="Models\MidiDevice.cs" />
     <Compile Include="Plugins\Importer.cs" />
     <Compile Include="MainForm.cs">

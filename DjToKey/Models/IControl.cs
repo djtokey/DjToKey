@@ -31,45 +31,11 @@
 
 namespace Ktos.DjToKey.Models
 {
-    /// <summary>
-    /// Available types of controls
-    /// </summary>
-    public enum ControlType
+    public interface IControl
     {
-        /// <summary>
-        /// Analog control (values from 0 to 127)
-        /// </summary>
-        Analog,
-
-        /// <summary>
-        /// Digital control (values in [0;127] or [1;127])
-        /// </summary>
-        Digital,
-
-        /// <summary>
-        /// Button control
-        /// </summary>
-        Button
-    }
-
-    /// <summary>
-    /// A control which can cause events in application
-    /// </summary>
-    public class MidiControl : IControl
-    {
-        /// <summary>
-        /// Internal Control ID, usually numerical
-        /// </summary>
-        public string ControlId { get; set; }
-
         /// <summary>
         /// Control name visible for user for fast identification
         /// </summary>
-        public string ControlName { get; set; }
-
-        /// <summary>
-        /// Type of this particular control
-        /// </summary>
-        public ControlType Type { get; set; }
+        string ControlName { get; set; }
     }
 }
