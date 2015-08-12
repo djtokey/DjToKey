@@ -35,6 +35,9 @@ namespace Ktos.DjToKey
 {
     static class Program
     {
+        /// <summary>
+        /// A script engine used in application
+        /// </summary>
         public static ScriptEngine ScriptEngine;
 
         /// <summary>

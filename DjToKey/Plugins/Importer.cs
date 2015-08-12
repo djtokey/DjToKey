@@ -33,7 +33,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using System.Reflection;
 using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
@@ -46,9 +45,16 @@ namespace Ktos.DjToKey.Plugins
     /// </summary>
     class PluginImporter
     {
+        /// <summary>
+        /// List of objects from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptObject"/>
+        /// </summary>
         [ImportMany(typeof(IScriptObject))]
         private IEnumerable<IScriptObject> pluginsObjects;
 
+        /// <summary>
+        /// List of objects from plugins to be included into script engine when loading
+        /// </summary>
         public IEnumerable<IScriptObject> Objects
         {
             get
@@ -57,9 +63,16 @@ namespace Ktos.DjToKey.Plugins
             }
         }
 
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptType"/>
+        /// </summary>
         [ImportMany(typeof(IScriptType))]
         private IEnumerable<IScriptType> pluginsTypes;
 
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading
+        /// </summary>
         public IEnumerable<IScriptType> Types
         {
             get
@@ -68,8 +81,14 @@ namespace Ktos.DjToKey.Plugins
             }
         }
 
+        /// <summary>
+        /// List of metadata for loaded plugins
+        /// </summary>
         private List<Metadata> loadedPlugins;
 
+        /// <summary>
+        /// List of metadata for loaded plugins
+        /// </summary>
         public IEnumerable<Metadata> Plugins
         {
             get
@@ -78,6 +97,9 @@ namespace Ktos.DjToKey.Plugins
             }
         }
 
+        /// <summary>
+        /// Performs loading all plugins, importing them by MEF and loading their metadata
+        /// </summary>
         public void Import()
         {            
             var catalog = new AggregateCatalog();
@@ -95,6 +117,7 @@ namespace Ktos.DjToKey.Plugins
 
                 foreach (var f in dirc.LoadedFiles)
                 {
+                    // loads assembly again, only for reflection information, to get their metadata
                     var ass = Assembly.ReflectionOnlyLoadFrom(f);
                     loadedPlugins.Add(ass.GetMetadata());
                 }
