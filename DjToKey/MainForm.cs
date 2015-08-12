@@ -1,4 +1,5 @@
 ﻿#region Licence
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,21 +24,22 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
-using System;
-using System.Windows.Forms;
+#endregion Licence
+
 using Ktos.DjToKey.Models;
-using System.IO;
 using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
-    {        
+    {
         private MidiDevice dev;
 
         /// <summary>
@@ -84,7 +86,6 @@ namespace Ktos.DjToKey
             {
                 lastErrorTime = DateTime.Now;
                 lastControlError = e.Control;
-
             }
         }
 
@@ -105,7 +106,6 @@ namespace Ktos.DjToKey
             }
             else
                 cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
-
         }
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
@@ -129,7 +129,6 @@ namespace Ktos.DjToKey
             {
                 MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Ktos.DjToKey
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(Resources.AppResources.PluginsMessage);
-            
+
             foreach (var p in Program.ScriptEngine.Plugins)
             {
                 sb.Append('\t');
@@ -259,7 +258,6 @@ namespace Ktos.DjToKey
             }
 
             MessageBox.Show(sb.ToString());
-            
         }
     }
 }
