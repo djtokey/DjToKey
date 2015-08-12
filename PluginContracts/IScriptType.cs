@@ -28,56 +28,29 @@
 #endregion
 
 
-using Ktos.DjToKey.Plugins.Contracts;
-using System.ComponentModel.Composition;
+using System;
 
-namespace TestPlugin
+namespace Ktos.DjToKey.Plugins.Contracts
 {
     /// <summary>
-    /// A very basic sample of a plugin - when in plugins directory for a DjToKey,
-    /// it automatically registers object called "TestPlugin" with a "DoWork" method
-    /// returning "Hello, world!" message. 
+    /// An interface defining a plugin for DjToKey allowing to add a new global type
+    /// into a script engine
     /// </summary>
-    [Export(typeof(IScriptObject))]
-    public class TestPlugin : IScriptObject
+    public interface IScriptType
     {
-        public string Description
-        {
-            get
-            {
-                return "A test plugin";
-            }
-        }
+        /// <summary>
+        /// The plugin name under which will be registered in script engine
+        /// </summary>
+        string Name { get; }
 
-        public string Name
-        {
-            get
-            {
-                return "TestPlugin";
-            }
-        }
+        /// <summary>
+        /// The plugin description which will be shown in about box
+        /// </summary>
+        string Description { get; }
 
-        public object Object
-        {
-            get
-            {
-                return tpi;
-            }
-        }
-
-        private TestPluginImpl tpi;
-
-        public TestPlugin()
-        {
-            tpi = new TestPluginImpl();
-        }
-    }
-
-    public class TestPluginImpl
-    {
-        public string DoWork()
-        {
-            return "Hello, world!";
-        }
+        /// <summary>
+        /// The plugin-defined type which will be registered in script engine under name <see cref="Name"/>
+        /// </summary>
+        Type Type { get; }
     }
 }

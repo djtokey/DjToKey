@@ -69,15 +69,23 @@ namespace Ktos.DjToKey.Models
             // addind useful types
             eng.AddHostType("KeyCode", typeof(WindowsInput.Native.VirtualKeyCode));
 
-            // adding objects coming from additional plugins
+            // adding objects and types coming from additional plugins
             PluginImporter i = new PluginImporter();
             i.Import();
 
-            if (i.ScriptPlugins != null)
+            if (i.Objects != null)
             {
-                foreach (var p in i.ScriptPlugins)
+                foreach (var p in i.Objects)
                 {
                     eng.AddHostObject(p.Name, p.Object);
+                }
+            }
+
+            if (i.Types != null)
+            {
+                foreach (var p in i.Types)
+                {
+                    eng.AddHostType(p.Name, p.Type);                    
                 }
             }
         }

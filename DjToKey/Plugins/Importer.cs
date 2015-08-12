@@ -44,14 +44,25 @@ namespace Ktos.DjToKey.Plugins
     /// </summary>
     class PluginImporter
     {
-        [ImportMany(typeof(IScriptPlugin))]
-        private IEnumerable<IScriptPlugin> scriptPlugins;
+        [ImportMany(typeof(IScriptObject))]
+        private IEnumerable<IScriptObject> pluginsObjects;
 
-        public IEnumerable<IScriptPlugin> ScriptPlugins
+        public IEnumerable<IScriptObject> Objects
         {
             get
             {
-                return scriptPlugins;
+                return pluginsObjects;
+            }
+        }
+
+        [ImportMany(typeof(IScriptType))]
+        private IEnumerable<IScriptType> pluginsTypes;
+
+        public IEnumerable<IScriptType> Types
+        {
+            get
+            {
+                return pluginsTypes;
             }
         }
 
@@ -63,6 +74,7 @@ namespace Ktos.DjToKey.Plugins
             try
             {                
                 catalog.Catalogs.Add(new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins"));
+                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
                 
                 CompositionContainer container = new CompositionContainer(catalog);                
                 container.ComposeParts(this);

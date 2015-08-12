@@ -34,7 +34,7 @@ namespace Ktos.DjToKey.Plugins.Contracts
     /// An interface defining a basic plugin for DjToKey allowing to add a new global object
     /// into a script engine
     /// </summary>
-    public interface IScriptPlugin
+    public interface IScriptObject
     {
         /// <summary>
         /// The plugin name under which will be registered in script engine
