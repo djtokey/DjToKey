@@ -27,6 +27,7 @@
  */
 #endregion
 
+using Ktos.DjToKey.Extensions;
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
 using Microsoft.ClearScript.V8;
@@ -37,7 +38,7 @@ namespace Ktos.DjToKey.Models
 {
     public class ScriptEngine
     {
-        public IEnumerable<string> Plugins { get; private set; }
+        public IEnumerable<Metadata> Plugins { get; private set; }
 
         /// <summary>
         /// Instance of script engine
@@ -76,14 +77,13 @@ namespace Ktos.DjToKey.Models
             PluginImporter i = new PluginImporter();
             i.Import();
 
-            var pl = new List<string>();
+            this.Plugins = i.Plugins;
 
             if (i.Objects != null)
             {
                 foreach (var p in i.Objects)
                 {
-                    eng.AddHostObject(p.Name, p.Object);
-                    pl.Add(p.Description);
+                    eng.AddHostObject(p.Name, p.Object);                    
                 }
             }
 
@@ -91,12 +91,9 @@ namespace Ktos.DjToKey.Models
             {
                 foreach (var p in i.Types)
                 {
-                    eng.AddHostType(p.Name, p.Type);
-                    pl.Add(p.Description);
+                    eng.AddHostType(p.Name, p.Type);                    
                 }
-            }
-
-            Plugins = pl;
+            }            
         }
 
         /// <summary>

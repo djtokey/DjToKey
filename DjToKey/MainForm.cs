@@ -254,7 +254,8 @@ namespace Ktos.DjToKey
             foreach (var p in Program.ScriptEngine.Plugins)
             {
                 sb.Append('\t');
-                sb.AppendLine(p);
+                sb.AppendFormat("{0} {1} - {2}. {3}", p.Title, p.Version, p.Description, p.Copyright);
+                sb.AppendLine();
             }
 
             MessageBox.Show(sb.ToString());

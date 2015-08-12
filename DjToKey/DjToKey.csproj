@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Models\MidiDevice.cs" />
     <Compile Include="Plugins\Importer.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Helpers\ScriptsHelper.cs" />
     <Compile Include="Models\Script.cs" />
     <Compile Include="Models\MidiControl.cs" />
+    <Compile Include="Plugins\Metadata.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\AppResources.pl-PL.Designer.cs">
       <DependentUpon>AppResources.pl-PL.resx</DependentUpon>

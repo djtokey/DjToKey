@@ -27,12 +27,14 @@
  */
 #endregion
 
+using Ktos.DjToKey.Extensions;
 using Ktos.DjToKey.Plugins.Contracts;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
+using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
 {
@@ -66,18 +68,36 @@ namespace Ktos.DjToKey.Plugins
             }
         }
 
+        private List<Metadata> loadedPlugins;
+
+        public IEnumerable<Metadata> Plugins
+        {
+            get
+            {
+                return loadedPlugins;
+            }
+        }
+
         public void Import()
         {            
             var catalog = new AggregateCatalog();
 
             // adds all the parts found in all assemblies in \plugins subdirectory
             try
-            {                
-                catalog.Catalogs.Add(new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins"));
-                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-                
+            {
+                loadedPlugins = new List<Metadata>();
+                var dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
+                catalog.Catalogs.Add(dirc);
+                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));                
+
                 CompositionContainer container = new CompositionContainer(catalog);                
                 container.ComposeParts(this);
+
+                foreach (var f in dirc.LoadedFiles)
+                {
+                    var ass = Assembly.ReflectionOnlyLoadFrom(f);
+                    loadedPlugins.Add(ass.GetMetadata());
+                }
             }
             catch (DirectoryNotFoundException)
             {
