@@ -27,10 +27,10 @@
  */
 #endregion
 
-using Ktos.DjToKey.Extensions;
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
 using Microsoft.ClearScript.V8;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -100,13 +100,13 @@ namespace Ktos.DjToKey.Models
         /// Executes script giving it also values of Control event which caused it and
         /// its value.
         /// </summary>
-        /// <param name="val">Value in numerical form</param>
-        /// <param name="ctrl">Object of MidiControl with name and type of control which caused event</param>
-        /// <param name="eng">Instance of script engine</param>
-        public void Execute(Script s, int val, MidiControl ctrl)
+        /// <param name="s">Script to be executed</param>
+        /// <param name="value">Value of an handled event</param>
+        /// <param name="ctrl">Object representing control which caused event</param>        
+        public void Execute(Script s, object value, object ctrl)
         {
             eng.AddHostObject("Control", ctrl);
-            eng.AddHostObject("Value", new { Raw = val, Transformed = (val == 127) ? 1 : -1 });
+            eng.AddHostObject("Value", value);
 
             string script = s.Text;
 
@@ -115,5 +115,14 @@ namespace Ktos.DjToKey.Models
 
             eng.Execute(script);
         }        
+    }
+
+    /// <summary>
+    /// Carries messages about script errors
+    /// </summary>
+    public class ScriptErrorEventArgs : EventArgs
+    {
+        public string Control { get; set; }
+        public string Message { get; set; }
     }
 }

@@ -157,7 +157,7 @@ namespace Ktos.DjToKey.Models
             {
                 try
                 {
-                    this.ScriptEngine.Execute(s, value, Controls.Find(x => x.ControlId == control.ToString()));
+                    this.ScriptEngine.Execute(s, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, Controls.Find(x => x.ControlId == control.ToString()));
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {
@@ -205,14 +205,4 @@ namespace Ktos.DjToKey.Models
         }
 
     }
-
-    /// <summary>
-    /// Carries messages about script errors
-    /// </summary>
-    public class ScriptErrorEventArgs : EventArgs
-    {
-        public string Control { get; set; }
-        public string Message { get; set; }
-    }
-
 }
