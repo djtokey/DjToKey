@@ -1,4 +1,5 @@
 ﻿#region Licence
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,9 +24,10 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
+
+#endregion Licence
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
@@ -44,17 +46,6 @@ namespace Ktos.DjToKey.Models
         /// Instance of script engine
         /// </summary>
         private V8ScriptEngine eng;
-
-        /// <summary>
-        /// An instance of a script engine
-        /// </summary>
-        public V8ScriptEngine Engine
-        {
-            get
-            {
-                return eng;
-            }
-        }
 
         /// <summary>
         /// Configures script engine, adding static, useful object,
@@ -83,7 +74,7 @@ namespace Ktos.DjToKey.Models
             {
                 foreach (var p in i.Objects)
                 {
-                    eng.AddHostObject(p.Name, p.Object);                    
+                    eng.AddHostObject(p.Name, p.Object);
                 }
             }
 
@@ -91,9 +82,9 @@ namespace Ktos.DjToKey.Models
             {
                 foreach (var p in i.Types)
                 {
-                    eng.AddHostType(p.Name, p.Type);                    
+                    eng.AddHostType(p.Name, p.Type);
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -102,7 +93,7 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         /// <param name="s">Script to be executed</param>
         /// <param name="value">Value of an handled event</param>
-        /// <param name="ctrl">Object representing control which caused event</param>        
+        /// <param name="ctrl">Object representing control which caused event</param>
         public void Execute(Script s, object value, object ctrl)
         {
             eng.AddHostObject("Control", ctrl);
@@ -114,7 +105,7 @@ namespace Ktos.DjToKey.Models
                 script = File.ReadAllText(s.Path);
 
             eng.Execute(script);
-        }        
+        }
     }
 
     /// <summary>

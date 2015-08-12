@@ -57,12 +57,12 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// List of scripts bound to controls
         /// </summary>
-        public Dictionary<string, Script> Bindings { get; private set; }
+        public IList<ControlBinding> Bindings { get; set; }
 
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public List<MidiControl> Controls { get; private set; }
+        public IEnumerable<MidiControl> Controls { get; private set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
@@ -100,8 +100,7 @@ namespace Ktos.DjToKey.Models
             if (newDevice != dev)
                 dev = newDevice;
 
-            loadControls();
-            loadBindings();
+            loadControls();            
 
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
@@ -116,24 +115,7 @@ namespace Ktos.DjToKey.Models
         private void loadControls()
         {
             string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            Controls = JsonConvert.DeserializeObject<List<MidiControl>>(File.ReadAllText(f));
-        }
-
-        /// <summary>
-        /// Loads bindings for device from file
-        /// </summary>
-        private void loadBindings()
-        {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-
-            try
-            {
-                Bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText(f));
-            }
-            catch (FileNotFoundException)
-            {
-                Bindings = new Dictionary<string, Script>();
-            }
+            Controls = JsonConvert.DeserializeObject<IEnumerable<MidiControl>>(File.ReadAllText(f));
         }
 
         /// <summary>
@@ -152,12 +134,13 @@ namespace Ktos.DjToKey.Models
         /// <param name="value">Value sent from MIDI device</param>
         private void handleControl(string control, int value)
         {
-            Script s;
-            if (Bindings.TryGetValue(control, out s))
+            var binding = Bindings.Where(x => x.Control.ControlId == control).FirstOrDefault();
+
+            if (binding != null)
             {
                 try
                 {
-                    this.ScriptEngine.Execute(s, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, Controls.Find(x => x.ControlId == control.ToString()));
+                    ScriptEngine.Execute(binding.Script, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, Controls.Where(x => x.ControlId == control.ToString()).First());
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {

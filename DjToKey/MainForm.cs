@@ -33,6 +33,7 @@ using Ktos.DjToKey.Models;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -145,13 +146,16 @@ namespace Ktos.DjToKey
 
                 Script s;
                 string v = "";
-                if (dev.Bindings.TryGetValue(c.ControlId, out s))
+
+                var b = dev.Bindings.Where(x => x.Control.ControlId == c.ControlId).FirstOrDefault();
+
+                if (b != null)
                 {
-                    if (s.Text != null)
-                        v = s.Text;
+                    if (b.Script.Text != null)
+                        v = b.Script.Text;
                     else
-                        v = @"file://" + s.Path;
-                }
+                        v = @"file://" + b.Script.Path;
+                }                
 
                 tlpBindings.Controls.Add(new TextBox()
                 {
@@ -181,26 +185,30 @@ namespace Ktos.DjToKey
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    if (dev.Bindings.ContainsKey(cc.Tag.ToString()))
+
+                    var b = dev.Bindings.Where(x => x.Control.ControlId == cc.Tag.ToString()).FirstOrDefault();
+
+                    if (b != null)
                     {
                         if (cc.Text.StartsWith("file://"))
                         {
-                            dev.Bindings[cc.Tag.ToString()].Path = cc.Text.Remove(0, "file://".Length);
-                            dev.Bindings[cc.Tag.ToString()].Text = null;
+                            b.Script.Path = cc.Text.Remove(0, "file://".Length);
+                            b.Script.Text = null;
                         }
                         else
                         {
-                            dev.Bindings[cc.Tag.ToString()].Text = cc.Text;
-                            dev.Bindings[cc.Tag.ToString()].Path = null;
+                            b.Script.Text = cc.Text;
+                            b.Script.Path = null;
                         }
                     }
                     else
                     {
                         if (cc.Text.StartsWith("file://"))
-                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Path = cc.Text.Remove(0, "file://".Length) });
+                            dev.Bindings.Add(new ControlBinding() { Control = dev.Controls.Where(x => x.ControlId == cc.Tag.ToString()).First(), Script = new Script() { Text = null, Path = cc.Text.Remove(0, "file://".Length) } });
                         else
-                            dev.Bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
+                            dev.Bindings.Add(new ControlBinding() { Control = dev.Controls.Where(x => x.ControlId == cc.Tag.ToString()).First(), Script = new Script() { Text = cc.Text, Path = null } });
                     }
+
                 }
             }
 
