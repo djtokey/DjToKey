@@ -70,8 +70,8 @@
   <ItemGroup>
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
+    <Compile Include="Mock\MockMidiDevice.cs" />
     <Compile Include="Models\ControlBinding.cs" />
-    <Compile Include="Models\DevicePackage.cs" />
     <Compile Include="Models\IControl.cs" />
     <Compile Include="Models\IDevice.cs" />
     <Compile Include="Models\MidiDevice.cs" />
@@ -107,6 +107,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Devices\TEST.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\AssemblyInfo.template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ValidFileName.cs" />

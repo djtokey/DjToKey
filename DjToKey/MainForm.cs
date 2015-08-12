@@ -32,6 +32,7 @@
 using Ktos.DjToKey.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,7 @@ namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
-        private MidiDevice dev;
+        private MockMidiDevice dev;
 
         /// <summary>
         /// Time to ignore errors for the same control
@@ -71,7 +72,8 @@ namespace Ktos.DjToKey
             gbBindings.Text = Resources.AppResources.gbBindings;
             btnSave.Text = Resources.AppResources.btnSave;
 
-            dev = new MidiDevice(Program.ScriptEngine);
+            dev = new MockMidiDevice();
+            dev.ScriptEngine = Program.ScriptEngine;
             dev.ScriptErrorOccured += OnScriptError;
         }
 
@@ -88,6 +90,7 @@ namespace Ktos.DjToKey
                 lastErrorTime = DateTime.Now;
                 lastControlError = e.Control;
             }
+            MessageBox.Show(err);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -113,7 +116,7 @@ namespace Ktos.DjToKey
         {
             try
             {
-                dev.Load(cbMidiDevices.SelectedText);
+                dev.Load(cbMidiDevices.SelectedItem.ToString());
                 trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
                 this.Text = trayIcon.Text;
                 createEditor();
@@ -179,13 +182,13 @@ namespace Ktos.DjToKey
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {
+        {            
             foreach (var c in tlpBindings.Controls)
             {
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-
+                    
                     var b = dev.Bindings.Where(x => x.Control.ControlId == cc.Tag.ToString()).FirstOrDefault();
 
                     if (b != null)

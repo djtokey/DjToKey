@@ -66,5 +66,9 @@ namespace Ktos.DjToKey.Models
         /// control
         /// </summary>
         EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
+
+        void Load(string deviceName);
+
+        void Unload();
     }
 }
