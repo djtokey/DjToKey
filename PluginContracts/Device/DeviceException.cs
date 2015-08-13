@@ -29,31 +29,28 @@
 
 #endregion License
 
-using Ktos.DjToKey.Scripts;
 using System;
-using System.Windows.Forms;
+using System.Runtime.Serialization;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Plugins.Device
 {
-    internal static class Program
+    [Serializable]
+    internal class DeviceException : Exception
     {
-        /// <summary>
-        /// A script engine used in application
-        /// </summary>
-        public static ScriptEngine ScriptEngine;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        public DeviceException()
         {
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure();
+        }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+        public DeviceException(string message) : base(message)
+        {
+        }
+
+        public DeviceException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected DeviceException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }

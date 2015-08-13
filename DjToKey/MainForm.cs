@@ -29,7 +29,6 @@
 
 #endregion License
 
-using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
@@ -130,7 +129,7 @@ namespace Ktos.DjToKey
             {
                 MessageBox.Show(Resources.AppResources.ControlFileNotFound, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Midi.DeviceException)
+            catch (DeviceException)
             {
                 MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

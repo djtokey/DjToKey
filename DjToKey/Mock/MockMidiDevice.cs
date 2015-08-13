@@ -39,7 +39,7 @@ using System.IO;
 using System.Linq;
 using System.Timers;
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey
 {
     public class MockMidiDevice : IDeviceHandler
     {

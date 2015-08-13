@@ -68,10 +68,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeviceException.cs" />
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Mock\MockMidiDevice.cs" />
-    <Compile Include="Models\MidiDevice.cs" />
+    <Compile Include="Midi\MidiDevice.cs" />
     <Compile Include="Plugins\Importer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -79,9 +80,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\GlobalDictionary.cs" />
-    <Compile Include="Models\ScriptEngine.cs" />
-    <Compile Include="Helpers\ScriptsHelper.cs" />
+    <Compile Include="Scripts\GlobalDictionary.cs" />
+    <Compile Include="Scripts\ScriptEngine.cs" />
+    <Compile Include="Scripts\ScriptsHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\AppResources.pl-PL.Designer.cs">
       <DependentUpon>AppResources.pl-PL.resx</DependentUpon>

@@ -31,7 +31,7 @@
 
 using System.Collections.Generic;
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Scripts
 {
     /// <summary>
     /// A global object accessible for all scripts on a page. It wraps

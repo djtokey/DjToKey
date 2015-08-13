@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Device\Control.cs" />
     <Compile Include="Device\ControlBinding.cs" />
+    <Compile Include="Device\DeviceException.cs" />
     <Compile Include="Device\IDeviceHandler.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
     <Compile Include="Scripts\IScriptObject.cs" />

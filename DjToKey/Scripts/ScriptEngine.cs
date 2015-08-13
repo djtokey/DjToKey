@@ -36,7 +36,7 @@ using Microsoft.ClearScript.V8;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Scripts
 {
     public class ScriptEngine : IScriptEngine
     {

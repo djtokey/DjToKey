@@ -39,7 +39,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.MidiDevice
 {
     public class MidiDevice : IDeviceHandler
     {
@@ -83,7 +83,7 @@ namespace Ktos.DjToKey.Models
         /// A constructor, intializing script engine and setting list of
         /// available input devices
         /// </summary>
-        public MidiDevice(ScriptEngine engine)
+        public MidiDevice(IScriptEngine engine)
         {
             this.ScriptEngine = engine;
 

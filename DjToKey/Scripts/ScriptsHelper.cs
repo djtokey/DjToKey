@@ -29,12 +29,11 @@
 
 #endregion License
 
-using Ktos.DjToKey.Models;
 using System.Diagnostics;
 using System.Windows.Forms;
 using WindowsInput;
 
-namespace Ktos.DjToKey.Helpers
+namespace Ktos.DjToKey.Scripts
 {
     /// <summary>
     /// Small static class which is a container for a few objects which
