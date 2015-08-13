@@ -29,15 +29,11 @@
 
 #endregion License
 
-using System.Collections.Generic;
-
 namespace Ktos.DjToKey.Plugins.Scripts
 {
     public interface IScriptEngine
     {
-        IEnumerable<Metadata> Plugins { get; }
-
-        void Configure();
+        void Configure(IScriptPlugins plugins);
 
         void Execute(Script s, object value, object ctrl);
     }

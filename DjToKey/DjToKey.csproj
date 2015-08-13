@@ -68,12 +68,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceException.cs" />
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
-    <Compile Include="Mock\MockMidiDevice.cs" />
+    <Compile Include="Mock\MockDevice.cs" />
     <Compile Include="Midi\MidiDevice.cs" />
-    <Compile Include="Plugins\Importer.cs" />
+    <Compile Include="Model\AllDevices.cs" />
+    <Compile Include="Plugins\DevicePlugins.cs" />
+    <Compile Include="Plugins\PluginImporter.cs" />
+    <Compile Include="Plugins\ScriptPlugins.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +175,7 @@
       <Name>PluginContracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>

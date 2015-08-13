@@ -47,6 +47,7 @@
     <Compile Include="Device\IDeviceHandler.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
     <Compile Include="Scripts\IScriptObject.cs" />
+    <Compile Include="Scripts\IScriptPlugins.cs" />
     <Compile Include="Scripts\IScriptType.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
