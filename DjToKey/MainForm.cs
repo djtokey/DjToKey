@@ -42,7 +42,7 @@ namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
-        private MockMidiDevice dev;
+        private MockDevice dev;
 
         /// <summary>
         /// Time to ignore errors for the same control
@@ -72,7 +72,7 @@ namespace Ktos.DjToKey
             gbBindings.Text = Resources.AppResources.gbBindings;
             btnSave.Text = Resources.AppResources.btnSave;
 
-            dev = new MockMidiDevice();
+            dev = new MockDevice();
             dev.ScriptEngine = Program.ScriptEngine;
             dev.ScriptErrorOccured += OnScriptError;
         }

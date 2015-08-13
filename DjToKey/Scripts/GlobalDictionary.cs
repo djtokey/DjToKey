@@ -35,6 +35,9 @@ using System.ComponentModel.Composition;
 
 namespace Ktos.DjToKey.Scripts
 {
+    /// <summary>
+    /// Class representing Global object available to scripts
+    /// </summary>
     [Export(typeof(IScriptObject))]
     public class Global : IScriptObject
     {

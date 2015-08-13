@@ -41,7 +41,7 @@ using System.Timers;
 
 namespace Ktos.DjToKey
 {
-    public class MockMidiDevice : IDeviceHandler
+    public class MockDevice : IDeviceHandler
     {
         /// <summary>
         /// A list of names of available input devices
@@ -80,7 +80,7 @@ namespace Ktos.DjToKey
         /// A constructor, intializing script engine and setting list of
         /// available input devices
         /// </summary>
-        public MockMidiDevice()
+        public MockDevice()
         {
             var l = new List<string>();
             l.Add("TEST");

@@ -30,14 +30,15 @@
 #endregion License
 
 using Ktos.DjToKey.Plugins.Scripts;
-using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.Windows.Forms;
-using WindowsInput;
 using System;
+using System.ComponentModel.Composition;
+using WindowsInput;
 
 namespace Ktos.DjToKey.Scripts
 {
+    /// <summary>
+    /// Class representing Keyboard object available for scripts
+    /// </summary>
     [Export(typeof(IScriptObject))]
     public class Keyboard : IScriptObject
     {
@@ -67,6 +68,9 @@ namespace Ktos.DjToKey.Scripts
         }
     }
 
+    /// <summary>
+    /// Class representing Mouse object available for scripts
+    /// </summary>
     [Export(typeof(IScriptObject))]
     public class Mouse : IScriptObject
     {
@@ -96,10 +100,14 @@ namespace Ktos.DjToKey.Scripts
         }
     }
 
+    /// <summary>
+    /// Class representing KeyCode type available for scripts
+    /// </summary>
     [Export(typeof(IScriptType))]
     public class KeyboardCodes : IScriptType
     {
         private const string name = "KeyCode";
+
         public string Name
         {
             get
@@ -116,6 +124,4 @@ namespace Ktos.DjToKey.Scripts
             }
         }
     }
-
-
 }

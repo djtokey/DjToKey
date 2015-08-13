@@ -35,6 +35,9 @@ using System.Windows.Forms;
 
 namespace Ktos.DjToKey.Scripts
 {
+    /// <summary>
+    /// Class representing Document object available for scripts
+    /// </summary>
     [Export(typeof(IScriptObject))]
     public class Document : IScriptObject
     {

@@ -35,6 +35,9 @@ using System.Diagnostics;
 
 namespace Ktos.DjToKey.Scripts
 {
+    /// <summary>
+    /// Class representing Console object available for scripts
+    /// </summary>
     [Export(typeof(IScriptObject))]
     public class Console : IScriptObject
     {

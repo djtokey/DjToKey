@@ -45,7 +45,7 @@ namespace Ktos.DjToKey.Plugins
     ///
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
-    internal class PluginImporter
+    internal class ScriptPluginImporter
     {
         /// <summary>
         /// List of objects from plugins to be included into script engine when loading.
@@ -106,7 +106,7 @@ namespace Ktos.DjToKey.Plugins
         {
             var catalog = new AggregateCatalog();
 
-            // adds all the parts found in all assemblies in \plugins subdirectory
+            // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
             try
             {
                 loadedPlugins = new List<Metadata>();
@@ -119,7 +119,7 @@ namespace Ktos.DjToKey.Plugins
 
                 foreach (var f in dirc.LoadedFiles)
                 {
-                    // loads assembly again, only for reflection information, to get their metadata
+                    // load plugin assemblies again, only for reflection information, to get their metadata
                     var ass = Assembly.ReflectionOnlyLoadFrom(f);
                     var metadata = ass.GetMetadata();
                     if (metadata != null)

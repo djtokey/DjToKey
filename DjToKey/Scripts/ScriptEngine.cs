@@ -29,7 +29,6 @@
 
 #endregion License
 
-using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Scripts;
 using Microsoft.ClearScript.V8;
@@ -52,11 +51,11 @@ namespace Ktos.DjToKey.Scripts
         /// debug objects, useful types and objects from additional plugins
         /// </summary>
         public void Configure()
-        {            
+        {
             eng = new V8ScriptEngine();
 
             // adding objects and types coming from additional plugins
-            PluginImporter i = new PluginImporter();
+            ScriptPluginImporter i = new ScriptPluginImporter();
             i.Import();
 
             this.Plugins = i.Plugins;
