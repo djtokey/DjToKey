@@ -6,6 +6,6 @@
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.CLSCompliant(false)]
 
-[assembly: System.Reflection.AssemblyVersion("${GfvSemVer}")]
+[assembly: System.Reflection.AssemblyVersion("${GfvAssemblySemVer}")]
 [assembly: System.Reflection.AssemblyFileVersion("${GfvAssemblySemVer}")]
 [assembly: System.Reflection.AssemblyInformationalVersion("${GfvFullSemVer}.${GfvBranchName}.${ShortSha}")]
