@@ -52,14 +52,8 @@ namespace Ktos.DjToKey.Scripts
         /// debug objects, useful types and objects from additional plugins
         /// </summary>
         public void Configure()
-        {
-            // adding set of static object which will be available for scripts
+        {            
             eng = new V8ScriptEngine();
-            eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
-            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);                            
-
-            // addind useful types
-            eng.AddHostType("KeyCode", typeof(WindowsInput.Native.VirtualKeyCode));
 
             // adding objects and types coming from additional plugins
             PluginImporter i = new PluginImporter();
