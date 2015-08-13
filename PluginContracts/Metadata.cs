@@ -29,40 +29,31 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
-using System.Windows.Forms;
-
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Plugins
 {
-    internal static class Program
+    /// <summary>
+    /// Class defining metadata for a plugin
+    /// </summary>
+    public class Metadata
     {
         /// <summary>
-        /// A script engine used in application
+        /// Plugin title
         /// </summary>
-        public static ScriptEngine ScriptEngine;
+        public string Title { get; set; }
 
         /// <summary>
-        /// A class used for importing all possible plugins
+        /// Plugin description
         /// </summary>
-        public static PluginImporter PluginImporter;
+        public string Description { get; set; }
 
         /// <summary>
-        /// The main entry point for the application.
+        /// Copyright information for a plugin
         /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            PluginImporter = new PluginImporter();
+        public string Copyright { get; set; }
 
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-        }
+        /// <summary>
+        /// Plugin version information
+        /// </summary>
+        public string Version { get; set; }
     }
 }

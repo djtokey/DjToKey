@@ -29,40 +29,49 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Plugins
 {
-    internal static class Program
+
+    internal class ScriptPlugins : IScriptPlugins
     {
         /// <summary>
-        /// A script engine used in application
+        /// List of objects from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptObject"/>
         /// </summary>
-        public static ScriptEngine ScriptEngine;
+        [ImportMany(typeof(IScriptObject))]
+        private IEnumerable<IScriptObject> pluginsObjects;
 
         /// <summary>
-        /// A class used for importing all possible plugins
+        /// List of objects from plugins to be included into script engine when loading
         /// </summary>
-        public static PluginImporter PluginImporter;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        public IEnumerable<IScriptObject> Objects
         {
-            PluginImporter = new PluginImporter();
+            get
+            {
+                return pluginsObjects;
+            }
+        }
 
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptType"/>
+        /// </summary>
+        [ImportMany(typeof(IScriptType))]
+        private IEnumerable<IScriptType> pluginsTypes;
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading
+        /// </summary>
+        public IEnumerable<IScriptType> Types
+        {
+            get
+            {
+                return pluginsTypes;
+            }
         }
     }
 }

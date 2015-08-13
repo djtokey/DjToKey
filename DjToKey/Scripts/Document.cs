@@ -29,40 +29,56 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
+using System.ComponentModel.Composition;
 using System.Windows.Forms;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Scripts
 {
-    internal static class Program
+    /// <summary>
+    /// Class representing Document object available for scripts
+    /// </summary>
+    [Export(typeof(IScriptObject))]
+    public class Document : IScriptObject
+    {
+        private const string name = "Document";
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+        }
+
+        public object Object
+        {
+            get
+            {
+                return dimpl;
+            }
+        }
+
+        private DocumentImpl dimpl;
+
+        public Document()
+        {
+            dimpl = new DocumentImpl();
+        }
+    }
+
+    /// <summary>
+    /// Document class has methods for showing messages
+    /// </summary>
+    public class DocumentImpl
     {
         /// <summary>
-        /// A script engine used in application
+        /// Named for a sake of consistency with browser implementations, Alert shows message box
         /// </summary>
-        public static ScriptEngine ScriptEngine;
-
-        /// <summary>
-        /// A class used for importing all possible plugins
-        /// </summary>
-        public static PluginImporter PluginImporter;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        /// <param name="message">A message to be shown</param>
+        public void Alert(string message)
         {
-            PluginImporter = new PluginImporter();
-
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            MessageBox.Show(message);
         }
     }
 }

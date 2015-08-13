@@ -29,40 +29,56 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
-using System.Windows.Forms;
+using System.ComponentModel.Composition;
 
-namespace Ktos.DjToKey
+namespace TestPlugin
 {
-    internal static class Program
+    /// <summary>
+    /// A very basic sample of a plugin - when in plugins directory for a DjToKey,
+    /// it automatically registers object called "TestPlugin" with a "DoWork" method
+    /// returning "Hello, world!" message.
+    /// </summary>
+    [Export(typeof(IScriptObject))]
+    public class TestPlugin : IScriptObject
     {
-        /// <summary>
-        /// A script engine used in application
-        /// </summary>
-        public static ScriptEngine ScriptEngine;
-
-        /// <summary>
-        /// A class used for importing all possible plugins
-        /// </summary>
-        public static PluginImporter PluginImporter;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        public string Description
         {
-            PluginImporter = new PluginImporter();
+            get
+            {
+                return "A test plugin";
+            }
+        }
 
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+        public string Name
+        {
+            get
+            {
+                return "TestPlugin";
+            }
+        }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+        public object Object
+        {
+            get
+            {
+                return tpi;
+            }
+        }
+
+        private TestPluginImpl tpi;
+
+        public TestPlugin()
+        {
+            tpi = new TestPluginImpl();
+        }
+    }
+
+    public class TestPluginImpl
+    {
+        public string DoWork()
+        {
+            return "Hello, world!";
         }
     }
 }

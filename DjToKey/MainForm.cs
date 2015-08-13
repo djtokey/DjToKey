@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,54 +24,32 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using Midi;
+#endregion License
+
+using Ktos.DjToKey.Model;
+using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
-using Ktos.DjToKey.Models;
+using System;
 using System.IO;
-using System.Reflection;
-using Microsoft.ClearScript.V8;
-using Microsoft.ClearScript;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
-        /// <summary>
-        /// Application name
-        /// </summary>
-        private const string APPNAME = "DjToKey";
+        private IDeviceHandler dev;
+        private AllDevices allDevices;
 
         /// <summary>
         /// Time to ignore errors for the same control
         /// </summary>
         private const int ERRORTIME = 10;
-
-        /// <summary>
-        /// List of possible controls in connected MIDI device
-        /// </summary>
-        private List<MidiControl> controls;
-
-        /// <summary>
-        /// List of scripts bound to controls
-        /// </summary>
-        private Dictionary<string, Script> bindings;
-
-        /// <summary>
-        /// Instance of MIDI input device
-        /// </summary>
-        private InputDevice dev;
-
-        /// <summary>
-        /// Instance of script engine
-        /// </summary>
-        private V8ScriptEngine eng;
 
         /// <summary>
         /// When last control error was shown
@@ -89,85 +68,75 @@ namespace Ktos.DjToKey
         {
             InitializeComponent();
 
-            configureEngine();
+            lbAbout.Text = Resources.AppResources.lbAbout;
+            lbDevice.Text = Resources.AppResources.lbDevice;
+            lbPlugins.Text = Resources.AppResources.lbPlugins;
+            gbBindings.Text = Resources.AppResources.gbBindings;
+            btnSave.Text = Resources.AppResources.btnSave;
         }
 
         /// <summary>
-        /// Configures script engine
+        /// Handles errors in script execution and shows proper messages for user
         /// </summary>
-        private void configureEngine()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnScriptError(object sender, ScriptErrorEventArgs e)
         {
-            // adding set of static object which will be available for scripts
-            eng = new V8ScriptEngine();
-            eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
-            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
-            eng.AddHostObject("Document", ScriptsHelper.Document);
-            eng.AddHostObject("Console", ScriptsHelper.Console);
-            eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
-
-            // addind useful types
-            eng.AddHostType("KeyCode", typeof (WindowsInput.Native.VirtualKeyCode));
+            string err = string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message);
+            if ((lastControlError != e.Control) || (DateTime.Now - lastErrorTime > TimeSpan.FromSeconds(ERRORTIME)))
+            {
+                lastErrorTime = DateTime.Now;
+                lastControlError = e.Control;
+            }
+            MessageBox.Show(err);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            allDevices = new AllDevices(Program.PluginImporter.DevicePlugins.DeviceHandlers);
+
             // load list of input devices into ComboBox
-            foreach (var item in InputDevice.InstalledDevices)
+            foreach (var item in allDevices.AvailableDevices)
             {
-                cbMidiDevices.Items.Add(item.Name);                
+                cbMidiDevices.Items.Add(item);
             }
 
             // if there is none, show message
             // if there are some - set first of them as active
-            if (InputDevice.InstalledDevices.Count == 0)
+            if (cbMidiDevices.Items.Count == 0)
             {
-                MessageBox.Show("Nie znaleziono urządzeń MIDI!");
+                MessageBox.Show(Resources.AppResources.NoMidiMessage);
                 btnSave.Enabled = false;
             }
             else
                 cbMidiDevices.SelectedIndex = cbMidiDevices.Items.Count - 1;
-
         }
 
         private void cbMidiDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (dev != null && InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex].Name == dev.Name)
-                return;
-
-            dev = InputDevice.InstalledDevices[cbMidiDevices.SelectedIndex];
-
             try
             {
-                loadControls();
-                loadBindings();
-                createEditor();
+                dev = allDevices.FindHandler(cbMidiDevices.SelectedItem.ToString());
+                dev.ScriptEngine = Program.ScriptEngine;
+                dev.ScriptErrorOccured += OnScriptError;
+                dev.Load(cbMidiDevices.SelectedItem.ToString());
 
-                dev.ControlChange += dev_ControlChange;
-                dev.NoteOn += dev_NoteOn;
-                if (!dev.IsOpen) dev.Open();
-                dev.StartReceiving(null);
+                trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
+                this.Text = trayIcon.Text;
+                createEditor();
             }
             catch (JsonReaderException)
             {
-                MessageBox.Show("Błąd podczas odczytu pliku definiującego kontrolki tego urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.ControlFileError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("Nie znaleziono pliku definiującego kontrolki tego urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.ControlFileNotFound, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (DeviceException)
             {
-                MessageBox.Show("Błąd urządzenia MIDI!", APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        /// <summary>
-        /// Handles pressing button on a device
-        /// </summary>
-        /// <param name="msg"></param>
-        private void dev_NoteOn(NoteOnMessage msg)
-        {
-            handleControl(((int)msg.Pitch).ToString(), msg.Velocity);
         }
 
         /// <summary>
@@ -175,17 +144,24 @@ namespace Ktos.DjToKey
         /// </summary>
         private void createEditor()
         {
-            foreach (var c in controls)
+            foreach (var c in dev.Controls)
             {
                 tlpBindings.Controls.Add(new Label()
                 {
                     Text = c.ControlName
                 }, 0, tlpBindings.RowCount - 1);
 
-                Script s;
                 string v = "";
-                if (bindings.TryGetValue(c.ControlId, out s))
-                    v = s.Text;
+
+                var b = dev.Bindings.Where(x => x.Control.ControlId == c.ControlId).FirstOrDefault();
+
+                if (b != null)
+                {
+                    if (b.Script.Text != null)
+                        v = b.Script.Text;
+                    else
+                        v = @"file://" + b.Script.Path;
+                }
 
                 tlpBindings.Controls.Add(new TextBox()
                 {
@@ -203,112 +179,45 @@ namespace Ktos.DjToKey
             tlpBindings.PerformLayout();
         }
 
-        /// <summary>
-        /// Loads control definitions from file
-        /// </summary>
-        private void loadControls()
-        {
-            trayIcon.Text = APPNAME + " - " + dev.Name;
-            this.Text = trayIcon.Text;
-
-            string f = ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            controls = JsonConvert.DeserializeObject<List<MidiControl>>(File.ReadAllText(f));            
-        }
-
-        /// <summary>
-        /// Loads bindings for device from file
-        /// </summary>
-        private void loadBindings()
-        {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-
-            try
-            {
-                bindings = JsonConvert.DeserializeObject<Dictionary<string, Script>>(File.ReadAllText(f));
-            }
-            catch (FileNotFoundException)
-            {
-                bindings = new Dictionary<string, Script>();
-            }
-        }
-
-        /// <summary>
-        /// Handles ControlChange messages
-        /// </summary>
-        /// <param name="msg"></param>
-        void dev_ControlChange(ControlChangeMessage msg)
-        {
-            handleControl(msg.Control.ToString(), msg.Value);
-        }
-
-        /// <summary>
-        /// Handles MIDI message for buttons or controls
-        /// </summary>
-        /// <param name="control">Control ID for searching a script bound to it</param>
-        /// <param name="value">Value sent from MIDI device</param>
-        private void handleControl(string control, int value)
-        {
-            Script s;
-            if (bindings.TryGetValue(control, out s))
-            {
-                try
-                {
-                    s.Execute(value, controls.Find(x => x.ControlId == control.ToString()), eng);
-                }
-                catch (ScriptEngineException e)
-                {
-                    string err = string.Format("Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}", control, e.Message);
-                    if ((lastControlError != control) || (DateTime.Now - lastErrorTime > TimeSpan.FromSeconds(ERRORTIME)))
-                    {
-                        lastErrorTime = DateTime.Now;
-                        lastControlError = control;
-                        MessageBox.Show(err);
-                    }                                       
-                }
-            }
-        }
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (dev != null)
-            {
-                try
-                {
-                    dev.StopReceiving();
-                    if (dev.IsOpen) dev.Close();
-                }
-                catch (Midi.DeviceException)
-                {
-                    // device was removed while application was running or cannot be closed
-                    // we cannot do much about it, so we are just closing
-                }
-            }
+            dev.Unload();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {
-            saveBindings();
-        }
-
-        /// <summary>
-        /// Saves bindings to file
-        /// </summary>
-        private void saveBindings()
         {
             foreach (var c in tlpBindings.Controls)
             {
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    if (bindings.ContainsKey(cc.Tag.ToString()))
-                        bindings[cc.Tag.ToString()].Text = cc.Text;
+
+                    var b = dev.Bindings.Where(x => x.Control.ControlId == cc.Tag.ToString()).FirstOrDefault();
+
+                    if (b != null)
+                    {
+                        if (cc.Text.StartsWith("file://"))
+                        {
+                            b.Script.Path = cc.Text.Remove(0, "file://".Length);
+                            b.Script.Text = null;
+                        }
+                        else
+                        {
+                            b.Script.Text = cc.Text;
+                            b.Script.Path = null;
+                        }
+                    }
                     else
-                        bindings.Add(cc.Tag.ToString(), new Script() { Text = cc.Text });
+                    {
+                        if (cc.Text.StartsWith("file://"))
+                            dev.Bindings.Add(new ControlBinding() { Control = dev.Controls.Where(x => x.ControlId == cc.Tag.ToString()).First(), Script = new Script() { Text = null, Path = cc.Text.Remove(0, "file://".Length) } });
+                        else
+                            dev.Bindings.Add(new ControlBinding() { Control = dev.Controls.Where(x => x.ControlId == cc.Tag.ToString()).First(), Script = new Script() { Text = cc.Text, Path = null } });
+                    }
                 }
             }
 
-            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            File.WriteAllText(f, JsonConvert.SerializeObject(bindings));
+            dev.SaveBindings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -316,7 +225,7 @@ namespace Ktos.DjToKey
             if (this.WindowState == FormWindowState.Minimized)
             {
                 trayIcon.Visible = true;
-                this.ShowInTaskbar = false;                
+                this.ShowInTaskbar = false;
             }
             else
             {
@@ -333,18 +242,35 @@ namespace Ktos.DjToKey
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.S)
-                saveBindings();
+                btnSave_Click(null, null);
         }
 
         private void linkLabel1_Click(object sender, EventArgs e)
         {
-            var version = Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof (AssemblyInformationalVersionAttribute), false)[0] as
-                AssemblyInformationalVersionAttribute;
+#if DEBUG
+            var version = Build.GitVersion.FullSemVer;
+#else
+            var version = Build.GitVersion.SemVer;
+#endif
 
-            var mess = String.Format("{0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/", APPNAME, version.InformationalVersion);
+            var mess = String.Format(Resources.AppResources.About, Resources.AppResources.AppName, version);
 
-            MessageBox.Show(mess, APPNAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Resources.AppResources.PluginsMessage);
+
+            foreach (var p in Program.PluginImporter.Plugins)
+            {
+                sb.Append('\t');
+                sb.AppendFormat("{0} {1} - {2}. {3}", p.Title, p.Version, p.Description, p.Copyright);
+                sb.AppendLine();
+            }
+
+            MessageBox.Show(sb.ToString());
         }
     }
 }

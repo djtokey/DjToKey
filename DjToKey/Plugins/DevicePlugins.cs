@@ -29,40 +29,34 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
-using System.Windows.Forms;
+using Ktos.DjToKey.Plugins.Device;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Plugins
 {
-    internal static class Program
+    /// <summary>
+    /// This class is responsible for finding and loading all plugins for devices from the their subdirectory
+    /// using MEF.
+    /// </summary>
+    public class DevicePlugins
     {
         /// <summary>
-        /// A script engine used in application
+        /// List of types from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IDeviceHandler"/>
         /// </summary>
-        public static ScriptEngine ScriptEngine;
+        [ImportMany(typeof(IDeviceHandler))]
+        private IEnumerable<IDeviceHandler> deviceHandlers;
 
         /// <summary>
-        /// A class used for importing all possible plugins
+        /// List of types from plugins to be included into script engine when loading
         /// </summary>
-        public static PluginImporter PluginImporter;
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        private static void Main()
+        public IEnumerable<IDeviceHandler> DeviceHandlers
         {
-            PluginImporter = new PluginImporter();
-
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            get
+            {
+                return deviceHandlers;
+            }
         }
     }
 }

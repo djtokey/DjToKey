@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,58 +24,52 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
-using System.Collections.Generic;
+#endregion License
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Plugins.Device
 {
     /// <summary>
-    /// A global object accessible for all scripts on a page. It wraps
-    /// a typical Dictionary of string as a key and object as a value.
+    /// A control which can cause events in application
     /// </summary>
-    public class GlobalDictionary
+    public class Control
     {
-        private Dictionary<string, object> dict;
+        /// <summary>
+        /// Internal Control ID, usually numerical
+        /// </summary>
+        public string ControlId { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of GlobalDictionary
+        /// Control name visible for user for fast identification
         /// </summary>
-        public GlobalDictionary()
-        {
-            dict = new Dictionary<string, object>();
-        }
+        public string ControlName { get; set; }
 
         /// <summary>
-        /// Sets a value for a given key. If key does not exist, it is added.
+        /// Type of this particular control
         /// </summary>
-        /// <param name="key">A key</param>
-        /// <param name="value">Any value for this key</param>
-        public void Set(string key, object value)
-        {
-            if (dict.ContainsKey(key))
-                dict[key] = value;
-            else
-                dict.Add(key, value);
-        }
+        public ControlType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Available control types
+    /// </summary>
+    public enum ControlType
+    {
+        /// <summary>
+        /// Analog control (values from 0 to 127)
+        /// </summary>
+        Analog,
 
         /// <summary>
-        /// Gets a value for a given key
+        /// Digital control (values in [0;127] or [1;127])
         /// </summary>
-        /// <param name="key">A key to be retrieved value for</param>
-        /// <returns></returns>
-        public object Get(string key)
-        {
-            try
-            {
-                return dict[key];
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
-        }
+        Digital,
+
+        /// <summary>
+        /// Button control
+        /// </summary>
+        Button
     }
 }
