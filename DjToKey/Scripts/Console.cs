@@ -29,51 +29,53 @@
 
 #endregion License
 
+using Ktos.DjToKey.Plugins.Scripts;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Windows.Forms;
-using WindowsInput;
 
 namespace Ktos.DjToKey.Scripts
 {
-    /// <summary>
-    /// Small static class which is a container for a few objects which
-    /// will be useful in scripts
-    /// </summary>
-    public static class ScriptsHelper
+    [Export(typeof(IScriptObject))]
+    public class Console : IScriptObject
     {
-        /// <summary>
-        /// A Document class instance
-        /// </summary>
-        public static Document Document = new Document();
+        private const string name = "Console";
 
-        /// <summary>
-        /// Reference to a console class
-        /// </summary>
-        public static Console Console = new Console();
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+        }
 
-        /// <summary>
-        /// Instance of a InputSimulator class
-        /// </summary>
-        public static InputSimulator Simulator = new InputSimulator();
+        public object Object
+        {
+            get
+            {
+                return cimpl;
+            }
+        }
 
-        /// <summary>
-        /// A global dictionary usable by all scripts
-        /// </summary>
-        public static GlobalDictionary GlobalDictionary = new GlobalDictionary();
+        private ConsoleImpl cimpl;
+
+        public Console()
+        {
+            cimpl = new ConsoleImpl();
+        }
     }
 
     /// <summary>
-    /// Document class has methods for showing messages
+    /// Console class has methods for debugging purposes
     /// </summary>
-    public class Document
+    public class ConsoleImpl
     {
         /// <summary>
-        /// Named for a sake of consistency with browser implementations, Alert shows message box
+        /// The Log method shows message in a debug area
         /// </summary>
         /// <param name="message">A message to be shown</param>
-        public void Alert(string message)
+        public void Log(string message)
         {
-            MessageBox.Show(message);
+            Debug.WriteLine(message);
         }
-    }  
+    }
 }

@@ -57,8 +57,7 @@ namespace Ktos.DjToKey.Scripts
             eng = new V8ScriptEngine();
             eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
             eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);
-            eng.AddHostObject("Document", ScriptsHelper.Document);
-            eng.AddHostObject("Console", ScriptsHelper.Console);
+            eng.AddHostObject("Document", ScriptsHelper.Document);            
             eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
 
             // addind useful types
