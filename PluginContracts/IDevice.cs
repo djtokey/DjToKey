@@ -1,4 +1,5 @@
 ﻿#region Licence
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,25 +24,51 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
-namespace Ktos.DjToKey.Models
+#endregion Licence
+
+using System;
+using System.Collections.Generic;
+
+namespace Ktos.DjToKey.Plugins.Contracts
 {
-    /// <summary>
-    /// Class encapsulating Script to be run when event occured
-    /// </summary>
-    public class Script
+    public interface IDevice
     {
         /// <summary>
-        /// Source code of a script
+        /// A list of names of available input devices
         /// </summary>
-        public string Text { get; set; }
+        IEnumerable<string> AvailableDevices { get; }
 
         /// <summary>
-        /// Path to a script file
+        /// The name of a selected device
         /// </summary>
-        public string Path { get; set; }
+        string ActiveDevice { get; }
+
+        /// <summary>
+        /// List of scripts bound to controls
+        /// </summary>
+        IList<ControlBinding> Bindings { get; set; }
+
+        /// <summary>
+        /// List of possible controls in connected MIDI device
+        /// </summary>
+        IEnumerable<Control> Controls { get; }
+
+        /// <summary>
+        /// A script engine which will be used when executing scripts
+        /// </summary>
+        IScriptEngine ScriptEngine { get; set; }
+
+        /// <summary>
+        /// An event invoked when script error occured when handling
+        /// control
+        /// </summary>
+        EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
+
+        void Load(string deviceName);
+
+        void Unload();
     }
 }

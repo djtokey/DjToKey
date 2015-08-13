@@ -29,13 +29,47 @@
 
 #endregion Licence
 
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Plugins.Contracts
 {
-    public interface IControl
+    /// <summary>
+    /// A control which can cause events in application
+    /// </summary>
+    public class Control
     {
+        /// <summary>
+        /// Internal Control ID, usually numerical
+        /// </summary>
+        public string ControlId { get; set; }
+
         /// <summary>
         /// Control name visible for user for fast identification
         /// </summary>
-        string ControlName { get; set; }
+        public string ControlName { get; set; }
+
+        /// <summary>
+        /// Type of this particular control
+        /// </summary>
+        public ControlType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Available control types
+    /// </summary>
+    public enum ControlType
+    {
+        /// <summary>
+        /// Analog control (values from 0 to 127)
+        /// </summary>
+        Analog,
+
+        /// <summary>
+        /// Digital control (values in [0;127] or [1;127])
+        /// </summary>
+        Digital,
+
+        /// <summary>
+        /// Button control
+        /// </summary>
+        Button
     }
 }

@@ -31,6 +31,7 @@
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Plugins.Contracts;
 using Microsoft.ClearScript.V8;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ using System.IO;
 
 namespace Ktos.DjToKey.Models
 {
-    public class ScriptEngine
+    public class ScriptEngine : IScriptEngine
     {
         public IEnumerable<Metadata> Plugins { get; private set; }
 
@@ -106,14 +107,5 @@ namespace Ktos.DjToKey.Models
 
             eng.Execute(script);
         }
-    }
-
-    /// <summary>
-    /// Carries messages about script errors
-    /// </summary>
-    public class ScriptErrorEventArgs : EventArgs
-    {
-        public string Control { get; set; }
-        public string Message { get; set; }
     }
 }

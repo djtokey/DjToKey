@@ -41,9 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control.cs" />
+    <Compile Include="ControlBinding.cs" />
+    <Compile Include="IDevice.cs" />
+    <Compile Include="IScriptEngine.cs" />
     <Compile Include="IScriptObject.cs" />
     <Compile Include="IScriptType.cs" />
+    <Compile Include="Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="ScriptErrorEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

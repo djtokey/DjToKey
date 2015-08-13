@@ -1,5 +1,4 @@
 ﻿#region Licence
-
 /*
  * DjToKey
  *
@@ -13,10 +12,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,26 +23,25 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * SOFTWARE. 
  */
+#endregion
 
-#endregion Licence
-
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Plugins.Contracts
 {
     /// <summary>
-    /// A class representing binding between a device control and a script
+    /// Class encapsulating Script to be run when event occured
     /// </summary>
-    public class ControlBinding
+    public class Script
     {
         /// <summary>
-        /// A device control
+        /// Source code of a script
         /// </summary>
-        public MidiControl Control { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
-        /// Script bound to device control
+        /// Path to a script file
         /// </summary>
-        public Script Script { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -29,46 +29,21 @@
 
 #endregion Licence
 
-using System;
-using System.Collections.Generic;
-
-namespace Ktos.DjToKey.Models
+namespace Ktos.DjToKey.Plugins.Contracts
 {
-    public interface IDevice
+    /// <summary>
+    /// A class representing binding between a device control and a script
+    /// </summary>
+    public class ControlBinding
     {
         /// <summary>
-        /// A list of names of available input devices
+        /// A device control
         /// </summary>
-        IEnumerable<string> AvailableDevices { get; }
+        public Control Control { get; set; }
 
         /// <summary>
-        /// The name of a selected device
+        /// Script bound to device control
         /// </summary>
-        string ActiveDevice { get; }
-
-        /// <summary>
-        /// List of scripts bound to controls
-        /// </summary>
-        IList<ControlBinding> Bindings { get; set; }
-
-        /// <summary>
-        /// List of possible controls in connected MIDI device
-        /// </summary>
-        IEnumerable<MidiControl> Controls { get; }
-
-        /// <summary>
-        /// A script engine which will be used when executing scripts
-        /// </summary>
-        ScriptEngine ScriptEngine { get; set; }
-
-        /// <summary>
-        /// An event invoked when script error occured when handling
-        /// control
-        /// </summary>
-        EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
-
-        void Load(string deviceName);
-
-        void Unload();
+        public Script Script { get; set; }
     }
 }

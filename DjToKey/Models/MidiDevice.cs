@@ -28,6 +28,8 @@
 #endregion
 
 using Ktos.DjToKey.Helpers;
+using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Plugins.Contracts;
 using Midi;
 using Newtonsoft.Json;
 using System;
@@ -62,12 +64,12 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public IEnumerable<MidiControl> Controls { get; private set; }
+        public IEnumerable<Plugins.Contracts.Control> Controls { get; private set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
         /// </summary>
-        public ScriptEngine ScriptEngine { get; set; }
+        public IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
         /// An event invoked when script error occured when handling
@@ -115,7 +117,7 @@ namespace Ktos.DjToKey.Models
         private void loadControls()
         {
             string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            Controls = JsonConvert.DeserializeObject<IEnumerable<MidiControl>>(File.ReadAllText(f));
+            Controls = JsonConvert.DeserializeObject<IEnumerable<Plugins.Contracts.Control>>(File.ReadAllText(f));
         }
 
         /// <summary>

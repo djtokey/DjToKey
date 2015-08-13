@@ -71,9 +71,6 @@
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Mock\MockMidiDevice.cs" />
-    <Compile Include="Models\ControlBinding.cs" />
-    <Compile Include="Models\IControl.cs" />
-    <Compile Include="Models\IDevice.cs" />
     <Compile Include="Models\MidiDevice.cs" />
     <Compile Include="Plugins\Importer.cs" />
     <Compile Include="MainForm.cs">
@@ -85,9 +82,6 @@
     <Compile Include="Models\GlobalDictionary.cs" />
     <Compile Include="Models\ScriptEngine.cs" />
     <Compile Include="Helpers\ScriptsHelper.cs" />
-    <Compile Include="Models\Script.cs" />
-    <Compile Include="Models\MidiControl.cs" />
-    <Compile Include="Plugins\Metadata.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources\AppResources.pl-PL.Designer.cs">
       <DependentUpon>AppResources.pl-PL.resx</DependentUpon>
@@ -107,6 +101,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Devices\TEST.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

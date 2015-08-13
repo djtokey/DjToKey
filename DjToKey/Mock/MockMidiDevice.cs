@@ -1,4 +1,5 @@
 ﻿#region Licence
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,12 +24,14 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
+
+#endregion Licence
 
 using Ktos.DjToKey.Helpers;
-using Midi;
+using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Plugins.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -58,12 +61,12 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public IEnumerable<MidiControl> Controls { get; private set; }
+        public IEnumerable<Control> Controls { get; private set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
         /// </summary>
-        public ScriptEngine ScriptEngine { get; set; }
+        public IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
         /// An event invoked when script error occured when handling
@@ -105,7 +108,6 @@ namespace Ktos.DjToKey.Models
             //dev.NoteOn += dev_NoteOn;
             //if (!dev.IsOpen) dev.Open();
             //dev.StartReceiving(null);
-
         }
 
         private void loadBindings()
@@ -115,20 +117,24 @@ namespace Ktos.DjToKey.Models
             try
             {
                 Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+                //var aa = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f)); ;
+                //Bindings
+                //(IList<IControlBinding>)
             }
             catch (FileNotFoundException)
             {
                 Bindings = new List<ControlBinding>();
             }
         }
+
         /// <summary>
         /// Loads control definitions from file
         /// </summary>
         private void loadControls()
         {
             string f = @"devices\" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-            Controls = JsonConvert.DeserializeObject<IEnumerable<MidiControl>>(File.ReadAllText(f));
-        }        
+            Controls = JsonConvert.DeserializeObject<IEnumerable<Control>>(File.ReadAllText(f));
+        }
 
         /// <summary>
         /// Handles MIDI message for buttons or controls
@@ -151,13 +157,13 @@ namespace Ktos.DjToKey.Models
                     if (ScriptErrorOccured != null) ScriptErrorOccured.Invoke(this, new ScriptErrorEventArgs() { Control = control, Message = e.Message });
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// Saves bindings to file
         /// </summary>
         public void SaveBindings()
-        {            
+        {
             string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
             File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
         }
@@ -167,8 +173,6 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public void Unload()
         {
-            
         }
-
     }
 }

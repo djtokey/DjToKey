@@ -30,6 +30,8 @@
 #endregion Licence
 
 using Ktos.DjToKey.Models;
+using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Plugins.Contracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -146,8 +148,7 @@ namespace Ktos.DjToKey
                 {
                     Text = c.ControlName
                 }, 0, tlpBindings.RowCount - 1);
-
-                Script s;
+                
                 string v = "";
 
                 var b = dev.Bindings.Where(x => x.Control.ControlId == c.ControlId).FirstOrDefault();
