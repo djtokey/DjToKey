@@ -75,17 +75,27 @@ namespace Ktos.DjToKey.Plugins
             var catalog = new AggregateCatalog();
 
             // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
+
+            loadedPlugins = new List<Metadata>();
+            DirectoryCatalog dirc = null;
             try
             {
-                loadedPlugins = new List<Metadata>();
-                var dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
+                dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
                 catalog.Catalogs.Add(dirc);
-                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // if no plugins directory found, silently ignore
+            }
 
-                CompositionContainer container = new CompositionContainer(catalog);
-                container.ComposeParts(DevicePlugins);
-                container.ComposeParts(ScriptPlugins);
+            catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 
+            CompositionContainer container = new CompositionContainer(catalog);
+            container.ComposeParts(DevicePlugins);
+            container.ComposeParts(ScriptPlugins);
+
+            if (dirc != null)
+            {
                 foreach (var f in dirc.LoadedFiles)
                 {
                     // load plugin assemblies again, only for reflection information, to get their metadata
@@ -94,10 +104,6 @@ namespace Ktos.DjToKey.Plugins
                     if (metadata != null)
                         loadedPlugins.Add(metadata);
                 }
-            }
-            catch (DirectoryNotFoundException)
-            {
-                // if no plugins directory found, silently ignore
             }
         }
     }

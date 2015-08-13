@@ -42,8 +42,9 @@ using System.Timers;
 
 namespace Ktos.DjToKey
 {
-
+#if DEBUG
     [Export(typeof(IDeviceHandler))]
+#endif
     public class MockDevice : IDeviceHandler
     {
         /// <summary>
