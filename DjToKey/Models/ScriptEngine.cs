@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,13 +27,12 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using Microsoft.ClearScript.V8;
-using System;
 using System.Collections.Generic;
 using System.IO;
 

@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,9 +24,10 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
+
+#endregion License
 
 using System;
 using System.IO;
@@ -36,11 +38,11 @@ namespace Ktos.DjToKey.Helpers
 {
     public static class ValidFileName
     {
-        static char[] _invalids;
+        private static char[] _invalids;
 
         // Source: http://stackoverflow.com/a/25223884
 
-        /// <summary>Replaces characters in <c>text</c> that are not allowed in 
+        /// <summary>Replaces characters in <c>text</c> that are not allowed in
         /// file names with the specified replacement character.</summary>
         /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>
         /// <param name="replacement">Replacement character, or null to simply remove bad characters.</param>
@@ -50,7 +52,7 @@ namespace Ktos.DjToKey.Helpers
         {
             StringBuilder sb = new StringBuilder(text.Length);
             var invalids = _invalids ?? (_invalids = Path.GetInvalidFileNameChars());
-            
+
             // space is also changed into replacementchar
             Array.Resize(ref invalids, invalids.Length + 1);
             invalids[invalids.Length - 1] = ' ';

@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,11 +27,11 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
 using Ktos.DjToKey.Helpers;
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -102,7 +102,7 @@ namespace Ktos.DjToKey.Models
             tim = new Timer();
             tim.Interval = 3000;
             tim.Elapsed += (s, e) => { handleControl("1", 2); };
-            tim.Start();            
+            tim.Start();
         }
 
         private void loadBindings()

@@ -29,6 +29,8 @@
 
 #endregion License
 
+using Ktos.DjToKey.Plugins.Scripts;
+
 namespace Ktos.DjToKey.Plugins.Device
 {
     /// <summary>

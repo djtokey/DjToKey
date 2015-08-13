@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,14 +27,13 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
 using Ktos.DjToKey.Models;
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -148,7 +147,7 @@ namespace Ktos.DjToKey
                 {
                     Text = c.ControlName
                 }, 0, tlpBindings.RowCount - 1);
-                
+
                 string v = "";
 
                 var b = dev.Bindings.Where(x => x.Control.ControlId == c.ControlId).FirstOrDefault();
@@ -159,7 +158,7 @@ namespace Ktos.DjToKey
                         v = b.Script.Text;
                     else
                         v = @"file://" + b.Script.Path;
-                }                
+                }
 
                 tlpBindings.Controls.Add(new TextBox()
                 {
@@ -183,13 +182,13 @@ namespace Ktos.DjToKey
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {            
+        {
             foreach (var c in tlpBindings.Controls)
             {
                 if (c.GetType() == typeof(TextBox))
                 {
                     var cc = (c as TextBox);
-                    
+
                     var b = dev.Bindings.Where(x => x.Control.ControlId == cc.Tag.ToString()).FirstOrDefault();
 
                     if (b != null)
@@ -212,7 +211,6 @@ namespace Ktos.DjToKey
                         else
                             dev.Bindings.Add(new ControlBinding() { Control = dev.Controls.Where(x => x.ControlId == cc.Tag.ToString()).First(), Script = new Script() { Text = cc.Text, Path = null } });
                     }
-
                 }
             }
 

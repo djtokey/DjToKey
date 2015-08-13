@@ -29,6 +29,7 @@
 
 #endregion License
 
+using Ktos.DjToKey.Plugins.Scripts;
 using System;
 using System.Collections.Generic;
 

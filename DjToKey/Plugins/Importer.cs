@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,12 +24,13 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
+
+#endregion License
 
 using Ktos.DjToKey.Extensions;
-using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -40,10 +42,10 @@ namespace Ktos.DjToKey.Plugins
     /// <summary>
     /// This class is responsible for finding and loading all plugins from the their subdirectory
     /// using MEF.
-    /// 
+    ///
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
-    class PluginImporter
+    internal class PluginImporter
     {
         /// <summary>
         /// List of objects from plugins to be included into script engine when loading.
@@ -101,7 +103,7 @@ namespace Ktos.DjToKey.Plugins
         /// Performs loading all plugins, importing them by MEF and loading their metadata
         /// </summary>
         public void Import()
-        {            
+        {
             var catalog = new AggregateCatalog();
 
             // adds all the parts found in all assemblies in \plugins subdirectory
@@ -110,9 +112,9 @@ namespace Ktos.DjToKey.Plugins
                 loadedPlugins = new List<Metadata>();
                 var dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
                 catalog.Catalogs.Add(dirc);
-                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));                
+                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 
-                CompositionContainer container = new CompositionContainer(catalog);                
+                CompositionContainer container = new CompositionContainer(catalog);
                 container.ComposeParts(this);
 
                 foreach (var f in dirc.LoadedFiles)

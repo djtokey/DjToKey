@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,13 +24,14 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
+
+#endregion License
 
 using Ktos.DjToKey.Helpers;
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
 using Midi;
 using Newtonsoft.Json;
 using System;
@@ -102,13 +104,12 @@ namespace Ktos.DjToKey.Models
             if (newDevice != dev)
                 dev = newDevice;
 
-            loadControls();            
+            loadControls();
 
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
             if (!dev.IsOpen) dev.Open();
             dev.StartReceiving(null);
-
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Ktos.DjToKey.Models
         /// Handles ControlChange messages
         /// </summary>
         /// <param name="msg"></param>
-        void dev_ControlChange(ControlChangeMessage msg)
+        private void dev_ControlChange(ControlChangeMessage msg)
         {
             handleControl(msg.Control.ToString(), msg.Value);
         }
@@ -164,7 +165,7 @@ namespace Ktos.DjToKey.Models
         /// Saves bindings to file
         /// </summary>
         public void SaveBindings()
-        {            
+        {
             string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
             File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
         }
@@ -188,6 +189,5 @@ namespace Ktos.DjToKey.Models
                 }
             }
         }
-
     }
 }
