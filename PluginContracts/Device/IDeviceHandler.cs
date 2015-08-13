@@ -68,8 +68,23 @@ namespace Ktos.DjToKey.Plugins.Device
         /// </summary>
         EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
+        /// <summary>
+        /// Loads device based on a specified name and starts listening for its events
+        /// </summary>
+        /// <param name="deviceName"></param>
         void Load(string deviceName);
 
+        /// <summary>
+        /// Unloads currently active device and stops listening for its events
+        /// </summary>
         void Unload();
+
+        /// <summary>
+        /// Performs saving bindings to a device file
+        ///
+        /// This is deprecated method available only in Plugin API 0.8 for compatibility before 0.3 DjToKey release. It will be removed after "look & feel" improvements
+        /// </summary>
+        [Obsolete]
+        void SaveBindings();
     }
 }

@@ -29,20 +29,15 @@
 
 #endregion License
 
-using Ktos.DjToKey.Extensions;
 using Ktos.DjToKey.Plugins.Device;
-using Ktos.DjToKey.Plugins.Scripts;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
-using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
 {
     /// <summary>
     /// This class is responsible for finding and loading all plugins for devices from the their subdirectory
-    /// using MEF.    
+    /// using MEF.
     /// </summary>
     public class DevicePlugins
     {
@@ -62,6 +57,6 @@ namespace Ktos.DjToKey.Plugins
             {
                 return deviceHandlers;
             }
-        }        
+        }
     }
 }

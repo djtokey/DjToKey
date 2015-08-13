@@ -45,6 +45,12 @@ namespace Ktos.DjToKey
 #if DEBUG
     [Export(typeof(IDeviceHandler))]
 #endif
+    /// <summary>
+    /// Mock Device is a virtual device available only in Debug builds.
+    /// 
+    /// It offers 3 virtual controls, every of different type, and handling action of one
+    /// of controls is run 3 seconds after loading device.
+    /// </summary>
     public class MockDevice : IDeviceHandler
     {
         /// <summary>

@@ -35,8 +35,15 @@ using System.Collections.Generic;
 
 namespace Ktos.DjToKey.Model
 {
+    /// <summary>
+    /// This class lists all possible devices from all device handlers
+    /// and performs routing to get a handler for a device with specified name
+    /// </summary>
     public class AllDevices
     {
+        /// <summary>
+        /// List of all possible devices from all device handlers
+        /// </summary>
         public IEnumerable<string> AvailableDevices
         {
             get
@@ -47,24 +54,33 @@ namespace Ktos.DjToKey.Model
 
         private List<string> availableDevices;
 
-        private DevicePlugins plugins;
+        private IEnumerable<IDeviceHandler> plugins;
 
-        public AllDevices(DevicePlugins plugins)
+        /// <summary>
+        /// Creates a new instance of AllDevices
+        /// </summary>
+        /// <param name="plugins">List of all plugins of IDeviceHandler type</param>
+        public AllDevices(IEnumerable<IDeviceHandler> plugins)
         {
             availableDevices = new List<string>();
             this.plugins = plugins;
 
-            if (plugins.DeviceHandlers != null)
-                foreach (var dh in plugins.DeviceHandlers)
+            if (plugins != null)
+                foreach (var dh in plugins)
                     availableDevices.AddRange(dh.AvailableDevices);
         }
 
+        /// <summary>
+        /// Finds handler for a specific device name
+        /// </summary>
+        /// <param name="name">Name of a device</param>
+        /// <returns>Handler for this device name</returns>
         public IDeviceHandler FindHandler(string name)
         {
-            if (plugins.DeviceHandlers == null)
+            if (plugins == null)
                 return null;
 
-            foreach (var dh in plugins.DeviceHandlers)
+            foreach (var dh in plugins)
                 foreach (var n in dh.AvailableDevices)
                     if (n == name)
                         return dh;

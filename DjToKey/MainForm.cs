@@ -93,7 +93,7 @@ namespace Ktos.DjToKey
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            allDevices = new AllDevices(Program.PluginImporter.DevicePlugins);
+            allDevices = new AllDevices(Program.PluginImporter.DevicePlugins.DeviceHandlers);
 
             // load list of input devices into ComboBox
             foreach (var item in allDevices.AvailableDevices)
@@ -217,7 +217,7 @@ namespace Ktos.DjToKey
                 }
             }
 
-            //dev.SaveBindings();
+            dev.SaveBindings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

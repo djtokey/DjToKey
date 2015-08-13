@@ -44,6 +44,9 @@ namespace Ktos.DjToKey
         /// </summary>
         public static ScriptEngine ScriptEngine;
 
+        /// <summary>
+        /// A class used for importing all possible plugins
+        /// </summary>
         public static PluginImporter PluginImporter;
 
         /// <summary>
