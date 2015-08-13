@@ -122,9 +122,6 @@ namespace Ktos.DjToKey
             try
             {
                 Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
-                //var aa = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f)); ;
-                //Bindings
-                //(IList<IControlBinding>)
             }
             catch (FileNotFoundException)
             {

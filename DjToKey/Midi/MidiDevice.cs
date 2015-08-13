@@ -85,10 +85,8 @@ namespace Ktos.DjToKey.MidiDevice
         /// A constructor, intializing script engine and setting list of
         /// available input devices
         /// </summary>
-        public MidiDevice(IScriptEngine engine)
+        public MidiDevice()
         {
-            this.ScriptEngine = engine;
-
             AvailableDevices = new List<string>();
             foreach (var d in InputDevice.InstalledDevices)
             {
@@ -106,12 +104,29 @@ namespace Ktos.DjToKey.MidiDevice
             if (newDevice != dev)
                 dev = newDevice;
 
+            ActiveDevice = deviceName;
+
             loadControls();
+            loadBindings();
 
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
             if (!dev.IsOpen) dev.Open();
             dev.StartReceiving(null);
+        }
+
+        private void loadBindings()
+        {
+            string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
+
+            try
+            {
+                Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+            }
+            catch (FileNotFoundException)
+            {
+                Bindings = new List<ControlBinding>();
+            }
         }
 
         /// <summary>
