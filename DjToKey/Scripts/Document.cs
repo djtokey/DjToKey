@@ -29,38 +29,53 @@
 
 #endregion License
 
-using System.Diagnostics;
+using Ktos.DjToKey.Plugins.Scripts;
+using System.ComponentModel.Composition;
 using System.Windows.Forms;
-using WindowsInput;
 
 namespace Ktos.DjToKey.Scripts
 {
-    /// <summary>
-    /// Small static class which is a container for a few objects which
-    /// will be useful in scripts
-    /// </summary>
-    public static class ScriptsHelper
+    [Export(typeof(IScriptObject))]
+    public class Document : IScriptObject
     {
-        /// <summary>
-        /// A Document class instance
-        /// </summary>
-        public static Document Document = new Document();
+        private const string name = "Document";
 
-        /// <summary>
-        /// Reference to a console class
-        /// </summary>
-        public static Console Console = new Console();
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+        }
 
-        /// <summary>
-        /// Instance of a InputSimulator class
-        /// </summary>
-        public static InputSimulator Simulator = new InputSimulator();
+        public object Object
+        {
+            get
+            {
+                return dimpl;
+            }
+        }
 
-        /// <summary>
-        /// A global dictionary usable by all scripts
-        /// </summary>
-        public static GlobalDictionary GlobalDictionary = new GlobalDictionary();
+        private DocumentImpl dimpl;
+
+        public Document()
+        {
+            dimpl = new DocumentImpl();
+        }
     }
 
-
+    /// <summary>
+    /// Document class has methods for showing messages
+    /// </summary>
+    public class DocumentImpl
+    {
+        /// <summary>
+        /// Named for a sake of consistency with browser implementations, Alert shows message box
+        /// </summary>
+        /// <param name="message">A message to be shown</param>
+        public void Alert(string message)
+        {
+            MessageBox.Show(message);
+        }
+    }
 }
