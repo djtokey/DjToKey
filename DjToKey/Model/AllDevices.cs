@@ -29,39 +29,47 @@
 
 #endregion License
 
-using Ktos.DjToKey.Extensions;
+using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
-using Ktos.DjToKey.Plugins.Scripts;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
-using Assembly = System.Reflection.Assembly;
 
-namespace Ktos.DjToKey.Plugins
+namespace Ktos.DjToKey.Model
 {
-    /// <summary>
-    /// This class is responsible for finding and loading all plugins for devices from the their subdirectory
-    /// using MEF.    
-    /// </summary>
-    public class DevicePlugins
+    public class AllDevices
     {
-        /// <summary>
-        /// List of types from plugins to be included into script engine when loading.
-        /// MEF will automatically satisfy this list with every class implementing <see cref="IDeviceHandler"/>
-        /// </summary>
-        [ImportMany(typeof(IDeviceHandler))]
-        private IEnumerable<IDeviceHandler> deviceHandlers;
-
-        /// <summary>
-        /// List of types from plugins to be included into script engine when loading
-        /// </summary>
-        public IEnumerable<IDeviceHandler> DeviceHandlers
+        public IEnumerable<string> AvailableDevices
         {
             get
             {
-                return deviceHandlers;
+                return availableDevices;
             }
-        }        
+        }
+
+        private List<string> availableDevices;
+
+        private DevicePlugins plugins;
+
+        public AllDevices(DevicePlugins plugins)
+        {
+            availableDevices = new List<string>();
+            this.plugins = plugins;
+
+            if (plugins.DeviceHandlers != null)
+                foreach (var dh in plugins.DeviceHandlers)
+                    availableDevices.AddRange(dh.AvailableDevices);
+        }
+
+        public IDeviceHandler FindHandler(string name)
+        {
+            if (plugins.DeviceHandlers == null)
+                return null;
+
+            foreach (var dh in plugins.DeviceHandlers)
+                foreach (var n in dh.AvailableDevices)
+                    if (n == name)
+                        return dh;
+
+            return null;
+        }
     }
 }

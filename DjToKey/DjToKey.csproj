@@ -72,6 +72,7 @@
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Mock\MockDevice.cs" />
     <Compile Include="Midi\MidiDevice.cs" />
+    <Compile Include="Model\AllDevices.cs" />
     <Compile Include="Plugins\DevicePlugins.cs" />
     <Compile Include="Plugins\PluginImporter.cs" />
     <Compile Include="Plugins\ScriptPlugins.cs" />
@@ -174,9 +175,7 @@
       <Name>PluginContracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>

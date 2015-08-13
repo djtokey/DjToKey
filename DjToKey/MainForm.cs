@@ -29,6 +29,7 @@
 
 #endregion License
 
+using Ktos.DjToKey.Model;
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
@@ -42,7 +43,8 @@ namespace Ktos.DjToKey
 {
     public partial class MainForm : Form
     {
-        private MockDevice dev;
+        private IDeviceHandler dev;
+        private AllDevices allDevices;
 
         /// <summary>
         /// Time to ignore errors for the same control
@@ -71,10 +73,6 @@ namespace Ktos.DjToKey
             lbPlugins.Text = Resources.AppResources.lbPlugins;
             gbBindings.Text = Resources.AppResources.gbBindings;
             btnSave.Text = Resources.AppResources.btnSave;
-
-            dev = new MockDevice();
-            dev.ScriptEngine = Program.ScriptEngine;
-            dev.ScriptErrorOccured += OnScriptError;
         }
 
         /// <summary>
@@ -95,15 +93,17 @@ namespace Ktos.DjToKey
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            allDevices = new AllDevices(Program.PluginImporter.DevicePlugins);
+
             // load list of input devices into ComboBox
-            foreach (var item in dev.AvailableDevices)
+            foreach (var item in allDevices.AvailableDevices)
             {
                 cbMidiDevices.Items.Add(item);
             }
 
             // if there is none, show message
             // if there are some - set first of them as active
-            if (dev.AvailableDevices.Count() == 0)
+            if (cbMidiDevices.Items.Count == 0)
             {
                 MessageBox.Show(Resources.AppResources.NoMidiMessage);
                 btnSave.Enabled = false;
@@ -116,7 +116,11 @@ namespace Ktos.DjToKey
         {
             try
             {
+                dev = allDevices.FindHandler(cbMidiDevices.SelectedItem.ToString());
+                dev.ScriptEngine = Program.ScriptEngine;
+                dev.ScriptErrorOccured += OnScriptError;
                 dev.Load(cbMidiDevices.SelectedItem.ToString());
+
                 trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
                 this.Text = trayIcon.Text;
                 createEditor();
@@ -213,7 +217,7 @@ namespace Ktos.DjToKey
                 }
             }
 
-            dev.SaveBindings();
+            //dev.SaveBindings();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

@@ -35,12 +35,15 @@ using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Timers;
 
 namespace Ktos.DjToKey
 {
+
+    [Export(typeof(IDeviceHandler))]
     public class MockDevice : IDeviceHandler
     {
         /// <summary>
