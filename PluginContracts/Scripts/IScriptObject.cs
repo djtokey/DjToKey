@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,20 +24,18 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
+#endregion License
 
-using System;
-
-namespace Ktos.DjToKey.Plugins.Contracts
+namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// An interface defining a plugin for DjToKey allowing to add a new global type
+    /// An interface defining a basic plugin for DjToKey allowing to add a new global object
     /// into a script engine
     /// </summary>
-    public interface IScriptType
+    public interface IScriptObject
     {
         /// <summary>
         /// The plugin name under which will be registered in script engine
@@ -44,8 +43,8 @@ namespace Ktos.DjToKey.Plugins.Contracts
         string Name { get; }
 
         /// <summary>
-        /// The plugin-defined type which will be registered in script engine under name <see cref="Name"/>
+        /// The plugin object which will be registered in script engine under name <see cref="Name"/>
         /// </summary>
-        Type Type { get; }
+        object Object { get; }
     }
 }

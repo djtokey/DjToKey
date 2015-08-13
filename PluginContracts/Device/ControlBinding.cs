@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,9 +27,9 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
-namespace Ktos.DjToKey.Plugins.Contracts
+namespace Ktos.DjToKey.Plugins.Device
 {
     /// <summary>
     /// A class representing binding between a device control and a script

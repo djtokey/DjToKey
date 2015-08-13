@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,61 +24,26 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
+#endregion License
 
-using Ktos.DjToKey.Plugins.Device;
-using System.ComponentModel.Composition;
-
-namespace TestPlugin
+namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// A very basic sample of a plugin - when in plugins directory for a DjToKey,
-    /// it automatically registers object called "TestPlugin" with a "DoWork" method
-    /// returning "Hello, world!" message. 
+    /// Class encapsulating Script to be run when event occured
     /// </summary>
-    [Export(typeof(IScriptObject))]
-    public class TestPlugin : IScriptObject
+    public class Script
     {
-        public string Description
-        {
-            get
-            {
-                return "A test plugin";
-            }
-        }
+        /// <summary>
+        /// Source code of a script
+        /// </summary>
+        public string Text { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return "TestPlugin";
-            }
-        }
-
-        public object Object
-        {
-            get
-            {
-                return tpi;
-            }
-        }
-
-        private TestPluginImpl tpi;
-
-        public TestPlugin()
-        {
-            tpi = new TestPluginImpl();
-        }
-    }
-
-    public class TestPluginImpl
-    {
-        public string DoWork()
-        {
-            return "Hello, world!";
-        }
+        /// <summary>
+        /// Path to a script file
+        /// </summary>
+        public string Path { get; set; }
     }
 }

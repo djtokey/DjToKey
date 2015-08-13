@@ -31,7 +31,7 @@
 
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Contracts;
+using Ktos.DjToKey.Plugins.Device;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

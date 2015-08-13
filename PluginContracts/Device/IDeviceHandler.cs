@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,14 +27,14 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
 using System;
 using System.Collections.Generic;
 
-namespace Ktos.DjToKey.Plugins.Contracts
+namespace Ktos.DjToKey.Plugins.Device
 {
-    public interface IDevice
+    public interface IDeviceHandler
     {
         /// <summary>
         /// A list of names of available input devices
@@ -52,7 +52,7 @@ namespace Ktos.DjToKey.Plugins.Contracts
         IList<ControlBinding> Bindings { get; set; }
 
         /// <summary>
-        /// List of possible controls in connected MIDI device
+        /// List of possible controls in connected device
         /// </summary>
         IEnumerable<Control> Controls { get; }
 

@@ -1,4 +1,5 @@
-﻿#region Licence
+﻿#region License
+
 /*
  * DjToKey
  *
@@ -12,10 +13,10 @@
  * publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -23,25 +24,52 @@
  * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  */
-#endregion
 
-namespace Ktos.DjToKey.Plugins.Contracts
+#endregion License
+
+namespace Ktos.DjToKey.Plugins.Device
 {
     /// <summary>
-    /// Class encapsulating Script to be run when event occured
+    /// A control which can cause events in application
     /// </summary>
-    public class Script
+    public class Control
     {
         /// <summary>
-        /// Source code of a script
+        /// Internal Control ID, usually numerical
         /// </summary>
-        public string Text { get; set; }
+        public string ControlId { get; set; }
 
         /// <summary>
-        /// Path to a script file
+        /// Control name visible for user for fast identification
         /// </summary>
-        public string Path { get; set; }
+        public string ControlName { get; set; }
+
+        /// <summary>
+        /// Type of this particular control
+        /// </summary>
+        public ControlType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Available control types
+    /// </summary>
+    public enum ControlType
+    {
+        /// <summary>
+        /// Analog control (values from 0 to 127)
+        /// </summary>
+        Analog,
+
+        /// <summary>
+        /// Digital control (values in [0;127] or [1;127])
+        /// </summary>
+        Digital,
+
+        /// <summary>
+        /// Button control
+        /// </summary>
+        Button
     }
 }

@@ -1,4 +1,4 @@
-﻿#region Licence
+﻿#region License
 
 /*
  * DjToKey
@@ -27,49 +27,18 @@
  * SOFTWARE.
  */
 
-#endregion Licence
+#endregion License
 
-namespace Ktos.DjToKey.Plugins.Contracts
+using System;
+
+namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// A control which can cause events in application
+    /// Carries messages about script errors
     /// </summary>
-    public class Control
+    public class ScriptErrorEventArgs : EventArgs
     {
-        /// <summary>
-        /// Internal Control ID, usually numerical
-        /// </summary>
-        public string ControlId { get; set; }
-
-        /// <summary>
-        /// Control name visible for user for fast identification
-        /// </summary>
-        public string ControlName { get; set; }
-
-        /// <summary>
-        /// Type of this particular control
-        /// </summary>
-        public ControlType Type { get; set; }
-    }
-
-    /// <summary>
-    /// Available control types
-    /// </summary>
-    public enum ControlType
-    {
-        /// <summary>
-        /// Analog control (values from 0 to 127)
-        /// </summary>
-        Analog,
-
-        /// <summary>
-        /// Digital control (values in [0;127] or [1;127])
-        /// </summary>
-        Digital,
-
-        /// <summary>
-        /// Button control
-        /// </summary>
-        Button
+        public string Control { get; set; }
+        public string Message { get; set; }
     }
 }

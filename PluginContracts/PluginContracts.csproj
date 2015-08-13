@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Control.cs" />
     <Compile Include="ControlBinding.cs" />
-    <Compile Include="IDevice.cs" />
+    <Compile Include="IDeviceHandler.cs" />
     <Compile Include="IScriptEngine.cs" />
     <Compile Include="IScriptObject.cs" />
     <Compile Include="IScriptType.cs" />

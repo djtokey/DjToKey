@@ -31,7 +31,7 @@
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Contracts;
+using Ktos.DjToKey.Plugins.Device;
 using Microsoft.ClearScript.V8;
 using System;
 using System.Collections.Generic;

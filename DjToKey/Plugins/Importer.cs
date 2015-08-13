@@ -28,7 +28,7 @@
 #endregion
 
 using Ktos.DjToKey.Extensions;
-using Ktos.DjToKey.Plugins.Contracts;
+using Ktos.DjToKey.Plugins.Device;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;

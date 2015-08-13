@@ -31,7 +31,7 @@
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Contracts;
+using Ktos.DjToKey.Plugins.Device;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ using System.Timers;
 
 namespace Ktos.DjToKey.Models
 {
-    public class MockMidiDevice : IDevice
+    public class MockMidiDevice : IDeviceHandler
     {
         /// <summary>
         /// A list of names of available input devices
@@ -86,11 +86,6 @@ namespace Ktos.DjToKey.Models
             l.Add("TEST");
 
             AvailableDevices = l;
-
-            tim = new Timer();
-            tim.Interval = 3000;
-            tim.Elapsed += (s, e) => { handleControl("1", 2); };
-            tim.Start();
         }
 
         /// <summary>
@@ -104,10 +99,10 @@ namespace Ktos.DjToKey.Models
             loadControls();
             loadBindings();
 
-            //dev.ControlChange += dev_ControlChange;
-            //dev.NoteOn += dev_NoteOn;
-            //if (!dev.IsOpen) dev.Open();
-            //dev.StartReceiving(null);
+            tim = new Timer();
+            tim.Interval = 3000;
+            tim.Elapsed += (s, e) => { handleControl("1", 2); };
+            tim.Start();            
         }
 
         private void loadBindings()
