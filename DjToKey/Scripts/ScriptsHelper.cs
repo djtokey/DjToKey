@@ -42,24 +42,9 @@ namespace Ktos.DjToKey.Scripts
     public static class ScriptsHelper
     {
         /// <summary>
-        /// A Document class instance
-        /// </summary>
-        public static Document Document = new Document();
-
-        /// <summary>
-        /// Reference to a console class
-        /// </summary>
-        public static Console Console = new Console();
-
-        /// <summary>
         /// Instance of a InputSimulator class
         /// </summary>
         public static InputSimulator Simulator = new InputSimulator();
-
-        /// <summary>
-        /// A global dictionary usable by all scripts
-        /// </summary>
-        public static GlobalDictionary GlobalDictionary = new GlobalDictionary();
     }
 
 

@@ -29,10 +29,41 @@
 
 #endregion License
 
+using Ktos.DjToKey.Plugins.Scripts;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 
 namespace Ktos.DjToKey.Scripts
 {
+    [Export(typeof(IScriptObject))]
+    public class Global : IScriptObject
+    {
+        private const string name = "Global";
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+        }
+
+        public object Object
+        {
+            get
+            {
+                return gimpl;
+            }
+        }
+
+        private GlobalDictionary gimpl;
+
+        public Global()
+        {
+            gimpl = new GlobalDictionary();
+        }
+    }
+
     /// <summary>
     /// A global object accessible for all scripts on a page. It wraps
     /// a typical Dictionary of string as a key and object as a value.

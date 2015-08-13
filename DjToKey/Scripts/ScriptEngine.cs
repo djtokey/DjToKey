@@ -56,8 +56,7 @@ namespace Ktos.DjToKey.Scripts
             // adding set of static object which will be available for scripts
             eng = new V8ScriptEngine();
             eng.AddHostObject("Keyboard", ScriptsHelper.Simulator.Keyboard);
-            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);                
-            eng.AddHostObject("Global", ScriptsHelper.GlobalDictionary);
+            eng.AddHostObject("Mouse", ScriptsHelper.Simulator.Mouse);                            
 
             // addind useful types
             eng.AddHostType("KeyCode", typeof(WindowsInput.Native.VirtualKeyCode));
