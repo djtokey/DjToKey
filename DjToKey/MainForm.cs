@@ -259,7 +259,7 @@ namespace Ktos.DjToKey
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(Resources.AppResources.PluginsMessage);
 
-            foreach (var p in Program.ScriptEngine.Plugins)
+            foreach (var p in Program.PluginImporter.Plugins)
             {
                 sb.Append('\t');
                 sb.AppendFormat("{0} {1} - {2}. {3}", p.Title, p.Version, p.Description, p.Copyright);

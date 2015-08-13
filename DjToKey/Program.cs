@@ -29,6 +29,8 @@
 
 #endregion License
 
+using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Plugins.Scripts;
 using Ktos.DjToKey.Scripts;
 using System;
 using System.Windows.Forms;
@@ -42,14 +44,18 @@ namespace Ktos.DjToKey
         /// </summary>
         public static ScriptEngine ScriptEngine;
 
+        public static PluginImporter PluginImporter;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         private static void Main()
         {
+            PluginImporter = new PluginImporter();
+
             ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure();
+            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -38,9 +38,7 @@ using System.IO;
 namespace Ktos.DjToKey.Scripts
 {
     public class ScriptEngine : IScriptEngine
-    {
-        public IEnumerable<Metadata> Plugins { get; private set; }
-
+    {        
         /// <summary>
         /// Instance of script engine
         /// </summary>
@@ -50,27 +48,21 @@ namespace Ktos.DjToKey.Scripts
         /// Configures script engine, adding static, useful object,
         /// debug objects, useful types and objects from additional plugins
         /// </summary>
-        public void Configure()
+        public void Configure(IScriptPlugins plugins)
         {
-            eng = new V8ScriptEngine();
+            eng = new V8ScriptEngine();            
 
-            // adding objects and types coming from additional plugins
-            ScriptPluginImporter i = new ScriptPluginImporter();
-            i.Import();
-
-            this.Plugins = i.Plugins;
-
-            if (i.Objects != null)
+            if (plugins.Objects != null)
             {
-                foreach (var p in i.Objects)
+                foreach (var p in plugins.Objects)
                 {
                     eng.AddHostObject(p.Name, p.Object);
                 }
             }
 
-            if (i.Types != null)
+            if (plugins.Types != null)
             {
-                foreach (var p in i.Types)
+                foreach (var p in plugins.Types)
                 {
                     eng.AddHostType(p.Name, p.Type);
                 }

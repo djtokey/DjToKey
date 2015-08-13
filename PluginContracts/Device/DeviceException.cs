@@ -35,7 +35,7 @@ using System.Runtime.Serialization;
 namespace Ktos.DjToKey.Plugins.Device
 {
     [Serializable]
-    internal class DeviceException : Exception
+    public class DeviceException : Exception
     {
         public DeviceException()
         {

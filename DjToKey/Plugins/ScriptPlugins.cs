@@ -29,23 +29,14 @@
 
 #endregion License
 
-using Ktos.DjToKey.Extensions;
 using Ktos.DjToKey.Plugins.Scripts;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
-using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
 {
-    /// <summary>
-    /// This class is responsible for finding and loading all plugins from the their subdirectory
-    /// using MEF.
-    ///
-    /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
-    /// </summary>
-    internal class ScriptPluginImporter
+
+    internal class ScriptPlugins : IScriptPlugins
     {
         /// <summary>
         /// List of objects from plugins to be included into script engine when loading.
@@ -80,55 +71,6 @@ namespace Ktos.DjToKey.Plugins
             get
             {
                 return pluginsTypes;
-            }
-        }
-
-        /// <summary>
-        /// List of metadata for loaded plugins
-        /// </summary>
-        private List<Metadata> loadedPlugins;
-
-        /// <summary>
-        /// List of metadata for loaded plugins
-        /// </summary>
-        public IEnumerable<Metadata> Plugins
-        {
-            get
-            {
-                return loadedPlugins;
-            }
-        }
-
-        /// <summary>
-        /// Performs loading all plugins, importing them by MEF and loading their metadata
-        /// </summary>
-        public void Import()
-        {
-            var catalog = new AggregateCatalog();
-
-            // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
-            try
-            {
-                loadedPlugins = new List<Metadata>();
-                var dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
-                catalog.Catalogs.Add(dirc);
-                catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-
-                CompositionContainer container = new CompositionContainer(catalog);
-                container.ComposeParts(this);
-
-                foreach (var f in dirc.LoadedFiles)
-                {
-                    // load plugin assemblies again, only for reflection information, to get their metadata
-                    var ass = Assembly.ReflectionOnlyLoadFrom(f);
-                    var metadata = ass.GetMetadata();
-                    if (metadata != null)
-                        loadedPlugins.Add(metadata);
-                }
-            }
-            catch (DirectoryNotFoundException)
-            {
-                // if no plugins directory found, silently ignore
             }
         }
     }

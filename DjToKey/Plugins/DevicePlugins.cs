@@ -29,28 +29,39 @@
 
 #endregion License
 
-using System;
-using System.Runtime.Serialization;
+using Ktos.DjToKey.Extensions;
+using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.IO;
+using Assembly = System.Reflection.Assembly;
 
-namespace Ktos.DjToKey.Plugins.Device
+namespace Ktos.DjToKey.Plugins
 {
-    [Serializable]
-    internal class DeviceException : Exception
+    /// <summary>
+    /// This class is responsible for finding and loading all plugins for devices from the their subdirectory
+    /// using MEF.    
+    /// </summary>
+    internal class DevicePlugins
     {
-        public DeviceException()
-        {
-        }
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading.
+        /// MEF will automatically satisfy this list with every class implementing <see cref="IDeviceHandler"/>
+        /// </summary>
+        [ImportMany(typeof(IDeviceHandler))]
+        private IEnumerable<IDeviceHandler> deviceHandlers;
 
-        public DeviceException(string message) : base(message)
+        /// <summary>
+        /// List of types from plugins to be included into script engine when loading
+        /// </summary>
+        public IEnumerable<IDeviceHandler> DeviceHandlers
         {
-        }
-
-        public DeviceException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected DeviceException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+            get
+            {
+                return deviceHandlers;
+            }
+        }        
     }
 }
