@@ -181,7 +181,8 @@ namespace Ktos.DjToKey
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            dev.Unload();
+            if (dev != null)
+                dev.Unload();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
