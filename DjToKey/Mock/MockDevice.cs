@@ -121,7 +121,7 @@ namespace Ktos.DjToKey
         private void loadControls()
         {
             string f = @"devices\" + ValidFileName.MakeValidFileName(ActiveDevice) + ".dtkpkg";
-            DevicePackage d = new DevicePackage(f);
+            DevicePackage d = DevicePackage.Load(f);
             Controls = JsonConvert.DeserializeObject<IEnumerable<Control>>(d.Definition);
         }
 

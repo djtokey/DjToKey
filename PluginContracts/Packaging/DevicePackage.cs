@@ -50,8 +50,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// </summary>
         /// <param name="fileName">Package file name to be opened</param>
         /// <param name="deviceName">Device name in a package to load configuration</param>
-        public DevicePackage(string fileName, string deviceName = null)
+        public static DevicePackage Load(string fileName, string deviceName = null)
         {
+            var p = new DevicePackage();
+
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
             {
                 // .dtkpkg files may be device descriptors or other categories, if package describes itself
@@ -59,9 +61,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 if (!string.IsNullOrEmpty(pack.PackageProperties.Category) && pack.PackageProperties.Category != "device")
                     throw new ArgumentException("Package is not device descriptor");
 
-                Title = pack.PackageProperties.Title;
-                Description = pack.PackageProperties.Description;
-                Version = pack.PackageProperties.Version;
+                p.Title = pack.PackageProperties.Title;
+                p.Description = pack.PackageProperties.Description;
+                p.Version = pack.PackageProperties.Version;
+                
 
                 Uri u;
                 if (string.IsNullOrEmpty(deviceName))
@@ -71,7 +74,8 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
                 if (pack.PartExists(u))
                 {
-                    Image = pack.GetPart(u).GetStream();
+                    p.Image = new MemoryStream();
+                    pack.GetPart(u).GetStream().CopyTo(p.Image);
                 }
                 else
                 {
@@ -88,7 +92,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     var f = pack.GetPart(u).GetStream();
                     using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
                     {
-                        Definition = reader.ReadToEnd();
+                        p.Definition = reader.ReadToEnd();
                     }
                 }
                 else
@@ -96,6 +100,8 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     throw new FileNotFoundException("Device configuration file not found in package.");
                 }
             }
+
+            return p;
         }
 
         /// <summary>
@@ -121,22 +127,18 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// <summary>
         /// Version of device package
         /// </summary>
-        public string Version { get; private set; }
-
-        private static char[] _invalids;
-
-        // Source: http://stackoverflow.com/a/25223884
+        public string Version { get; private set; }        
 
         /// <summary>Replaces characters in <c>text</c> that are not allowed in
         /// file names with the specified replacement character.</summary>
-        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>
-        /// <param name="replacement">Replacement character, or null to simply remove bad characters.</param>
-        /// <param name="fancy">Whether to replace quotes and slashes with the non-ASCII characters ” and ⁄.</param>
+        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>        
         /// <returns>A string that can be used as a filename. If the output string would otherwise be empty, returns "_".</returns>
-        private static string MakeValidFileName(string text, char? replacement = '_', bool fancy = true)
+        private static string MakeValidFileName(string text)
         {
             StringBuilder sb = new StringBuilder(text.Length);
-            var invalids = _invalids ?? (_invalids = Path.GetInvalidFileNameChars());
+            var invalids = Path.GetInvalidFileNameChars();
+
+            char repl = '_';
 
             // space is also changed into replacementchar
             Array.Resize(ref invalids, invalids.Length + 1);
@@ -148,22 +150,16 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 char c = text[i];
                 if (invalids.Contains(c))
                 {
-                    changed = true;
-                    var repl = replacement ?? '\0';
-                    if (fancy)
-                    {
-                        if (c == '"') repl = '”'; // U+201D right double quotation mark
-                        else if (c == '\'') repl = '’'; // U+2019 right single quotation mark
-                        else if (c == '/') repl = '⁄'; // U+2044 fraction slash
-                    }
-                    if (repl != '\0')
-                        sb.Append(repl);
+                    changed = true;          
+                    sb.Append(repl);
                 }
                 else
                     sb.Append(c);
             }
+
             if (sb.Length == 0)
                 return "_";
+
             return changed ? sb.ToString() : text;
         }
 

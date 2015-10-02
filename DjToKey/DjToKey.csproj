@@ -106,6 +106,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Devices\TEST.dtkpkg" />
     <None Include="Devices\TEST.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
