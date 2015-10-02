@@ -31,6 +31,7 @@
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Packaging;
 using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
@@ -134,8 +135,9 @@ namespace Ktos.DjToKey
         /// </summary>
         private void loadControls()
         {
-            string f = @"devices\" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-            Controls = JsonConvert.DeserializeObject<IEnumerable<Control>>(File.ReadAllText(f));
+            string f = @"devices\" + ValidFileName.MakeValidFileName(ActiveDevice) + ".dtkpkg";
+            DevicePackage d = new DevicePackage(f);
+            Controls = JsonConvert.DeserializeObject<IEnumerable<Control>>(d.Definition);
         }
 
         /// <summary>

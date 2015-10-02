@@ -39,12 +39,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Device\Control.cs" />
     <Compile Include="Device\ControlBinding.cs" />
     <Compile Include="Device\DeviceException.cs" />
     <Compile Include="Device\IDeviceHandler.cs" />
+    <Compile Include="Packaging\DevicePackage.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
     <Compile Include="Scripts\IScriptObject.cs" />
     <Compile Include="Scripts\IScriptPlugins.cs" />
