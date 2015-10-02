@@ -66,6 +66,8 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 p.Version = pack.PackageProperties.Version;
                 p.Keywords = pack.PackageProperties.Keywords;
 
+                // TODO: mapping file - what if device name does not correspond with folder name, but descriptor says it supports it?                
+
                 deviceName = MakeValidFileName(deviceName).ToLower();
 
                 Uri u = new Uri(string.Format("/{0}/image.png", deviceName), UriKind.Relative);
