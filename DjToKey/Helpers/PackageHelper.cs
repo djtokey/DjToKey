@@ -57,12 +57,12 @@ namespace Ktos.DjToKey.Helpers
         {
             safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
             this.deviceName = deviceName;
-            IEnumerable<string> files = listPackages();
+            IEnumerable<string> files = listDevicePackages();
 
             return DevicePackage.Load(findPackage(files), deviceName);            
         }
 
-        private IEnumerable<string> listPackages()
+        private IEnumerable<string> listDevicePackages()
         {
             var appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
 
@@ -77,9 +77,13 @@ namespace Ktos.DjToKey.Helpers
                 localAppDataByName = new List<string>();
             }
 
+            var files = Enumerable.Concat(Enumerable.Concat(appFolderByName, localAppDataByName), listAllPackages());
+            return files;
+        }
+
+        private static IEnumerable<string> listAllPackages()
+        {
             var appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
-
-
             IEnumerable<string> localAppDataAll = null;
             try
             {
@@ -90,8 +94,7 @@ namespace Ktos.DjToKey.Helpers
                 localAppDataAll = new List<string>();
             }
 
-            var files = Enumerable.Concat(Enumerable.Concat(appFolderByName, localAppDataByName), Enumerable.Concat(appFolderAll, localAppDataAll));
-            return files;
+            return Enumerable.Concat(appFolderAll, localAppDataAll);
         }
 
         private string findPackage(IEnumerable<string> filesList)
