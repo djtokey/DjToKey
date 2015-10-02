@@ -72,7 +72,7 @@ namespace Ktos.DjToKey
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public IEnumerable<Control> Controls { get; private set; }
+        public IEnumerable<Control> Controls { get; set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
@@ -105,24 +105,12 @@ namespace Ktos.DjToKey
         /// <param name="deviceName">Name of a device to be loaded</param>
         public void Load(string deviceName)
         {
-            ActiveDevice = deviceName;
-
-            loadControls();
+            ActiveDevice = deviceName;            
 
             tim = new Timer();
             tim.Interval = 3000;
             tim.Elapsed += (s, e) => { handleControl("1", 2); };
             tim.Start();
-        }
-
-        /// <summary>
-        /// Loads control definitions from file
-        /// </summary>
-        private void loadControls()
-        {
-            string f = @"devices\" + ValidFileName.MakeValidFileName(ActiveDevice) + ".dtkpkg";
-            DevicePackage d = DevicePackage.Load(f);
-            Controls = JsonConvert.DeserializeObject<IEnumerable<Control>>(d.Definition);
         }
 
         /// <summary>
@@ -158,6 +146,7 @@ namespace Ktos.DjToKey
         /// </summary>
         public void Unload()
         {
+            tim.Stop();
         }
     }
 }

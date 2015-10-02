@@ -68,7 +68,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public IEnumerable<Plugins.Device.Control> Controls { get; private set; }
+        public IEnumerable<Plugins.Device.Control> Controls { get; set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts

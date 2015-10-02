@@ -55,7 +55,7 @@ namespace Ktos.DjToKey.Plugins.Device
         /// <summary>
         /// List of possible controls in connected device
         /// </summary>
-        IEnumerable<Control> Controls { get; }
+        IEnumerable<Control> Controls { get; set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
@@ -77,14 +77,6 @@ namespace Ktos.DjToKey.Plugins.Device
         /// <summary>
         /// Unloads currently active device and stops listening for its events
         /// </summary>
-        void Unload();        
-
-        /// <summary>
-        /// Performs saving bindings to a device file
-        ///
-        /// This is deprecated method available only in Plugin API 0.8 for compatibility before 0.3 DjToKey release. It will be removed after "look & feel" improvements
-        /// </summary>
-        [Obsolete]
-        void SaveBindings();
+        void Unload();
     }
 }

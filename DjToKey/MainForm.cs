@@ -32,6 +32,7 @@
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Model;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Packaging;
 using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
@@ -122,6 +123,8 @@ namespace Ktos.DjToKey
                 dev.ScriptEngine = Program.ScriptEngine;
                 dev.ScriptErrorOccured += OnScriptError;
                 dev.Load(cbMidiDevices.SelectedItem.ToString());
+
+                loadControls();
                 loadBindings();
 
                 trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
@@ -142,11 +145,18 @@ namespace Ktos.DjToKey
             }
         }
 
+        private void loadControls()
+        {
+            string f = @"devices\" + ValidFileName.MakeValidFileName(dev.ActiveDevice) + ".dtkpkg";
+            DevicePackage d = DevicePackage.Load(f, dev.ActiveDevice);
+            dev.Controls = JsonConvert.DeserializeObject<IEnumerable<Plugins.Device.Control>>(d.Definition);
+        }
+
         /// <summary>
         /// Creates a set of TextBox based on all possible controls for device
         /// </summary>
         private void createEditor()
-        {
+        {   
             foreach (var c in dev.Controls)
             {
                 tlpBindings.Controls.Add(new Label()

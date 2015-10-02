@@ -50,7 +50,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// </summary>
         /// <param name="fileName">Package file name to be opened</param>
         /// <param name="deviceName">Device name in a package to load configuration</param>
-        public static DevicePackage Load(string fileName, string deviceName = null)
+        public static DevicePackage Load(string fileName, string deviceName)
         {
             var p = new DevicePackage();
 
@@ -64,13 +64,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 p.Title = pack.PackageProperties.Title;
                 p.Description = pack.PackageProperties.Description;
                 p.Version = pack.PackageProperties.Version;
-                
 
-                Uri u;
-                if (string.IsNullOrEmpty(deviceName))
-                    u = new Uri("/image.png", UriKind.Relative);
-                else
-                    u = new Uri(string.Format("/{0}/image.png", MakeValidFileName(deviceName)), UriKind.Relative);
+                deviceName = MakeValidFileName(deviceName).ToLower();
+
+                Uri u = new Uri(string.Format("/{0}/image.png", deviceName), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
@@ -82,10 +79,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     throw new FileNotFoundException("Device image file not found in package.");
                 }
                 
-                if (string.IsNullOrEmpty(deviceName))
-                    u = new Uri("/definition.json", UriKind.Relative);
-                else
-                    u = new Uri(string.Format("/{0}/definition.json", MakeValidFileName(deviceName)), UriKind.Relative);
+                u = new Uri(string.Format("/{0}/definition.json", deviceName), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
