@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Extensions\Assembly.cs" />
     <Compile Include="Helpers\GitVersion.cs" />
+    <Compile Include="Helpers\PackageLoader.cs" />
     <Compile Include="Mock\MockDevice.cs" />
     <Compile Include="Midi\MidiDevice.cs" />
     <Compile Include="Model\AllDevices.cs" />

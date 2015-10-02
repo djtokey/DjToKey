@@ -64,6 +64,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 p.Title = pack.PackageProperties.Title;
                 p.Description = pack.PackageProperties.Description;
                 p.Version = pack.PackageProperties.Version;
+                p.Keywords = pack.PackageProperties.Keywords;
 
                 deviceName = MakeValidFileName(deviceName).ToLower();
 
@@ -121,7 +122,14 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// <summary>
         /// Version of device package
         /// </summary>
-        public string Version { get; private set; }        
+        public string Version { get; private set; }
+
+        /// <summary>
+        /// Keywords of device package - list of device names supported
+        ///
+        /// Separated by ";", may use * wildcard to support many devices with same prefix
+        /// </summary>
+        public string Keywords { get; private set; }
 
         /// <summary>Replaces characters in <c>text</c> that are not allowed in
         /// file names with the specified replacement character.</summary>

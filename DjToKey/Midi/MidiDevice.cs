@@ -117,6 +117,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Loads control definitions from file
         /// </summary>
+        [Obsolete]
         private void loadControls()
         {
             string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
