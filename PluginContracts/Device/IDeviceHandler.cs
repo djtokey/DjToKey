@@ -77,7 +77,7 @@ namespace Ktos.DjToKey.Plugins.Device
         /// <summary>
         /// Unloads currently active device and stops listening for its events
         /// </summary>
-        void Unload();
+        void Unload();        
 
         /// <summary>
         /// Performs saving bindings to a device file

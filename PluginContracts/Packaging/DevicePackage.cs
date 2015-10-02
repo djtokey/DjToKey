@@ -63,13 +63,11 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 Description = pack.PackageProperties.Description;
                 Version = pack.PackageProperties.Version;
 
-                deviceName = MakeValidFileName(deviceName);
-
                 Uri u;
                 if (string.IsNullOrEmpty(deviceName))
                     u = new Uri("/image.png", UriKind.Relative);
                 else
-                    u = new Uri(string.Format("/{0}/image.png", deviceName), UriKind.Relative);
+                    u = new Uri(string.Format("/{0}/image.png", MakeValidFileName(deviceName)), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
@@ -83,7 +81,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 if (string.IsNullOrEmpty(deviceName))
                     u = new Uri("/definition.json", UriKind.Relative);
                 else
-                    u = new Uri(string.Format("/{0}/definition.json", deviceName), UriKind.Relative);
+                    u = new Uri(string.Format("/{0}/definition.json", MakeValidFileName(deviceName)), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {

@@ -29,11 +29,13 @@
 
 #endregion License
 
+using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Model;
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -120,6 +122,7 @@ namespace Ktos.DjToKey
                 dev.ScriptEngine = Program.ScriptEngine;
                 dev.ScriptErrorOccured += OnScriptError;
                 dev.Load(cbMidiDevices.SelectedItem.ToString());
+                loadBindings();
 
                 trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
                 this.Text = trayIcon.Text;
@@ -218,7 +221,30 @@ namespace Ktos.DjToKey
                 }
             }
 
-            dev.SaveBindings();
+            saveBindings();
+        }
+
+        /// <summary>
+        /// Saves bindings to file
+        /// </summary>
+        private void saveBindings()
+        {
+            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.ActiveDevice) + ".json";
+            File.WriteAllText(f, JsonConvert.SerializeObject(dev.Bindings));
+        }
+
+        private void loadBindings()
+        {
+            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.ActiveDevice) + ".json";
+
+            try
+            {
+                dev.Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+            }
+            catch (FileNotFoundException)
+            {
+                dev.Bindings = new List<ControlBinding>();
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

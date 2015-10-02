@@ -107,26 +107,11 @@ namespace Ktos.DjToKey.MidiDevice
             ActiveDevice = deviceName;
 
             loadControls();
-            loadBindings();
 
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
             if (!dev.IsOpen) dev.Open();
             dev.StartReceiving(null);
-        }
-
-        private void loadBindings()
-        {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-
-            try
-            {
-                Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
-            }
-            catch (FileNotFoundException)
-            {
-                Bindings = new List<ControlBinding>();
-            }
         }
 
         /// <summary>
@@ -183,8 +168,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// </summary>
         public void SaveBindings()
         {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
+            throw new InvalidOperationException();
         }
 
         /// <summary>

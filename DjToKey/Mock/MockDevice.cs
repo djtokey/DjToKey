@@ -108,26 +108,11 @@ namespace Ktos.DjToKey
             ActiveDevice = deviceName;
 
             loadControls();
-            loadBindings();
 
             tim = new Timer();
             tim.Interval = 3000;
             tim.Elapsed += (s, e) => { handleControl("1", 2); };
             tim.Start();
-        }
-
-        private void loadBindings()
-        {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-
-            try
-            {
-                Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
-            }
-            catch (FileNotFoundException)
-            {
-                Bindings = new List<ControlBinding>();
-            }
         }
 
         /// <summary>
@@ -163,13 +148,9 @@ namespace Ktos.DjToKey
             }
         }
 
-        /// <summary>
-        /// Saves bindings to file
-        /// </summary>
         public void SaveBindings()
         {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-            File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
+            throw new InvalidOperationException();
         }
 
         /// <summary>
