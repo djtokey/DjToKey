@@ -119,6 +119,8 @@ namespace Ktos.DjToKey
         {
             try
             {
+                if (dev != null) dev.Unload();
+
                 dev = allDevices.FindHandler(cbMidiDevices.SelectedItem.ToString());
                 dev.ScriptEngine = Program.ScriptEngine;
                 dev.ScriptErrorOccured += OnScriptError;
@@ -129,6 +131,7 @@ namespace Ktos.DjToKey
 
                 trayIcon.Text = Resources.AppResources.AppName + " - " + dev.ActiveDevice;
                 this.Text = trayIcon.Text;
+                
                 createEditor();
             }
             catch (JsonReaderException)
@@ -157,7 +160,8 @@ namespace Ktos.DjToKey
         /// Creates a set of TextBox based on all possible controls for device
         /// </summary>
         private void createEditor()
-        {   
+        {
+            tlpBindings.Controls.Clear();
             foreach (var c in dev.Controls)
             {
                 tlpBindings.Controls.Add(new Label()
