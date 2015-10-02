@@ -66,7 +66,6 @@ namespace Ktos.DjToKey.Helpers
         {
             var appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
 
-
             IEnumerable<string> localAppDataByName = null;
             try
             {
@@ -122,13 +121,14 @@ namespace Ktos.DjToKey.Helpers
             if (string.IsNullOrEmpty(keywords))
                 return false;
 
-            var devices = keywords.Split('|');
+            var devices = keywords.Split(';');
             foreach (string d in devices)
             {
                 if (d.StartsWith("*") && deviceName.EndsWith(d)) return true;
                 if (d.EndsWith("*") && deviceName.StartsWith(d)) return true;
                 if (d == deviceName) return true;
                 if (d == safeDeviceName) return true;
+                if (d.ToLower() == safeDeviceName) return true;
             }
 
             return false;

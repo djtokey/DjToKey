@@ -106,23 +106,11 @@ namespace Ktos.DjToKey.MidiDevice
 
             ActiveDevice = deviceName;
 
-            loadControls();
-
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
             if (!dev.IsOpen) dev.Open();
             dev.StartReceiving(null);
-        }
-
-        /// <summary>
-        /// Loads control definitions from file
-        /// </summary>
-        [Obsolete]
-        private void loadControls()
-        {
-            string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            Controls = JsonConvert.DeserializeObject<IEnumerable<Plugins.Device.Control>>(File.ReadAllText(f));
-        }
+        }        
 
         /// <summary>
         /// Handles ControlChange messages
