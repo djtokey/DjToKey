@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow x:Class="Ktos.DjToKey.MainWindow"
+﻿<Controls:MetroWindow x:Class="Ktos.DjToKey.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
-        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="dtk.ico">
+        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico">
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
