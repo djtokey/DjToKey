@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ktos.DjToKey"
+        xmlns:viewmodels="clr-namespace:Ktos.DjToKey.ViewModels"
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
         ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico">
+    <Window.Resources>
+        <viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
+    </Window.Resources>
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
@@ -36,7 +40,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-    <Grid>
+    <Grid DataContext="{StaticResource MainWindowViewModel}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="914" />
             <ColumnDefinition />
@@ -45,18 +49,21 @@
         <Controls:MetroAnimatedSingleRowTabControl Grid.Column="0" ItemsSource="{Binding Devices}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TabItem Header="{Binding DeviceName}">
-                        <Grid HorizontalAlignment="Left" Margin="5">
-                            <Image Stretch="None" Height="600" Width="900" Source="{Binding DeviceImage}" />
-                            <Canvas x:Name="LayoutRoot" Background="PowderBlue" Height="600" Width="900" />
-                        </Grid>
-                    </TabItem>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
                 </DataTemplate>
             </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Left" Margin="5">
+                        <Image Stretch="None" Height="600" Width="900" Source="{Binding Image}" />
+                        <Canvas x:Name="LayoutRoot" Background="PowderBlue" Height="600" Width="900" />
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StackPanel Grid.Column="1">
-            
+
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

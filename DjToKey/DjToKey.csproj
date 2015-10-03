@@ -114,6 +114,7 @@
     <Compile Include="Helpers\GitVersion.cs" />
     <Compile Include="Helpers\PackageHelper.cs" />
     <Compile Include="Helpers\ValidFileName.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
