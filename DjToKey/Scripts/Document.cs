@@ -31,7 +31,7 @@
 
 using Ktos.DjToKey.Plugins.Scripts;
 using System.ComponentModel.Composition;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace Ktos.DjToKey.Scripts
 {
@@ -78,7 +78,7 @@ namespace Ktos.DjToKey.Scripts
         /// <param name="message">A message to be shown</param>
         public void Alert(string message)
         {
-            MessageBox.Show(message);
+            //MessageBox.Show(message);            
         }
     }
 }
