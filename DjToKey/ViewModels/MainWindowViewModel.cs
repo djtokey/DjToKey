@@ -32,6 +32,7 @@
 using Ktos.DjToKey.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Ktos.DjToKey.ViewModels
 {
@@ -46,6 +47,19 @@ namespace Ktos.DjToKey.ViewModels
             Devices.Add(new Device() { Name = "Test 2" });
 
             // TODO: dodawanie devices z kolekcji AllDevices.AvailableDevices
+        }
+
+        public void About()
+        {
+#if DEBUG
+            var version = Build.GitVersion.FullSemVer;
+#else
+            var version = Build.GitVersion.SemVer;
+#endif
+
+            var mess = string.Format(Resources.AppResources.About, Resources.AppResources.AppName, version);
+
+            MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public ObservableCollection<Device> Devices { get; set; }

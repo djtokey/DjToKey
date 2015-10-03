@@ -29,6 +29,7 @@
 
 #endregion License
 
+using Ktos.DjToKey.ViewModels;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,11 @@ namespace Ktos.DjToKey.Views
                 trayIcon.Visible = false;
                 this.ShowInTaskbar = true;
             }
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindowViewModel).About();
         }
     }
 }
