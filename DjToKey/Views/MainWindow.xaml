@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
-        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico">
+        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" StateChanged="MainWindow_StateChanged">
     <Window.Resources>
         <viewmodels:MainWindowViewModel x:Key="MainWindowViewModel" />
     </Window.Resources>
