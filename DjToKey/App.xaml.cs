@@ -43,12 +43,12 @@ namespace Ktos.DjToKey
         /// <summary>
         /// A script engine used in application
         /// </summary>
-        public static ScriptEngine ScriptEngine;
+        internal static ScriptEngine ScriptEngine;
 
         /// <summary>
         /// A class used for importing all possible plugins
         /// </summary>
-        private PluginImporter PluginImporter;
+        internal static PluginImporter PluginImporter;
 
         public App()
         {
