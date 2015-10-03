@@ -33,12 +33,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO.Packaging;
 using Ktos.DjToKey.Plugins.Packaging;
 using System.IO;
+using Ktos.DjToKey.Helpers;
+using Ktos.DjToKey.Models;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
 
-namespace Ktos.DjToKey.Helpers
+namespace Ktos.DjToKey.Packaging
 {
     /// <summary>
     /// A helper class for finding, loading, downloading and checking DjToKey packages
@@ -134,12 +138,92 @@ namespace Ktos.DjToKey.Helpers
             return false;
         }
 
-        private PackageProperties loadPackageMetadata(string fileName)
+        private PackageMetadata loadPackageMetadata(string fileName)
         {
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
             {
-                return pack.PackageProperties;
+                return new PackageMetadata()
+                {
+                    Keywords = pack.PackageProperties.Keywords,
+                    Title = pack.PackageProperties.Title,
+                    Description = pack.PackageProperties.Description,
+                    Version = pack.PackageProperties.Version
+                };                
             }
+        }
+
+        private IEnumerable<Device> loadDevicesFromPackage(string fileName)
+        {
+            List<Device> devices = new List<Device>();
+
+            using (var pack = Package.Open(fileName, FileMode.Open))
+            {
+                List<string> devicesInPackage = new List<string>();
+
+                foreach (var p in pack.GetParts())
+                {
+                    string x = p.Uri.ToString().TrimStart('/');
+
+                    if (x == "map.json")
+                        continue;
+
+                    x = x.Remove(x.IndexOf('/'));
+
+                    if (x != "_rels" && x != "package")
+                        devicesInPackage.Add(x);
+                }
+
+                foreach (var d in devicesInPackage.Distinct())
+                {
+                    Device x = new Device();
+                    x.Name = d;
+
+                    Uri u = new Uri(string.Format("/{0}/definition.json", x.Name), UriKind.Relative);
+
+                    if (pack.PartExists(u))
+                    {
+                        var f = pack.GetPart(u).GetStream();
+                        using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
+                        {
+                            string json = reader.ReadToEnd();
+                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Plugins.Device.Control>>(json);
+                        }
+                    }
+
+                    u = new Uri(string.Format("/{0}/image.png", x.Name), UriKind.Relative);
+
+                    if (pack.PartExists(u))
+                    {
+                        BitmapImage bitmap;
+
+                        using (var stream = pack.GetPart(u).GetStream())
+                        {
+                            bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.StreamSource = stream;
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+                            bitmap.Freeze();
+                        }
+
+                        x.Image = bitmap;
+                    }
+
+                    devices.Add(x);
+                }
+
+                /*
+                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
+                {
+                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
+                    {
+                        mapFile.Map = tr.ReadToEnd();
+                    }
+                }*/              
+                
+            }
+
+            return devices;
         }
     }
 }
