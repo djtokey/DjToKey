@@ -3,7 +3,7 @@
 
   <UsingTask
     TaskName="GitVersionTask.GetVersion"
-    AssemblyFile="$(SolutionDir)packages\Ktos.Build.GitVersion.1.0.1\GitVersionTask.dll"  />
+    AssemblyFile="$(SolutionDir)packages\Ktos.Build.GitVersion.1.1.0\GitVersionTask.dll"  />
 
   <Target Name="Version" BeforeTargets="BeforeBuild">
     <GetVersion SolutionDirectory="$(SolutionDir)">
@@ -21,11 +21,10 @@
       <Output TaskParameter="FullSemVer" PropertyName="GfvFullSemVer" />
       <Output TaskParameter="AssemblySemVer" PropertyName="GfvAssemblySemVer" />
       <Output TaskParameter="NuGetVersion" PropertyName="GfvNuGetVersion" />
-      <Output TaskParameter="ClassicVersion" PropertyName="GfvClassicVersion" />
-      <Output TaskParameter="ClassicVersionWithTag" PropertyName="GfvClassicVersionWithTag" />
       <Output TaskParameter="PreReleaseTag" PropertyName="GfvPreReleaseTag" />
       <Output TaskParameter="PreReleaseTagWithDash" PropertyName="GfvPreReleaseTagWithDash" />
       <Output TaskParameter="InformationalVersion" PropertyName="GfvInformationalVersion" />
+	  <Output TaskParameter="CommitDate" PropertyName="GitVersion_CommitDate" />
     </GetVersion>
 
     <GitVersion LocalPath="$(MSBuildProjectDirectory)">
@@ -77,13 +76,7 @@
       </Tokens>
       <Tokens Include="GfvNuGetVersion">
         <ReplacementValue>$(GfvNuGetVersion)</ReplacementValue>
-      </Tokens>
-      <Tokens Include="GfvClassicVersion">
-        <ReplacementValue>$(GfvClassicVersion)</ReplacementValue>
-      </Tokens>
-      <Tokens Include="GfvClassicVersionWithTag">
-        <ReplacementValue>$(GfvClassicVersionWithTag)</ReplacementValue>
-      </Tokens>
+      </Tokens>      
       <Tokens Include="GfvPreReleaseTag">
         <ReplacementValue>$(GfvPreReleaseTag)</ReplacementValue>
       </Tokens>
@@ -92,6 +85,9 @@
       </Tokens>
       <Tokens Include="GfvInformationalVersion">
         <ReplacementValue>$(GfvInformationalVersion)</ReplacementValue>
+      </Tokens>
+	  <Tokens Include="GfvClassicVersion">
+        <ReplacementValue>$(GitVersion_CommitDate)</ReplacementValue>
       </Tokens>
     </ItemGroup>
 
