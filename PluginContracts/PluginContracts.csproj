@@ -46,7 +46,6 @@
     <Compile Include="Device\ControlBinding.cs" />
     <Compile Include="Device\DeviceException.cs" />
     <Compile Include="Device\IDeviceHandler.cs" />
-    <Compile Include="Packaging\DevicePackage.cs" />
     <Compile Include="Scripts\IScriptEngine.cs" />
     <Compile Include="Scripts\IScriptObject.cs" />
     <Compile Include="Scripts\IScriptPlugins.cs" />

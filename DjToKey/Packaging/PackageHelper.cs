@@ -115,11 +115,6 @@ namespace Ktos.DjToKey.Packaging
             throw new FileNotFoundException("No suitable package file found for this device");
         }
 
-        private DevicePackage loadPackage(string fileName)
-        {
-            return DevicePackage.Load(fileName, safeDeviceName);
-        }
-
         private bool deviceSupported(string keywords)
         {            
             if (string.IsNullOrEmpty(keywords))
