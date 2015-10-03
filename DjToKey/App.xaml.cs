@@ -29,20 +29,33 @@
 
 #endregion License
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using Ktos.DjToKey.Plugins;
+using Ktos.DjToKey.Scripts;
 using System.Windows;
 
-namespace DjToKey_WPF
+namespace Ktos.DjToKey
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// A script engine used in application
+        /// </summary>
+        public static ScriptEngine ScriptEngine;
+
+        /// <summary>
+        /// A class used for importing all possible plugins
+        /// </summary>
+        private PluginImporter PluginImporter;
+
+        public App()
+        {
+            PluginImporter = new PluginImporter();
+
+            ScriptEngine = new ScriptEngine();
+            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+        }        
     }
 }

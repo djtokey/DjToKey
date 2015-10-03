@@ -45,7 +45,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DjToKey_WPF
+namespace Ktos.DjToKey
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
