@@ -29,56 +29,46 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins.Scripts;
-using System.ComponentModel.Composition;
+using Ktos.DjToKey.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 
-namespace Ktos.DjToKey.Scripts
+namespace Ktos.DjToKey.ViewModels
 {
-    /// <summary>
-    /// Class representing Document object available for scripts
-    /// </summary>
-    [Export(typeof(IScriptObject))]
-    public class Document : IScriptObject
+    class MainWindowViewModel : INotifyPropertyChanged
     {
-        private const string name = "Document";
-
-        public string Name
+        public MainWindowViewModel()
         {
-            get
-            {
-                return name;
-            }
+            Devices = new ObservableCollection<Device>();
+            var allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
+
+            Devices.Add(new Device() { Name = "Test" });
+            Devices.Add(new Device() { Name = "Test 2" });
+
+            // TODO: dodawanie devices z kolekcji AllDevices.AvailableDevices
         }
 
-        public object Object
+        public void About()
         {
-            get
-            {
-                return dimpl;
-            }
+#if DEBUG
+            var version = Build.GitVersion.FullSemVer;
+#else
+            var version = Build.GitVersion.SemVer;
+#endif
+
+            var mess = string.Format(Resources.AppResources.About, Resources.AppResources.AppName, version);
+
+            MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private DocumentImpl dimpl;
+        public ObservableCollection<Device> Devices { get; set; }
 
-        public Document()
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
         {
-            dimpl = new DocumentImpl();
-        }
-    }
-
-    /// <summary>
-    /// Document class has methods for showing messages
-    /// </summary>
-    public class DocumentImpl
-    {
-        /// <summary>
-        /// Named for a sake of consistency with browser implementations, Alert shows message box
-        /// </summary>
-        /// <param name="message">A message to be shown</param>
-        public void Alert(string message)
-        {
-            MessageBox.Show(message);            
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
     }
 }

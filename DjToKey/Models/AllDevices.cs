@@ -29,11 +29,10 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
 using System.Collections.Generic;
 
-namespace Ktos.DjToKey.Model
+namespace Ktos.DjToKey.Models
 {
     /// <summary>
     /// This class lists all possible devices from all device handlers

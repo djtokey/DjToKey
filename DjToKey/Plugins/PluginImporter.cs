@@ -44,7 +44,7 @@ namespace Ktos.DjToKey.Plugins
     ///
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
-    class PluginImporter
+    internal class PluginImporter
     {
         public DevicePlugins DevicePlugins { get; set; }
         public ScriptPlugins ScriptPlugins { get; set; }
