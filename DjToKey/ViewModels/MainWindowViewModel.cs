@@ -43,10 +43,10 @@ namespace Ktos.DjToKey.ViewModels
             Devices = new ObservableCollection<Device>();
             var allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
 
-            Devices.Add(new Device() { Name = "Test" });
-            Devices.Add(new Device() { Name = "Test 2" });
-
-            // TODO: dodawanie devices z kolekcji AllDevices.AvailableDevices
+            // lists all devices as just simply strings, while all loading
+            // will be when device is selected
+            foreach (var d in allDevices.AvailableDevices)
+                Devices.Add(new Device() { Name = d });
         }
 
         public void About()
@@ -57,12 +57,28 @@ namespace Ktos.DjToKey.ViewModels
             var version = Build.GitVersion.SemVer;
 #endif
 
-            var mess = string.Format(Resources.AppResources.About, Resources.AppResources.AppName, version);
+            var mess = string.Format(Resources.AppResources.About, Resources.AppResources.AppName, version).Replace("\\n", "\n");
 
             MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public ObservableCollection<Device> Devices { get; set; }
+
+
+        private Device currentDevice;
+        public Device CurrentDevice
+        {
+            get { return currentDevice; }
+            set
+            {
+                if (this.currentDevice != value)
+                {
+                    currentDevice = value;
+                    OnPropertyChanged(nameof(CurrentDevice));
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)

@@ -29,7 +29,9 @@
 
 #endregion License
 
+using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Packaging;
 using System.Collections.Generic;
 
 namespace Ktos.DjToKey.Models
@@ -66,7 +68,9 @@ namespace Ktos.DjToKey.Models
 
             if (plugins != null)
                 foreach (var dh in plugins)
+                {
                     availableDevices.AddRange(dh.AvailableDevices);
+                }
         }
 
         /// <summary>
