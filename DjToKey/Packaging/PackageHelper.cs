@@ -61,12 +61,12 @@ namespace Ktos.DjToKey.Packaging
         {
             safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
             this.deviceName = deviceName;
-            IEnumerable<string> files = listDevicePackages();
+            IEnumerable<string> files = ListDevicePackageFileNames();
 
-            return DevicePackage.Load(findPackage(files), deviceName);            
+            return DevicePackage.Load(findPackage(files), deviceName);
         }
 
-        private IEnumerable<string> listDevicePackages()
+        public IEnumerable<string> ListDevicePackageFileNames()
         {
             var appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
 
@@ -106,7 +106,7 @@ namespace Ktos.DjToKey.Packaging
             {
                 foreach (string f in filesList)
                 {
-                    var mt = loadPackageMetadata(f);
+                    var mt = LoadMetadata(f);
                     if (deviceSupported(mt.Keywords))
                         return f;
                 }
@@ -133,7 +133,7 @@ namespace Ktos.DjToKey.Packaging
             return false;
         }
 
-        private PackageMetadata loadPackageMetadata(string fileName)
+        public static PackageMetadata LoadMetadata(string fileName)
         {
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
             {
@@ -142,7 +142,8 @@ namespace Ktos.DjToKey.Packaging
                     Keywords = pack.PackageProperties.Keywords,
                     Title = pack.PackageProperties.Title,
                     Description = pack.PackageProperties.Description,
-                    Version = pack.PackageProperties.Version
+                    Version = pack.PackageProperties.Version,
+                    Category = pack.PackageProperties.Category
                 };                
             }
         }

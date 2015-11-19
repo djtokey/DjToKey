@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace Ktos.DjToKey.Packaging
 {
-    class PackageMetadata : INotifyPropertyChanged
+    public class PackageMetadata : INotifyPropertyChanged
     {
 
         private string title;
+
+        /// <summary>
+        /// Title of device package
+        /// </summary>
         public string Title
         {
             get { return title; }
@@ -27,6 +31,10 @@ namespace Ktos.DjToKey.Packaging
 
 
         private string description;
+
+        /// <summary>
+        /// Optional description of device package
+        /// </summary>
         public string Description
         {
             get { return description; }
@@ -42,6 +50,10 @@ namespace Ktos.DjToKey.Packaging
 
 
         private string version;
+
+        /// <summary>
+        /// Version of device package
+        /// </summary>
         public string Version
         {
             get { return version; }
@@ -57,6 +69,12 @@ namespace Ktos.DjToKey.Packaging
 
 
         private string keywords;
+
+        /// <summary>
+        /// Keywords of device package - list of device names supported
+        ///
+        /// Separated by ";", may use * wildcard to support many devices with same prefix
+        /// </summary>
         public string Keywords
         {
             get { return keywords; }
@@ -69,6 +87,22 @@ namespace Ktos.DjToKey.Packaging
                 }
             }
         }
+
+
+        private string category;
+        public string Category
+        {
+            get { return category; }
+            set
+            {
+                if (this.category != value)
+                {
+                    category = value;
+                    OnPropertyChanged(nameof(Category));
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName]string name = "")

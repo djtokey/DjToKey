@@ -34,6 +34,11 @@ using System.Text;
 using System.IO.Packaging;
 using System.IO;
 using System.Linq;
+using System.Windows.Media.Imaging;
+using Ktos.DjToKey.Packaging;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Ktos.DjToKey.Plugins.Packaging
 {
@@ -46,7 +51,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
     public class DevicePackage
     {
         /// <summary>
-        /// Opens a device package of a given name and loads a device definition from it
+        /// Opens a device package of a given name and loads metadata from it
         /// </summary>
         /// <param name="fileName">Package file name to be opened</param>
         /// <param name="deviceName">Device name in a package to load configuration</param>
@@ -54,42 +59,65 @@ namespace Ktos.DjToKey.Plugins.Packaging
         {
             var p = new DevicePackage();
 
+            p.Metadata = PackageHelper.LoadMetadata(fileName);
+            p.PackageFileName = fileName;
+
+            // .dtkpkg files may be device descriptors or other categories, if package describes itself
+            // as not device package, throw exception
+            if (!string.IsNullOrEmpty(p.Metadata.Category) && p.Metadata.Category != "device")
+                throw new ArgumentException("Package is not a device descriptor package.");
+
+            p.Device = loadDevice(fileName, deviceName);
+
+            return p;
+        }
+
+        private static Models.Device loadDevice(string fileName, string deviceName)
+        {
+            // TODO: support for mapping file!
+            Models.Device result = new Models.Device();            
+
+            deviceName = MakeValidFileName(deviceName).ToLower();
+
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
             {
-                // .dtkpkg files may be device descriptors or other categories, if package describes itself
-                // as not device package, throw exception
-                if (!string.IsNullOrEmpty(pack.PackageProperties.Category) && pack.PackageProperties.Category != "device")
-                    throw new ArgumentException("Package is not device descriptor");
-
-                p.Title = pack.PackageProperties.Title;
-                p.Description = pack.PackageProperties.Description;
-                p.Version = pack.PackageProperties.Version;
-                p.Keywords = pack.PackageProperties.Keywords;
-
-                // TODO: mapping file - what if device name does not correspond with folder name, but descriptor says it supports it?                
-
-                deviceName = MakeValidFileName(deviceName).ToLower();
-
                 Uri u = new Uri(string.Format("/{0}/image.png", deviceName), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
-                    p.Image = new MemoryStream();
-                    pack.GetPart(u).GetStream().CopyTo(p.Image);
+                    var imageStream = new MemoryStream();
+                    pack.GetPart(u).GetStream().CopyTo(imageStream);
+
+                    result.Image = new BitmapImage();
+                    result.Image.BeginInit();
+                    result.Image.StreamSource = imageStream;
+                    result.Image.CacheOption = BitmapCacheOption.OnLoad;
+                    result.Image.EndInit();
+                    result.Image.Freeze();
                 }
                 else
                 {
                     throw new FileNotFoundException("Device image file not found in package.");
                 }
-                
+
                 u = new Uri(string.Format("/{0}/definition.json", deviceName), UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
                     var f = pack.GetPart(u).GetStream();
+                    string definition;
                     using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
                     {
-                        p.Definition = reader.ReadToEnd();
+                        definition = reader.ReadToEnd();
+                    }
+
+                    try
+                    {
+                        result.Controls = JsonConvert.DeserializeObject<ObservableCollection<Device.Control>>(definition);
+                    }
+                    catch (JsonException)
+                    {
+                        throw new FileLoadException("Cannot load device configuration file from package");
                     }
                 }
                 else
@@ -98,40 +126,23 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 }
             }
 
-            return p;
+            return result;
         }
 
         /// <summary>
-        /// A stream to device image file
+        /// File name of a package file
         /// </summary>
-        public Stream Image { get; private set; }
+        public string PackageFileName { get; private set; }
 
         /// <summary>
-        /// A device definition file as a string
+        /// Device package metadata
         /// </summary>
-        public string Definition { get; private set; }
+        public PackageMetadata Metadata;
 
         /// <summary>
-        /// Title of device package
+        /// Loaded device from a package
         /// </summary>
-        public string Title { get; private set; }
-
-        /// <summary>
-        /// Optional description of device package
-        /// </summary>
-        public string Description { get; private set; }
-
-        /// <summary>
-        /// Version of device package
-        /// </summary>
-        public string Version { get; private set; }
-
-        /// <summary>
-        /// Keywords of device package - list of device names supported
-        ///
-        /// Separated by ";", may use * wildcard to support many devices with same prefix
-        /// </summary>
-        public string Keywords { get; private set; }
+        public Models.Device Device { get; set; }
 
         /// <summary>Replaces characters in <c>text</c> that are not allowed in
         /// file names with the specified replacement character.</summary>
