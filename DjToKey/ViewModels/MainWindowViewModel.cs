@@ -35,22 +35,27 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using Ktos.DjToKey.Plugins.Device;
 
 namespace Ktos.DjToKey.ViewModels
 {
     class MainWindowViewModel : INotifyPropertyChanged
     {
+        private IDeviceHandler deviceHandler;
+        private AllDevices allDevices;
+        private IDeviceHandler currentHandler;
+
         public MainWindowViewModel()
         {
             Devices = new ObservableCollection<Device>();
-            var allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
+            allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
 
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
-                Devices.Add(loadDevice(d));
+                Devices.Add(findAndLoadDeviceFromPackage(d));
         }
 
-        private Device loadDevice(string name)
+        private Device findAndLoadDeviceFromPackage(string name)
         {
             var d = PackageHelper.LoadDevicePackage(name);
             return d.Device;
@@ -89,9 +94,14 @@ namespace Ktos.DjToKey.ViewModels
             {
                 if (this.currentDevice != value)
                 {
+                    if (currentHandler != null) currentHandler.Unload();
 
                     currentDevice = value;
                     OnPropertyChanged(nameof(CurrentDevice));
+                    currentHandler = allDevices.FindHandler(currentDevice.Name);
+                    if (currentHandler != null) currentHandler.Load(currentDevice.Name);
+
+                    // TODO: load bindings for current device
                 }
             }
         }
