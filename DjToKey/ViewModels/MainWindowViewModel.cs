@@ -40,10 +40,9 @@ using Ktos.DjToKey.Plugins.Device;
 namespace Ktos.DjToKey.ViewModels
 {
     class MainWindowViewModel : INotifyPropertyChanged
-    {
-        private IDeviceHandler deviceHandler;
+    {        
         private AllDevices allDevices;
-        private IDeviceHandler currentHandler;
+        private IDeviceHandler deviceHandler;
 
         public MainWindowViewModel()
         {
@@ -94,12 +93,12 @@ namespace Ktos.DjToKey.ViewModels
             {
                 if (this.currentDevice != value)
                 {
-                    if (currentHandler != null) currentHandler.Unload();
+                    if (deviceHandler != null) deviceHandler.Unload();
 
                     currentDevice = value;
                     OnPropertyChanged(nameof(CurrentDevice));
-                    currentHandler = allDevices.FindHandler(currentDevice.Name);
-                    if (currentHandler != null) currentHandler.Load(currentDevice.Name);
+                    deviceHandler = allDevices.FindHandler(currentDevice.Name);
+                    if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);
 
                     // TODO: load bindings for current device
                 }
