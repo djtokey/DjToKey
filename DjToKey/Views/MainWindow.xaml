@@ -31,7 +31,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="0" ItemsSource="{Binding Devices}" SelectionChanged="MetroAnimatedSingleRowTabControl_SelectionChanged">
+        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="0" ItemsSource="{Binding Devices}" SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"></TextBlock>

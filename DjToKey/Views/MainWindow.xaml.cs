@@ -91,10 +91,5 @@ namespace Ktos.DjToKey.Views
         {
             (DataContext as MainWindowViewModel).About();
         }
-
-        private void MetroAnimatedSingleRowTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            (DataContext as MainWindowViewModel).LoadDeviceFully((sender as MetroAnimatedSingleRowTabControl).SelectedItem as Models.Device);
-        }
     }
 }
