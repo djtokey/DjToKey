@@ -29,15 +29,12 @@
 
 #endregion License
 
-using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
 using Midi;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 
 namespace Ktos.DjToKey.MidiDevice
@@ -110,7 +107,7 @@ namespace Ktos.DjToKey.MidiDevice
             dev.NoteOn += dev_NoteOn;
             if (!dev.IsOpen) dev.Open();
             dev.StartReceiving(null);
-        }        
+        }
 
         /// <summary>
         /// Handles ControlChange messages

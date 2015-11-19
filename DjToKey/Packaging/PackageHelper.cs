@@ -29,25 +29,20 @@
 
 #endregion License
 
+using Ktos.DjToKey.Helpers;
+using Ktos.DjToKey.Plugins.Packaging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO.Packaging;
-using Ktos.DjToKey.Plugins.Packaging;
 using System.IO;
-using Ktos.DjToKey.Helpers;
-using Ktos.DjToKey.Models;
-using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
+using System.IO.Packaging;
+using System.Linq;
 
 namespace Ktos.DjToKey.Packaging
 {
     /// <summary>
     /// A helper class for finding, loading, downloading and checking DjToKey packages
     /// </summary>
-    class PackageHelper
+    internal class PackageHelper
     {
         /// <summary>
         /// Loads device package for a specified device
@@ -61,6 +56,11 @@ namespace Ktos.DjToKey.Packaging
             return DevicePackage.Load(FindDevicePackageName(files, deviceName), deviceName);
         }
 
+        /// <summary>
+        /// Lists file names for all packages which are possible to handle device of a specified name
+        /// </summary>
+        /// <param name="deviceName">Name of a device to be handled</param>
+        /// <returns>A list of packages file names</returns>
         public static IEnumerable<string> ListDevicePackageFileNames(string deviceName)
         {
             string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
@@ -80,6 +80,10 @@ namespace Ktos.DjToKey.Packaging
             return files;
         }
 
+        /// <summary>
+        /// Lists all dtkpkg files
+        /// </summary>
+        /// <returns>Names of all dtkpkg files</returns>
         public static IEnumerable<string> ListAllPackages()
         {
             var appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
@@ -96,6 +100,12 @@ namespace Ktos.DjToKey.Packaging
             return Enumerable.Concat(appFolderAll, localAppDataAll);
         }
 
+        /// <summary>
+        /// Finds a first package which can handle a device
+        /// </summary>
+        /// <param name="filesList">List of all device packages</param>
+        /// <param name="deviceName">Name of a device to be handled</param>
+        /// <returns>Filename of a package which can handle this device</returns>
         public static string FindDevicePackageName(IEnumerable<string> filesList, string deviceName)
         {
             if (filesList.Count() > 0)
@@ -111,6 +121,12 @@ namespace Ktos.DjToKey.Packaging
             throw new FileNotFoundException("No suitable package file found for this device");
         }
 
+        /// <summary>
+        /// Checks if device is supported by package by checking keywords from package metadata
+        /// </summary>
+        /// <param name="keywords">Keywords extracted from package metadata</param>
+        /// <param name="deviceName">Name of device</param>
+        /// <returns>Returns if device is supported</returns>
         public static bool DeviceSupported(string keywords, string deviceName)
         {
             string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
@@ -131,6 +147,11 @@ namespace Ktos.DjToKey.Packaging
             return false;
         }
 
+        /// <summary>
+        /// Loads all metadata for a specified package
+        /// </summary>
+        /// <param name="fileName">File name to a package</param>
+        /// <returns>All package metadata - Keywords, Title, Description, Version and Category</returns>
         public static PackageMetadata LoadMetadata(string fileName)
         {
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
@@ -145,7 +166,5 @@ namespace Ktos.DjToKey.Packaging
                 };
             }
         }
-
     }
-
 }

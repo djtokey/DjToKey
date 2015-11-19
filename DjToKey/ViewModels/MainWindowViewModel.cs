@@ -84,7 +84,10 @@ namespace Ktos.DjToKey.ViewModels
         private Device currentDevice;
 
         /// <summary>
-        /// Currently used device
+        /// Currently active device
+        /// 
+        /// When currently active device is changed, previous one's handler is removed,
+        /// current handler is found and loaded, and new bindings for controls are loaded
         /// </summary>
         public Device CurrentDevice
         {

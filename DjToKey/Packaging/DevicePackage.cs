@@ -72,6 +72,12 @@ namespace Ktos.DjToKey.Plugins.Packaging
             return p;
         }
 
+        /// <summary>
+        /// Loads a device definition and image from a specified device package
+        /// </summary>
+        /// <param name="fileName">Name of a device package file</param>
+        /// <param name="deviceName">Name of a device</param>
+        /// <returns>A device object with controls, image, name and other parameters</returns>
         public static Models.Device LoadDeviceFromPackage(string fileName, string deviceName)
         {
             // TODO: support for mapping file!
@@ -137,6 +143,11 @@ namespace Ktos.DjToKey.Plugins.Packaging
             return result;
         }
 
+        /// <summary>
+        /// Loads all devices supported in a device package
+        /// </summary>
+        /// <param name="fileName">File name of a device package</param>
+        /// <returns>List of all devices supported with their images and control definitions</returns>
         public static IEnumerable<Models.Device> LoadDevicesFromPackage(string fileName)
         {
             List<Models.Device> devices = new List<Models.Device>();
