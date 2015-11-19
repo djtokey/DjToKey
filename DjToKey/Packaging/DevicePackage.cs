@@ -94,7 +94,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                         result.Image = new BitmapImage();
                         result.Image.BeginInit();
                         result.Image.StreamSource = imageStream;
-                        result.Image.CacheOption = BitmapCacheOption.Default;
+                        result.Image.CacheOption = BitmapCacheOption.OnLoad;
                         result.Image.EndInit();
                         result.Image.Freeze();
                     }

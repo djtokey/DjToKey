@@ -45,26 +45,20 @@ namespace Ktos.DjToKey.ViewModels
             Devices = new ObservableCollection<Device>();
             var allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
 
-            // lists all devices as just simply strings, while all loading
-            // will be when device is selected
+            // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
-                Devices.Add(new Device() { Name = d });
+                Devices.Add(loadDevice(d));
         }
 
-        public void LoadDeviceFully(Device device)
+        private Device loadDevice(string name)
         {
-            if (device != null)
-            {
-                var d = PackageHelper.LoadDevicePackage(device.Name);
-
-                for (int i = 0; i < Devices.Count; i++)
-                {
-                    if (Devices[i].Name == device.Name)
-                        Devices[i] = d.Device;
-                }
-            }        
+            var d = PackageHelper.LoadDevicePackage(name);
+            return d.Device;
         }
 
+        /// <summary>
+        /// Shows About window
+        /// </summary>
         public void About()
         {
 #if DEBUG
@@ -78,10 +72,16 @@ namespace Ktos.DjToKey.ViewModels
             MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>
+        /// List of all devices supported by the application
+        /// </summary>
         public ObservableCollection<Device> Devices { get; set; }
 
-
         private Device currentDevice;
+
+        /// <summary>
+        /// Currently used device
+        /// </summary>
         public Device CurrentDevice
         {
             get { return currentDevice; }
@@ -89,13 +89,16 @@ namespace Ktos.DjToKey.ViewModels
             {
                 if (this.currentDevice != value)
                 {
+
                     currentDevice = value;
                     OnPropertyChanged(nameof(CurrentDevice));
                 }
             }
         }
 
-
+        /// <summary>
+        /// Raised when databound property is changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
