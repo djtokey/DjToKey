@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Reflection;
 using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
@@ -90,9 +91,18 @@ namespace Ktos.DjToKey.Plugins
 
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeParts(DevicePlugins);
-            container.ComposeParts(ScriptPlugins);
+            try
+            {
+                CompositionContainer container = new CompositionContainer(catalog);
+                container.ComposeParts(DevicePlugins);
+                container.ComposeParts(ScriptPlugins);
+            }
+            catch (ReflectionTypeLoadException)
+            {
+                // plugins cannot be loaded due to type mismatch
+                // set dirc to null, so no plugins will be loaded for their metadata
+                dirc = null;
+            }
 
             if (dirc != null)
             {
