@@ -30,6 +30,8 @@
 #endregion License
 
 using Ktos.DjToKey.Models;
+using Ktos.DjToKey.Packaging;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -47,6 +49,20 @@ namespace Ktos.DjToKey.ViewModels
             // will be when device is selected
             foreach (var d in allDevices.AvailableDevices)
                 Devices.Add(new Device() { Name = d });
+        }
+
+        public void LoadDeviceFully(Device device)
+        {
+            if (device != null)
+            {
+                var d = PackageHelper.LoadDevicePackage(device.Name);
+
+                for (int i = 0; i < Devices.Count; i++)
+                {
+                    if (Devices[i].Name == device.Name)
+                        Devices[i] = d.Device;
+                }
+            }        
         }
 
         public void About()

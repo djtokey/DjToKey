@@ -49,25 +49,21 @@ namespace Ktos.DjToKey.Packaging
     /// </summary>
     class PackageHelper
     {
-        private string safeDeviceName;
-        private string deviceName;
-
         /// <summary>
         /// Loads device package for a specified device
         /// </summary>
         /// <param name="deviceName">Name of a device to load description package for</param>
         /// <returns>Loaded package</returns>
-        public DevicePackage LoadDevicePackage(string deviceName)
+        public static DevicePackage LoadDevicePackage(string deviceName)
         {
-            safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
-            this.deviceName = deviceName;
-            IEnumerable<string> files = ListDevicePackageFileNames();
+            IEnumerable<string> files = ListDevicePackageFileNames(deviceName);
 
-            return DevicePackage.Load(findPackage(files), deviceName);
+            return DevicePackage.Load(FindDevicePackageName(files, deviceName), deviceName);
         }
 
-        public IEnumerable<string> ListDevicePackageFileNames()
+        public static IEnumerable<string> ListDevicePackageFileNames(string deviceName)
         {
+            string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
             var appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
 
             IEnumerable<string> localAppDataByName = null;
@@ -80,11 +76,11 @@ namespace Ktos.DjToKey.Packaging
                 localAppDataByName = new List<string>();
             }
 
-            var files = Enumerable.Concat(Enumerable.Concat(appFolderByName, localAppDataByName), listAllPackages());
+            var files = Enumerable.Concat(Enumerable.Concat(appFolderByName, localAppDataByName), ListAllPackages());
             return files;
         }
 
-        private static IEnumerable<string> listAllPackages()
+        public static IEnumerable<string> ListAllPackages()
         {
             var appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
             IEnumerable<string> localAppDataAll = null;
@@ -100,14 +96,14 @@ namespace Ktos.DjToKey.Packaging
             return Enumerable.Concat(appFolderAll, localAppDataAll);
         }
 
-        private string findPackage(IEnumerable<string> filesList)
+        public static string FindDevicePackageName(IEnumerable<string> filesList, string deviceName)
         {
             if (filesList.Count() > 0)
             {
                 foreach (string f in filesList)
                 {
                     var mt = LoadMetadata(f);
-                    if (deviceSupported(mt.Keywords))
+                    if (DeviceSupported(mt.Keywords, deviceName))
                         return f;
                 }
             }
@@ -115,8 +111,10 @@ namespace Ktos.DjToKey.Packaging
             throw new FileNotFoundException("No suitable package file found for this device");
         }
 
-        private bool deviceSupported(string keywords)
-        {            
+        public static bool DeviceSupported(string keywords, string deviceName)
+        {
+            string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
+
             if (string.IsNullOrEmpty(keywords))
                 return false;
 
@@ -144,82 +142,10 @@ namespace Ktos.DjToKey.Packaging
                     Description = pack.PackageProperties.Description,
                     Version = pack.PackageProperties.Version,
                     Category = pack.PackageProperties.Category
-                };                
+                };
             }
         }
 
-        private IEnumerable<Device> loadDevicesFromPackage(string fileName)
-        {
-            List<Device> devices = new List<Device>();
-
-            using (var pack = Package.Open(fileName, FileMode.Open))
-            {
-                List<string> devicesInPackage = new List<string>();
-
-                foreach (var p in pack.GetParts())
-                {
-                    string x = p.Uri.ToString().TrimStart('/');
-
-                    if (x == "map.json")
-                        continue;
-
-                    x = x.Remove(x.IndexOf('/'));
-
-                    if (x != "_rels" && x != "package")
-                        devicesInPackage.Add(x);
-                }
-
-                foreach (var d in devicesInPackage.Distinct())
-                {
-                    Device x = new Device();
-                    x.Name = d;
-
-                    Uri u = new Uri(string.Format("/{0}/definition.json", x.Name), UriKind.Relative);
-
-                    if (pack.PartExists(u))
-                    {
-                        var f = pack.GetPart(u).GetStream();
-                        using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
-                        {
-                            string json = reader.ReadToEnd();
-                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Plugins.Device.Control>>(json);
-                        }
-                    }
-
-                    u = new Uri(string.Format("/{0}/image.png", x.Name), UriKind.Relative);
-
-                    if (pack.PartExists(u))
-                    {
-                        BitmapImage bitmap;
-
-                        using (var stream = pack.GetPart(u).GetStream())
-                        {
-                            bitmap = new BitmapImage();
-                            bitmap.BeginInit();
-                            bitmap.StreamSource = stream;
-                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmap.EndInit();
-                            bitmap.Freeze();
-                        }
-
-                        x.Image = bitmap;
-                    }
-
-                    devices.Add(x);
-                }
-
-                /*
-                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
-                {
-                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
-                    {
-                        mapFile.Map = tr.ReadToEnd();
-                    }
-                }*/              
-                
-            }
-
-            return devices;
-        }
     }
+
 }

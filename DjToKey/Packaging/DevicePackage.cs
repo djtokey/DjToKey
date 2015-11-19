@@ -67,15 +67,16 @@ namespace Ktos.DjToKey.Plugins.Packaging
             if (!string.IsNullOrEmpty(p.Metadata.Category) && p.Metadata.Category != "device")
                 throw new ArgumentException("Package is not a device descriptor package.");
 
-            p.Device = loadDevice(fileName, deviceName);
+            p.Device = LoadDeviceFromPackage(fileName, deviceName);
 
             return p;
         }
 
-        private static Models.Device loadDevice(string fileName, string deviceName)
+        public static Models.Device LoadDeviceFromPackage(string fileName, string deviceName)
         {
             // TODO: support for mapping file!
-            Models.Device result = new Models.Device();            
+            Models.Device result = new Models.Device();
+            result.Name = deviceName;
 
             deviceName = MakeValidFileName(deviceName).ToLower();
 
@@ -88,12 +89,19 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     var imageStream = new MemoryStream();
                     pack.GetPart(u).GetStream().CopyTo(imageStream);
 
-                    result.Image = new BitmapImage();
-                    result.Image.BeginInit();
-                    result.Image.StreamSource = imageStream;
-                    result.Image.CacheOption = BitmapCacheOption.OnLoad;
-                    result.Image.EndInit();
-                    result.Image.Freeze();
+                    try
+                    {
+                        result.Image = new BitmapImage();
+                        result.Image.BeginInit();
+                        result.Image.StreamSource = imageStream;
+                        result.Image.CacheOption = BitmapCacheOption.Default;
+                        result.Image.EndInit();
+                        result.Image.Freeze();
+                    }
+                    catch
+                    {
+                        throw new FileLoadException("Error when loading image file for a device");
+                    }
                 }
                 else
                 {
@@ -128,6 +136,81 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
             return result;
         }
+
+        public static IEnumerable<Models.Device> LoadDevicesFromPackage(string fileName)
+        {
+            List<Models.Device> devices = new List<Models.Device>();
+
+            using (var pack = Package.Open(fileName, FileMode.Open))
+            {
+                List<string> devicesInPackage = new List<string>();
+
+                foreach (var p in pack.GetParts())
+                {
+                    string x = p.Uri.ToString().TrimStart('/');
+
+                    if (x == "map.json")
+                        continue;
+
+                    x = x.Remove(x.IndexOf('/'));
+
+                    if (x != "_rels" && x != "package")
+                        devicesInPackage.Add(x);
+                }
+
+                foreach (var d in devicesInPackage.Distinct())
+                {
+                    Models.Device x = new Models.Device();
+                    x.Name = d;
+
+                    Uri u = new Uri(string.Format("/{0}/definition.json", x.Name), UriKind.Relative);
+
+                    if (pack.PartExists(u))
+                    {
+                        var f = pack.GetPart(u).GetStream();
+                        using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
+                        {
+                            string json = reader.ReadToEnd();
+                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Plugins.Device.Control>>(json);
+                        }
+                    }
+
+                    u = new Uri(string.Format("/{0}/image.png", x.Name), UriKind.Relative);
+
+                    if (pack.PartExists(u))
+                    {
+                        BitmapImage bitmap;
+
+                        using (var stream = pack.GetPart(u).GetStream())
+                        {
+                            bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.StreamSource = stream;
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+                            bitmap.Freeze();
+                        }
+
+                        x.Image = bitmap;
+                    }
+
+                    devices.Add(x);
+                }
+
+                /*
+                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
+                {
+                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
+                    {
+                        mapFile.Map = tr.ReadToEnd();
+                    }
+                }*/
+
+            }
+
+            return devices;
+        }
+
 
         /// <summary>
         /// File name of a package file
@@ -165,7 +248,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                 char c = text[i];
                 if (invalids.Contains(c))
                 {
-                    changed = true;          
+                    changed = true;
                     sb.Append(repl);
                 }
                 else

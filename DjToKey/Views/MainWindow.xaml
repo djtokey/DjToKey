@@ -31,7 +31,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="0" ItemsSource="{Binding Devices}">
+        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="0" ItemsSource="{Binding Devices}" SelectionChanged="MetroAnimatedSingleRowTabControl_SelectionChanged">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"></TextBlock>
@@ -42,6 +42,8 @@
                     <Grid HorizontalAlignment="Left" Margin="5">
                         <Image Stretch="None" Height="600" Width="900" Source="{Binding Image}" />
                         <Canvas x:Name="LayoutRoot" Background="PowderBlue" Height="600" Width="900" />
+
+                        <TextBlock Text="{Binding Controls}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>
