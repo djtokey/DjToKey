@@ -34,21 +34,47 @@ using System.Runtime.Serialization;
 
 namespace Ktos.DjToKey.Plugins.Device
 {
-    [Serializable]
+    /// <summary>
+    /// Exception thrown when there is a problem with a device
+    /// </summary>
+    [Serializable]    
     public class DeviceException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the DeviceException
+        /// </summary>
         public DeviceException()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DeviceException with a message.
+        /// 
+        /// Use message to signalize what is wrong with your device. This message may be presented
+        /// to the user.
+        /// </summary>
+        /// <param name="message">An error message</param>
         public DeviceException(string message) : base(message)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the DeviceException with a message and InnerException
+        /// 
+        /// Use message to tell what is wrong with your device - this message may be presented to
+        /// the user. Use InnerException to describe any internal exceptions of your device, if any.
+        /// </summary>
+        /// <param name="message">An error message</param>
+        /// <param name="innerException">An inner exception from the script engine.</param>
         public DeviceException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Exception class with serialized data.
+        /// </summary>
+        /// <param name="info">Holds the serialized object data about the exception being thrown. </param>
+        /// <param name="context">Contains contextual information about the source or destination. </param>
         protected DeviceException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
