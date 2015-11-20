@@ -193,6 +193,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="dtk.ico" />
+    <Resource Include="Mock\mock.png" />
     <Content Include="v8-ia32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

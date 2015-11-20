@@ -43,9 +43,29 @@
                 <DataTemplate>
                     <Grid HorizontalAlignment="Left" Margin="5">
                         <Image Stretch="None" Height="600" Width="900" Source="{Binding Image}" />
-                        <Canvas x:Name="LayoutRoot" Background="PowderBlue" Height="600" Width="900" />
+                        <Canvas x:Name="LayoutRoot" Background="Transparent" Height="600" Width="900" />
 
-                        <TextBlock Text="{Binding Controls}"></TextBlock>
+                        <ItemsControl ItemsSource="{Binding Controls}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="Aqua" Width="100" Height="100">
+                                        <TextBlock Text="{Binding ControlName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left" Value="{Binding Left}" />
+                                    <Setter Property="Canvas.Top" Value="{Binding Top}" />
+                                    <Setter Property="ToolTip" Value="{Binding ControlName}" />                                    
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                        </ItemsControl>
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>
