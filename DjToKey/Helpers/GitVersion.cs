@@ -39,6 +39,9 @@ namespace Ktos.Build
     /// </summary>
     public class GitVersion
     {
+        /// <summary>
+        /// Full SemVer from an assembly, in form of similar to "0.3.1-devel.1+39.Branch.devel.Sha.cb1319297409cd056e8126767be2d33206ec86ba"
+        /// </summary>
         public static string FullSemVer
         {
             get
@@ -49,6 +52,9 @@ namespace Ktos.Build
             }
         }
 
+        /// <summary>
+        /// Short SemVer version from an assembly, similar to "0.3.1-devel.1"
+        /// </summary>
         public static string SemVer
         {
             get

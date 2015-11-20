@@ -45,7 +45,11 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Title
         {
-            get { return title; }
+            get
+            {
+                return title;
+            }
+
             set
             {
                 if (title != value)
@@ -63,7 +67,11 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Description
         {
-            get { return description; }
+            get
+            {
+                return description;
+            }
+
             set
             {
                 if (description != value)
@@ -81,7 +89,11 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Version
         {
-            get { return version; }
+            get
+            {
+                return version;
+            }
+
             set
             {
                 if (version != value)
@@ -101,7 +113,11 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Keywords
         {
-            get { return keywords; }
+            get
+            {
+                return keywords;
+            }
+
             set
             {
                 if (keywords != value)
@@ -121,7 +137,11 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Category
         {
-            get { return category; }
+            get
+            {
+                return category;
+            }
+
             set
             {
                 if (this.category != value)
@@ -137,6 +157,13 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Handles when property is changed raising <see cref="PropertyChanged"/>
+        /// event.
+        /// 
+        /// Part of <see cref="INotifyPropertyChanged"/> implementation
+        /// </summary>
+        /// <param name="name">Name of a changed property</param>
         protected void OnPropertyChanged(string name = "")
         {
             if (PropertyChanged != null)

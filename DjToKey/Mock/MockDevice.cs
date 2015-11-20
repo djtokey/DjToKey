@@ -134,12 +134,7 @@ namespace Ktos.DjToKey
                     if (ScriptErrorOccured != null) ScriptErrorOccured.Invoke(this, new ScriptErrorEventArgs() { Control = control, Message = e.Message });
                 }
             }
-        }
-
-        public void SaveBindings()
-        {
-            throw new InvalidOperationException();
-        }
+        }        
 
         /// <summary>
         /// Unloads the device

@@ -89,7 +89,7 @@ namespace Ktos.DjToKey.Extensions
         /// </summary>
         /// <param name="assembly">Assembly to be analyzed</param>
         /// <param name="attributeType">Type of custom attribute to return</param>
-        /// <returns></returns>
+        /// <returns>Value of desired assembly attribute as a string</returns>
         private static string customAttributeToString(System.Reflection.Assembly assembly, Type attributeType)
         {
             string s = null;
@@ -101,7 +101,7 @@ namespace Ktos.DjToKey.Extensions
                 s = u.ToString();
                 s = s.Remove(0, s.IndexOf('"'));
                 s = s.Remove(s.IndexOf(')'));
-                s = s.Replace("\"", "");
+                s = s.Replace("\"", string.Empty);
             }
 
             return s;

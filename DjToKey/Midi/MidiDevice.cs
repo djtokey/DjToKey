@@ -39,6 +39,9 @@ using System.Linq;
 
 namespace Ktos.DjToKey.MidiDevice
 {
+    /// <summary>
+    /// Class implementing handling of a MIDI compatible input device
+    /// </summary>
     [Export(typeof(IDeviceHandler))]
     public class MidiDevice : IDeviceHandler
     {
@@ -112,7 +115,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Handles ControlChange messages
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">ControlChange MIDI message</param>
         private void dev_ControlChange(ControlChangeMessage msg)
         {
             handleControl(msg.Control.ToString(), msg.Value);
@@ -143,7 +146,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Handles pressing button on a device
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">NoteOn MIDI message</param>
         private void dev_NoteOn(NoteOnMessage msg)
         {
             handleControl(((int)msg.Pitch).ToString(), msg.Velocity);

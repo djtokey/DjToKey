@@ -35,6 +35,10 @@ using System.Windows.Media.Imaging;
 
 namespace Ktos.DjToKey.Models
 {
+    /// <summary>
+    /// Representation of a device, with a name, list of all controls
+    /// and image of a controller shown in UI.
+    /// </summary>
     public class Device : INotifyPropertyChanged
     {
         private string _name;
@@ -44,7 +48,11 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public string Name
         {
-            get { return _name; }
+            get
+            {
+                return _name;
+            }
+
             set
             {
                 if (_name != value)
@@ -67,7 +75,11 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public BitmapImage Image
         {
-            get { return _image; }
+            get
+            {
+                return _image;
+            }
+
             set
             {
                 if (_image != value)
@@ -91,11 +103,18 @@ namespace Ktos.DjToKey.Models
         /// Event run when any property is changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Handles when property is changed raising <see cref="PropertyChanged"/>
+        /// event.
+        /// 
+        /// Part of <see cref="INotifyPropertyChanged"/> implementation
+        /// </summary>
+        /// <param name="name">Name of a changed property</param>
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
-
     }
 }

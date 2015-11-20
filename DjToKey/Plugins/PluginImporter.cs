@@ -47,7 +47,14 @@ namespace Ktos.DjToKey.Plugins
     /// </summary>
     internal class PluginImporter
     {
+        /// <summary>
+        /// List of all device handling plugins
+        /// </summary>
         public DevicePlugins DevicePlugins { get; set; }
+
+        /// <summary>
+        /// List of all script plugins
+        /// </summary>
         public ScriptPlugins ScriptPlugins { get; set; }
 
         /// <summary>
@@ -76,7 +83,6 @@ namespace Ktos.DjToKey.Plugins
             var catalog = new AggregateCatalog();
 
             // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
-
             loadedPlugins = new List<Metadata>();
             DirectoryCatalog dirc = null;
             try

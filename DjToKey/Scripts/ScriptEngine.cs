@@ -37,6 +37,10 @@ using System.IO;
 
 namespace Ktos.DjToKey.Scripts
 {
+    /// <summary>
+    /// Implements a wrapper over a V8 Script Engine
+    /// for handling JavaScript scripts in DjToKey
+    /// </summary>
     public class ScriptEngine : IScriptEngine
     {        
         /// <summary>
@@ -48,6 +52,7 @@ namespace Ktos.DjToKey.Scripts
         /// Configures script engine, adding static, useful object,
         /// debug objects, useful types and objects from additional plugins
         /// </summary>
+        /// <param name="plugins">A list of plugins for a ScriptEngine</param>
         public void Configure(IScriptPlugins plugins)
         {
             eng = new V8ScriptEngine();            

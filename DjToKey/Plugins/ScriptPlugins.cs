@@ -35,7 +35,11 @@ using System.ComponentModel.Composition;
 
 namespace Ktos.DjToKey.Plugins
 {
-
+    /// <summary>
+    /// A collection of plugins added to scripts, consists of two
+    /// Lists internally - list of IScriptObject and IScriptType,
+    /// automatically imported by MEF
+    /// </summary>
     internal class ScriptPlugins : IScriptPlugins
     {
         /// <summary>

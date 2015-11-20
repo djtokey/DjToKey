@@ -29,22 +29,22 @@
 
 #endregion License
 
-using System;
-using System.Text;
-using System.IO.Packaging;
-using System.IO;
-using System.Linq;
-using System.Windows.Media.Imaging;
 using Ktos.DjToKey.Packaging;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.IO.Packaging;
+using System.Linq;
+using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace Ktos.DjToKey.Plugins.Packaging
 {
     /// <summary>
     /// Class describing package for a device
-    /// 
+    ///
     /// Device packages have images and control definitions for devices supported by a plugin. Build under
     /// a Open Packaging Conventions with a extension ".dtkpkg".
     /// </summary>
@@ -55,6 +55,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// </summary>
         /// <param name="fileName">Package file name to be opened</param>
         /// <param name="deviceName">Device name in a package to load configuration</param>
+        /// <returns>A device package with a single device and whole metadata loaded</returns>
         public static DevicePackage Load(string fileName, string deviceName)
         {
             var p = new DevicePackage();
@@ -169,6 +170,16 @@ namespace Ktos.DjToKey.Plugins.Packaging
                         devicesInPackage.Add(x);
                 }
 
+                // TODO: map file handling
+                /*
+                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
+                {
+                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
+                    {
+                        mapFile.Map = tr.ReadToEnd();
+                    }
+                }*/
+
                 foreach (var d in devicesInPackage.Distinct())
                 {
                     Models.Device x = new Models.Device();
@@ -207,21 +218,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
                     devices.Add(x);
                 }
-
-                /*
-                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
-                {
-                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
-                    {
-                        mapFile.Map = tr.ReadToEnd();
-                    }
-                }*/
-
             }
 
             return devices;
         }
-
 
         /// <summary>
         /// File name of a package file
@@ -231,7 +231,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// <summary>
         /// Device package metadata
         /// </summary>
-        public PackageMetadata Metadata;
+        public PackageMetadata Metadata { get; set; }
 
         /// <summary>
         /// Loaded device from a package
@@ -240,7 +240,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
         /// <summary>Replaces characters in <c>text</c> that are not allowed in
         /// file names with the specified replacement character.</summary>
-        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>        
+        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>
         /// <returns>A string that can be used as a filename. If the output string would otherwise be empty, returns "_".</returns>
         private static string MakeValidFileName(string text)
         {
@@ -271,6 +271,5 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
             return changed ? sb.ToString() : text;
         }
-
     }
 }

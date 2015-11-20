@@ -36,6 +36,9 @@ using System.Text;
 
 namespace Ktos.DjToKey.Helpers
 {
+    /// <summary>
+    /// Provides checking if the file name is a valid one
+    /// </summary>
     public static class ValidFileName
     {
         private static char[] _invalids;
@@ -65,20 +68,24 @@ namespace Ktos.DjToKey.Helpers
                 {
                     changed = true;
                     var repl = replacement ?? '\0';
+
                     if (fancy)
                     {
                         if (c == '"') repl = '”'; // U+201D right double quotation mark
                         else if (c == '\'') repl = '’'; // U+2019 right single quotation mark
                         else if (c == '/') repl = '⁄'; // U+2044 fraction slash
                     }
+
                     if (repl != '\0')
                         sb.Append(repl);
                 }
                 else
                     sb.Append(c);
             }
+
             if (sb.Length == 0)
                 return "_";
+
             return changed ? sb.ToString() : text;
         }
     }

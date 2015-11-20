@@ -41,16 +41,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Document : IScriptObject
     {
-        private const string name = "Document";
+        private const string NAME = "Document";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -61,6 +67,9 @@ namespace Ktos.DjToKey.Scripts
 
         private DocumentImpl dimpl;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Document()
         {
             dimpl = new DocumentImpl();

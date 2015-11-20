@@ -31,19 +31,25 @@
 
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
-using System.Linq;
+using Ktos.DjToKey.Plugins.Device;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using Ktos.DjToKey.Plugins.Device;
 
 namespace Ktos.DjToKey.ViewModels
 {
-    class MainWindowViewModel : INotifyPropertyChanged
-    {        
+    /// <summary>
+    /// A ViewModel for a MainWindow of an application
+    /// </summary>
+    internal class MainWindowViewModel : INotifyPropertyChanged
+    {
         private AllDevices allDevices;
         private IDeviceHandler deviceHandler;
 
+        /// <summary>
+        /// Initializes a new MainWindowViewModel and loads
+        /// all devices from all supported handlers
+        /// </summary>
         public MainWindowViewModel()
         {
             Devices = new ObservableCollection<Device>();
@@ -85,13 +91,17 @@ namespace Ktos.DjToKey.ViewModels
 
         /// <summary>
         /// Currently active device
-        /// 
+        ///
         /// When currently active device is changed, previous one's handler is removed,
         /// current handler is found and loaded, and new bindings for controls are loaded
         /// </summary>
         public Device CurrentDevice
         {
-            get { return currentDevice; }
+            get
+            {
+                return currentDevice;
+            }
+
             set
             {
                 if (this.currentDevice != value)
@@ -109,9 +119,17 @@ namespace Ktos.DjToKey.ViewModels
         }
 
         /// <summary>
-        /// Raised when databound property is changed
+        /// Even run when databound property is changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Handles when property is changed raising <see cref="PropertyChanged"/>
+        /// event.
+        /// 
+        /// Part of <see cref="INotifyPropertyChanged"/> implementation
+        /// </summary>
+        /// <param name="name">Name of a changed property</param>
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)

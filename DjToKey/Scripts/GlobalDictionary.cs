@@ -41,16 +41,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Global : IScriptObject
     {
-        private const string name = "Global";
+        private const string NAME = "Global";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -61,6 +67,9 @@ namespace Ktos.DjToKey.Scripts
 
         private GlobalDictionary gimpl;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Global()
         {
             gimpl = new GlobalDictionary();
@@ -100,7 +109,7 @@ namespace Ktos.DjToKey.Scripts
         /// Gets a value for a given key
         /// </summary>
         /// <param name="key">A key to be retrieved value for</param>
-        /// <returns></returns>
+        /// <returns>A valur for a given key</returns>
         public object Get(string key)
         {
             try

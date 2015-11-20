@@ -43,13 +43,17 @@ namespace Ktos.DjToKey
         /// <summary>
         /// A script engine used in application
         /// </summary>
-        internal static ScriptEngine ScriptEngine;
+        internal static ScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
         /// A class used for importing all possible plugins
         /// </summary>
-        internal static PluginImporter PluginImporter;
+        internal static PluginImporter PluginImporter { get; set; }
 
+        /// <summary>
+        /// Initializes the application and loads importer of plugins,
+        /// loads script engine and configures it with a script plugins.
+        /// </summary>
         public App()
         {
             PluginImporter = new PluginImporter();
