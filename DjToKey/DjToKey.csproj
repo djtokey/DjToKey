@@ -88,6 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mock\MainWindowViewModel.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\ViewControl.cs" />
     <Compile Include="Packaging\DevicePackage.cs" />
@@ -107,6 +108,10 @@
     <Compile Include="Scripts\GlobalDictionary.cs" />
     <Compile Include="Scripts\InputSimulator.cs" />
     <Compile Include="Scripts\ScriptEngine.cs" />
+    <Resource Include="Mock\MockMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

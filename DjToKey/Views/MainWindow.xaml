@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
-        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" StateChanged="MainWindow_StateChanged" DataContext="{StaticResource MainWindowViewModel}">
+        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" 
+        StateChanged="MainWindow_StateChanged" DataContext="{StaticResource MainWindowViewModel}"
+        d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}">
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>

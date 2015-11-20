@@ -1,0 +1,9 @@
+﻿<vm:MainWindowViewModel
+    xmlns:vm="clr-namespace:Ktos.DjToKey.Mock"
+    xmlns:models="clr-namespace:Ktos.DjToKey.Models"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <vm:MainWindowViewModel.Devices>
+        <models:Device Name="DESIGN" />
+    </vm:MainWindowViewModel.Devices>
+</vm:MainWindowViewModel>
