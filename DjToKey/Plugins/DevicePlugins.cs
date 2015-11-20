@@ -41,12 +41,14 @@ namespace Ktos.DjToKey.Plugins
     /// </summary>
     public class DevicePlugins
     {
+#pragma warning disable 0649
         /// <summary>
         /// List of types from plugins to be included into script engine when loading.
         /// MEF will automatically satisfy this list with every class implementing <see cref="IDeviceHandler"/>
-        /// </summary>
+        /// </summary>        
         [ImportMany(typeof(IDeviceHandler))]
         private IEnumerable<IDeviceHandler> deviceHandlers;
+#pragma warning restore 0649
 
         /// <summary>
         /// List of types from plugins to be included into script engine when loading

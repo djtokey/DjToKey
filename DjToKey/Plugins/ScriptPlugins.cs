@@ -42,6 +42,7 @@ namespace Ktos.DjToKey.Plugins
     /// </summary>
     internal class ScriptPlugins : IScriptPlugins
     {
+#pragma warning disable 0649
         /// <summary>
         /// List of objects from plugins to be included into script engine when loading.
         /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptObject"/>
@@ -78,4 +79,5 @@ namespace Ktos.DjToKey.Plugins
             }
         }
     }
+#pragma warning restore 0649
 }
