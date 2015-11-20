@@ -66,7 +66,7 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// Collection of all controls supported by the device
         /// </summary>
-        public ObservableCollection<Plugins.Device.Control> Controls { get; set; }
+        public ObservableCollection<ViewControl> Controls { get; set; }
 
         private BitmapImage _image;
 

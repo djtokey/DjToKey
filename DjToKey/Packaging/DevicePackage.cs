@@ -128,7 +128,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
                     try
                     {
-                        result.Controls = JsonConvert.DeserializeObject<ObservableCollection<Device.Control>>(definition);
+                        result.Controls = JsonConvert.DeserializeObject<ObservableCollection<Models.ViewControl>>(definition);
                     }
                     catch (JsonException)
                     {
@@ -193,7 +193,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                         using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
                         {
                             string json = reader.ReadToEnd();
-                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Plugins.Device.Control>>(json);
+                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Models.ViewControl>>(json);
                         }
                     }
 
