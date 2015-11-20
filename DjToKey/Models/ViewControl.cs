@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Ktos.DjToKey.Models
 {
@@ -52,5 +53,20 @@ namespace Ktos.DjToKey.Models
         /// Defines position of a control in a window, in pixels from Top
         /// </summary>
         public int Top { get; set; }
+
+        /// <summary>
+        /// Control width on a screen
+        /// </summary>
+        public int Width { get; set; }
+
+        /// <summary>
+        /// Control height on a screen
+        /// </summary>
+        public int Height { get; set; }
+
+        /// <summary>
+        /// Control background color
+        /// </summary>
+        public Color Background { get; set; }
     }
 }
