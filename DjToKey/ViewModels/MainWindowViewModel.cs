@@ -50,7 +50,7 @@ namespace Ktos.DjToKey.ViewModels
     {
         private AllDevices allDevices;
         private IDeviceHandler deviceHandler;
-        
+
         /// <summary>
         /// A script engine used in application
         /// </summary>
@@ -77,7 +77,7 @@ namespace Ktos.DjToKey.ViewModels
 
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
-                Devices.Add(findAndLoadDeviceFromPackage(d));            
+                Devices.Add(findAndLoadDeviceFromPackage(d));
         }
 
         private Device findAndLoadDeviceFromPackage(string name)
@@ -126,10 +126,16 @@ namespace Ktos.DjToKey.ViewModels
             {
                 if (this.currentDevice != value)
                 {
-                    if (deviceHandler != null) deviceHandler.Unload();
+
+                    if (deviceHandler != null)
+                    {
+                        saveBindings();
+                        deviceHandler.Unload();
+                    }
 
                     currentDevice = value;
                     OnPropertyChanged(nameof(CurrentDevice));
+
                     deviceHandler = allDevices.FindHandler(currentDevice.Name);
                     if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);
                     deviceHandler.Controls = currentDevice.Controls;
@@ -142,6 +148,7 @@ namespace Ktos.DjToKey.ViewModels
 
         private void loadBindings()
         {
+            // TODO: ładowanie i zapisywanie bindingów z różnych ścieżek
             string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
 
             try
@@ -152,6 +159,15 @@ namespace Ktos.DjToKey.ViewModels
             {
                 deviceHandler.Bindings = new List<ControlBinding>();
             }
+        }
+
+        /// <summary>
+        /// Saves bindings to file
+        /// </summary>
+        private void saveBindings()
+        {
+            string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
+            File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
         }
 
         /// <summary>
