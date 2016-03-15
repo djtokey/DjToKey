@@ -191,8 +191,11 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         private void saveBindings()
         {
-            string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
-            File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
+            if (currentDevice != null)
+            {
+                string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
+                File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
+            }
         }
 
         /// <summary>
