@@ -127,7 +127,8 @@ namespace Ktos.DjToKey
             {
                 try
                 {
-                    ScriptEngine.Execute(binding.Script, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, Controls.Where(x => x.ControlId == control.ToString()).First());
+                    var ctrl = Controls.ToList().Where(x => x.ControlId == control).First();
+                    ScriptEngine.Execute(binding.Script, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, ctrl);
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {

@@ -32,8 +32,10 @@
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins.Device;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 
 namespace Ktos.DjToKey.ViewModels
@@ -112,9 +114,23 @@ namespace Ktos.DjToKey.ViewModels
                     OnPropertyChanged(nameof(CurrentDevice));
                     deviceHandler = allDevices.FindHandler(currentDevice.Name);
                     if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);
-
-                    // TODO: load bindings for current device
+                    deviceHandler.Controls = currentDevice.Controls;
+                    loadBindings();
                 }
+            }
+        }
+
+        private void loadBindings()
+        {
+            string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
+
+            try
+            {
+                deviceHandler.Bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+            }
+            catch (FileNotFoundException)
+            {
+                deviceHandler.Bindings = new List<ControlBinding>();
             }
         }
 
