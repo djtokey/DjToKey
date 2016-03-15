@@ -53,7 +53,10 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="{Binding Background}" Width="{Binding Width}" Height="{Binding Height}" MouseLeftButtonUp="Border_MouseLeftButtonUp">
+                                    <Border Width="{Binding Width}" Height="{Binding Height}" MouseLeftButtonUp="Border_MouseLeftButtonUp" Opacity="0.7">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{Binding Background}" />
+                                        </Border.Background>
                                         <TextBlock Text="{Binding ControlName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </DataTemplate>
