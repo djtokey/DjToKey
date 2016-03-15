@@ -78,7 +78,16 @@ namespace Ktos.DjToKey.ViewModels
 
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
-                Devices.Add(findAndLoadDeviceFromPackage(d));
+            {
+                try
+                {
+                    Devices.Add(findAndLoadDeviceFromPackage(d));
+                }
+                catch (FileNotFoundException)
+                {
+
+                }
+            }
         }
 
         private Device findAndLoadDeviceFromPackage(string name)
