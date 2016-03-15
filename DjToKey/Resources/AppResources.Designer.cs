@@ -61,7 +61,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/.
+        ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015-2016\nIcon used from: https://icons8.com/.
         /// </summary>
         public static string About {
             get {
