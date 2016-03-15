@@ -149,7 +149,8 @@ namespace Ktos.DjToKey.ViewModels
 
         private void loadBindings()
         {
-            // TODO: ładowanie i zapisywanie bindingów z różnych ścieżek
+            // TODO: should try to load bindings from this folder, %USERPROFILE% or similar and if there is none
+            // there should be a dialog to select binding file manually or create a new one
             string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
 
             try

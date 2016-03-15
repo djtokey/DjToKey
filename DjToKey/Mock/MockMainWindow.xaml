@@ -7,7 +7,7 @@
     <vm:MainWindowViewModel.Devices>
         <models:Device Image="/Mock/mock.png" Name="Mock">
             <models:Device.Controls>
-                <models:ViewControl ControlId="1" Left="50" Top="100" Background="AliceBlue" ControlName="Control 1">
+                <models:ViewControl ControlId="1" Left="50" Top="100" Width="100" Height="100" Background="AliceBlue" ControlName="Control 1">
                 </models:ViewControl>
             </models:Device.Controls>
         </models:Device>
