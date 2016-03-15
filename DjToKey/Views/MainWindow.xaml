@@ -8,8 +8,8 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
         ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" 
-        StateChanged="MainWindow_StateChanged" DataContext="{StaticResource MainWindowViewModel}"
-        d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}">
+        StateChanged="MainWindow_StateChanged" d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}"
+        DataContext="{StaticResource MainWindowViewModel}">
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
@@ -53,7 +53,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="Aqua" Width="100" Height="100">
+                                    <Border Background="Aqua" Width="100" Height="100" MouseLeftButtonUp="Border_MouseLeftButtonUp">
                                         <TextBlock Text="{Binding ControlName}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </DataTemplate>
@@ -72,7 +72,8 @@
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StackPanel Grid.Column="1">
-
+            <TextBox Text="{Binding CurrentScript}" x:Name="tbScript"></TextBox>
+            <Button Content="Save" Click="Button_Click" />
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

@@ -43,6 +43,7 @@ namespace Ktos.DjToKey.Views
     public partial class MainWindow : MetroWindow
     {
         private NotifyIcon trayIcon;
+        private MainWindowViewModel vm;
 
         /// <summary>
         /// Creates a new Window and prepares the Tray Icon
@@ -57,6 +58,8 @@ namespace Ktos.DjToKey.Views
             trayIcon.Icon = DjToKey.Resources.AppResources.icon;
             trayIcon.Text = DjToKey.Resources.AppResources.AppName;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
+
+            vm = (DataContext as MainWindowViewModel);
         }
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
@@ -80,7 +83,17 @@ namespace Ktos.DjToKey.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel).About();
+            vm.About();
+        }
+
+        private void Border_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            vm.SetCurrentScript((sender as System.Windows.Controls.Border).DataContext as Models.ViewControl);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            vm.UpdateCurrentScript(tbScript.Text);
         }
     }
 }

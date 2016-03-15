@@ -37,6 +37,7 @@ using Ktos.DjToKey.Plugins.Scripts;
 using Ktos.DjToKey.Scripts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -169,6 +170,49 @@ namespace Ktos.DjToKey.ViewModels
             string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
             File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
         }
+
+
+        public void SetCurrentScript(ViewControl ctrl)
+        {
+            currentlyEditing = ctrl;
+            var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == ctrl.ControlId).FirstOrDefault();
+
+            if (binding != null)
+                CurrentScript = binding.Script.Text;
+            else
+            {
+                CurrentScript = string.Empty;
+                deviceHandler.Bindings.Add(new ControlBinding { Control = ctrl, Script = new Script() { Text = CurrentScript } });
+            }
+        }
+
+        public void UpdateCurrentScript(string script)
+        {
+            var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == currentlyEditing.ControlId).FirstOrDefault();
+            binding.Script.Text = script;
+        }
+
+        private ViewControl currentlyEditing;
+
+        private string currentScript;
+
+        public string CurrentScript
+        {
+            get
+            {
+                return currentScript;
+            }
+
+            private set
+            {
+                if (this.currentScript != value)
+                {
+                    currentScript = value;
+                    OnPropertyChanged(nameof(CurrentScript));
+                }
+            }
+        }
+
 
         /// <summary>
         /// Even run when databound property is changed
