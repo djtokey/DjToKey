@@ -31,7 +31,10 @@
 
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
+using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
+using Ktos.DjToKey.Plugins.Scripts;
+using Ktos.DjToKey.Scripts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -47,6 +50,16 @@ namespace Ktos.DjToKey.ViewModels
     {
         private AllDevices allDevices;
         private IDeviceHandler deviceHandler;
+        
+        /// <summary>
+        /// A script engine used in application
+        /// </summary>
+        private ScriptEngine ScriptEngine { get; set; }
+
+        /// <summary>
+        /// A class used for importing all possible plugins
+        /// </summary>
+        private PluginImporter PluginImporter { get; set; }
 
         /// <summary>
         /// Initializes a new MainWindowViewModel and loads
@@ -54,12 +67,17 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
+            PluginImporter = new PluginImporter();
+
+            ScriptEngine = new ScriptEngine();
+            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+
             Devices = new ObservableCollection<Device>();
-            allDevices = new AllDevices(App.PluginImporter.DevicePlugins.DeviceHandlers);
+            allDevices = new AllDevices(PluginImporter.DevicePlugins.DeviceHandlers);
 
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
-                Devices.Add(findAndLoadDeviceFromPackage(d));
+                Devices.Add(findAndLoadDeviceFromPackage(d));            
         }
 
         private Device findAndLoadDeviceFromPackage(string name)
@@ -115,6 +133,8 @@ namespace Ktos.DjToKey.ViewModels
                     deviceHandler = allDevices.FindHandler(currentDevice.Name);
                     if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);
                     deviceHandler.Controls = currentDevice.Controls;
+                    deviceHandler.ScriptEngine = this.ScriptEngine;
+
                     loadBindings();
                 }
             }
