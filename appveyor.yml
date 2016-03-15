@@ -4,6 +4,8 @@ branches:
   only:
   - master
 
+platform: x86
+  
 configuration: Release
 
 before_build:
@@ -14,7 +16,7 @@ build:
   verbosity: minimal
 
 after_build:
-- 7z a djtokey.zip %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\Release\DjToKey.exe*  %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\Release\Devices  %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\Release\*.dll %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\Release\pl-PL
+- 7z a djtokey.zip %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\x86\Release\DjToKey.exe*  %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\x86\Release\Devices  %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\x86\Release\*.dll %APPVEYOR_BUILD_FOLDER%\DjToKey\bin\x86\Release\pl-PL
 
 artifacts:
 - path: djtokey.zip
