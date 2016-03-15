@@ -146,11 +146,22 @@ namespace Ktos.DjToKey.ViewModels
                     OnPropertyChanged(nameof(CurrentDevice));
 
                     deviceHandler = allDevices.FindHandler(currentDevice.Name);
-                    if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);
-                    deviceHandler.Controls = currentDevice.Controls;
-                    deviceHandler.ScriptEngine = this.ScriptEngine;
+                    try
+                    {
+                        if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);                        
+                    }
+                    catch (DeviceException)
+                    {
+                        MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        deviceHandler.Controls = currentDevice.Controls;
+                        deviceHandler.ScriptEngine = this.ScriptEngine;
 
-                    loadBindings();
+                        loadBindings();
+                    }
+                    
                 }
             }
         }
@@ -166,6 +177,8 @@ namespace Ktos.DjToKey.ViewModels
             try
             {
                 deviceHandler.Bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+                if (deviceHandler.Bindings == null)
+                    deviceHandler.Bindings = new List<ControlBinding>();
             }
             catch (FileNotFoundException)
             {

@@ -43,7 +43,7 @@
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Left" Margin="5">
-                        <Image Stretch="None" Height="600" Width="900" Source="{Binding Image}" />
+                        <Image Stretch="Uniform" Height="600" Width="900" Source="{Binding Image}" />
                         <Canvas x:Name="LayoutRoot" Background="Transparent" Height="600" Width="900" />
 
                         <ItemsControl ItemsSource="{Binding Controls}">
