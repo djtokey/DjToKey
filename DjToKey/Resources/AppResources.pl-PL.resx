@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>{0} {1}\n\nDjToKey to aplikacja do mapowania kontrolek z kontrolera MIDI do własnych skryptów. Pozwala ona na przygotowanie skryptów imitujący poruszanie myszą i naciskanie klawiszy, uruchamianych gdy użyjesz pewnych opcji swojego kontrolera MIDI. Na przykład możliwe jest powiązanie ruchu stołu DJskiego z przewijaniem kółkiem myszy.\n\nCopyright (c0 Marcin Badurowicz 2015\nIkona pochodzi z: htps://icons8.com</value>
+    <value>{0} {1}\n\nDjToKey to aplikacja do mapowania kontrolek z kontrolera MIDI do własnych skryptów. Pozwala ona na przygotowanie skryptów imitujący poruszanie myszą i naciskanie klawiszy, uruchamianych gdy użyjesz pewnych opcji swojego kontrolera MIDI. Na przykład możliwe jest powiązanie ruchu stołu DJskiego z przewijaniem kółkiem myszy.\n\nCopyright (c) Marcin Badurowicz 2015-2016\nIkona pochodzi z: htps://icons8.com</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>DjToKey</value>

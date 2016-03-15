@@ -108,8 +108,15 @@ namespace Ktos.DjToKey.MidiDevice
 
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
-            if (!dev.IsOpen) dev.Open();
-            dev.StartReceiving(null);
+            try
+            {
+                if (!dev.IsOpen) dev.Open();
+                dev.StartReceiving(null);
+            }
+            catch (Midi.DeviceException e)
+            {
+                throw new Plugins.Device.DeviceException("MIDI device exception", e);
+            }
         }
 
         /// <summary>
