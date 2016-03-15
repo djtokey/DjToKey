@@ -171,6 +171,9 @@
     <None Include="Devices\DJControl_MP3_LE_MIDI.dtkpkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Devices\mpk_mini.dtkpkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Devices\test.dtkpkg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
