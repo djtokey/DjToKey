@@ -87,7 +87,7 @@ namespace Ktos.DjToKey.ViewModels
                 {
 
                 }
-            }
+            }            
         }
 
         private Device findAndLoadDeviceFromPackage(string name)

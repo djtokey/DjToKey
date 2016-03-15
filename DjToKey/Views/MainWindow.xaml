@@ -75,11 +75,13 @@
             </TabControl.ContentTemplate>
         </Controls:MetroAnimatedSingleRowTabControl>
 
-        <StackPanel Grid.Column="1">
-            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" Height="400" FontFamily="Consolas" FontSize="16"></TextBox>
-            </ScrollViewer>
-            <Button Content="{x:Static p:AppResources.btnSave}" Click="btnSave_Click" />
-        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" FontFamily="Consolas" FontSize="16" HorizontalScrollBarVisibility="Auto" Grid.Row="0"/>
+            <Button Content="{x:Static p:AppResources.btnSave}" Click="btnSave_Click" Grid.Row="1"/>
+        </Grid>
     </Grid>
 </Controls:MetroWindow>

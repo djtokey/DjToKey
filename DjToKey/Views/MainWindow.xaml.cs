@@ -49,7 +49,7 @@ namespace Ktos.DjToKey.Views
         /// Creates a new Window and prepares the Tray Icon
         /// </summary>
         public MainWindow()
-        {
+        {            
             InitializeComponent();
 
             trayIcon = new NotifyIcon();
@@ -60,6 +60,11 @@ namespace Ktos.DjToKey.Views
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
             vm = (DataContext as MainWindowViewModel);
+
+            if (vm.Devices.Count == 0)
+            {
+                System.Windows.MessageBox.Show(DjToKey.Resources.AppResources.NoMidiMessage, DjToKey.Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
