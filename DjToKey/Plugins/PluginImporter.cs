@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -34,19 +34,27 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Reflection;
 using Assembly = System.Reflection.Assembly;
 
 namespace Ktos.DjToKey.Plugins
 {
     /// <summary>
-    /// This class is responsible for finding and loading all plugins from the their subdirectory
-    /// using MEF.
-    ///
+    /// This class is responsible for finding and loading all plugins
+    /// from the their subdirectory using MEF.
+    /// 
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
-    class PluginImporter
+    internal class PluginImporter
     {
+        /// <summary>
+        /// List of all device handling plugins
+        /// </summary>
         public DevicePlugins DevicePlugins { get; set; }
+
+        /// <summary>
+        /// List of all script plugins
+        /// </summary>
         public ScriptPlugins ScriptPlugins { get; set; }
 
         /// <summary>
@@ -66,7 +74,8 @@ namespace Ktos.DjToKey.Plugins
         }
 
         /// <summary>
-        /// Performs loading all plugins, importing them by MEF and loading their metadata
+        /// Performs loading all plugins, importing them by MEF and
+        /// loading their metadata
         /// </summary>
         public PluginImporter()
         {
@@ -74,8 +83,8 @@ namespace Ktos.DjToKey.Plugins
             ScriptPlugins = new ScriptPlugins();
             var catalog = new AggregateCatalog();
 
-            // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
-
+            // adds all the parts found in all assemblies in \plugins
+            // subdirectory and in current assembly
             loadedPlugins = new List<Metadata>();
             DirectoryCatalog dirc = null;
             try
@@ -90,15 +99,26 @@ namespace Ktos.DjToKey.Plugins
 
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
 
-            CompositionContainer container = new CompositionContainer(catalog);
-            container.ComposeParts(DevicePlugins);
-            container.ComposeParts(ScriptPlugins);
+            try
+            {
+                CompositionContainer container = new CompositionContainer(catalog);
+                container.ComposeParts(DevicePlugins);
+                container.ComposeParts(ScriptPlugins);
+            }
+            catch (ReflectionTypeLoadException)
+            {
+                // plugins cannot be loaded due to type mismatch set
+                // dirc to null, so no plugins will be loaded for
+                // their metadata
+                dirc = null;
+            }
 
             if (dirc != null)
             {
                 foreach (var f in dirc.LoadedFiles)
                 {
-                    // load plugin assemblies again, only for reflection information, to get their metadata
+                    // load plugin assemblies again, only for
+                    // reflection information, to get their metadata
                     var ass = Assembly.ReflectionOnlyLoadFrom(f);
                     var metadata = ass.GetMetadata();
                     if (metadata != null)

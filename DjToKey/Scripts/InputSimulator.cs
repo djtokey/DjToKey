@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -42,16 +42,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Keyboard : IScriptObject
     {
-        private const string name = "Keyboard";
+        private const string NAME = "Keyboard";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -62,6 +68,9 @@ namespace Ktos.DjToKey.Scripts
 
         private InputSimulator simulator;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Keyboard()
         {
             simulator = new InputSimulator();
@@ -74,16 +83,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Mouse : IScriptObject
     {
-        private const string name = "Mouse";
+        private const string NAME = "Mouse";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -94,6 +109,9 @@ namespace Ktos.DjToKey.Scripts
 
         private InputSimulator simulator;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Mouse()
         {
             simulator = new InputSimulator();
@@ -106,16 +124,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptType))]
     public class KeyboardCodes : IScriptType
     {
-        private const string name = "KeyCode";
+        private const string NAME = "KeyCode";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// A Type available in a script engine
+        /// </summary>
         public Type Type
         {
             get

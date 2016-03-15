@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -39,7 +39,8 @@ using System.Linq;
 namespace Ktos.DjToKey.Extensions
 {
     /// <summary>
-    /// Contains extension methods for Assembly class to get access to their custom attributes
+    /// Contains extension methods for Assembly class to get access to
+    /// their custom attributes
     /// </summary>
     public static class Assembly
     {
@@ -84,24 +85,29 @@ namespace Ktos.DjToKey.Extensions
         }
 
         /// <summary>
-        /// Gets desired assembly attribute as a string, parsed from custom attributes when assembly is loaded
-        /// with ReflectionOnlyLoadFrom
+        /// Gets desired assembly attribute as a string, parsed from
+        /// custom attributes when assembly is loaded with ReflectionOnlyLoadFrom
         /// </summary>
         /// <param name="assembly">Assembly to be analyzed</param>
-        /// <param name="attributeType">Type of custom attribute to return</param>
-        /// <returns></returns>
+        /// <param name="attributeType">
+        /// Type of custom attribute to return
+        /// </param>
+        /// <returns>
+        /// Value of desired assembly attribute as a string
+        /// </returns>
         private static string customAttributeToString(System.Reflection.Assembly assembly, Type attributeType)
         {
             string s = null;
             var u = assembly.GetCustomAttributesData().Where(x => x.AttributeType == attributeType).FirstOrDefault();
             if (u != null)
             {
-                // attributes are being converted to string, so they are in the form of [Name(\"value\")], and we
-                // need to get rid of unnecessary chars
+                // attributes are being converted to string, so they
+                // are in the form of [Name(\"value\")], and we need
+                // to get rid of unnecessary chars
                 s = u.ToString();
                 s = s.Remove(0, s.IndexOf('"'));
                 s = s.Remove(s.IndexOf(')'));
-                s = s.Replace("\"", "");
+                s = s.Replace("\"", string.Empty);
             }
 
             return s;
@@ -110,8 +116,13 @@ namespace Ktos.DjToKey.Extensions
         /// <summary>
         /// Converts assembly class into set of metadata for a plugin
         /// </summary>
-        /// <param name="assembly">Loaded plugin assembly using ReflectionOnlyLoadFrom</param>
-        /// <returns>Plugin metadata - title, description, version and copyright information for a plugin</returns>
+        /// <param name="assembly">
+        /// Loaded plugin assembly using ReflectionOnlyLoadFrom
+        /// </param>
+        /// <returns>
+        /// Plugin metadata - title, description, version and
+        /// copyright information for a plugin
+        /// </returns>
         public static Plugins.Metadata GetMetadata(this System.Reflection.Assembly assembly)
         {
             try

@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -41,16 +41,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Console : IScriptObject
     {
-        private const string name = "Console";
+        private const string NAME = "Console";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -61,6 +67,9 @@ namespace Ktos.DjToKey.Scripts
 
         private ConsoleImpl cimpl;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Console()
         {
             cimpl = new ConsoleImpl();

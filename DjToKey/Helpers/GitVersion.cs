@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -34,11 +34,15 @@ using System.Reflection;
 namespace Ktos.Build
 {
     /// <summary>
-    /// A simple class getting information from assembly built with Ktos.Build.GitVersion
-    /// about InformationalVersion attribute covering full semver versioning of an assembly
+    /// A simple class getting information from assembly built with
+    /// Ktos.Build.GitVersion about InformationalVersion attribute
+    /// covering full semver versioning of an assembly
     /// </summary>
     public class GitVersion
     {
+        /// <summary>
+        /// Full SemVer from an assembly, in form of similar to "0.3.1-devel.1+39.Branch.devel.Sha.cb1319297409cd056e8126767be2d33206ec86ba"
+        /// </summary>
         public static string FullSemVer
         {
             get
@@ -49,6 +53,9 @@ namespace Ktos.Build
             }
         }
 
+        /// <summary>
+        /// Short SemVer version from an assembly, similar to "0.3.1-devel.1"
+        /// </summary>
         public static string SemVer
         {
             get

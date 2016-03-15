@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,19 +29,19 @@
 
 #endregion License
 
-using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
 using Midi;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 
 namespace Ktos.DjToKey.MidiDevice
 {
+    /// <summary>
+    /// Class implementing handling of a MIDI compatible input device
+    /// </summary>
     [Export(typeof(IDeviceHandler))]
     public class MidiDevice : IDeviceHandler
     {
@@ -68,7 +68,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// List of possible controls in connected MIDI device
         /// </summary>
-        public IEnumerable<Plugins.Device.Control> Controls { get; private set; }
+        public IEnumerable<Plugins.Device.Control> Controls { get; set; }
 
         /// <summary>
         /// A script engine which will be used when executing scripts
@@ -76,14 +76,13 @@ namespace Ktos.DjToKey.MidiDevice
         public IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
-        /// An event invoked when script error occured when handling
-        /// control
+        /// An event invoked when script error occured when handling control
         /// </summary>
         public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
         /// <summary>
-        /// A constructor, intializing script engine and setting list of
-        /// available input devices
+        /// A constructor, intializing script engine and setting list
+        /// of available input devices
         /// </summary>
         public MidiDevice()
         {
@@ -95,7 +94,8 @@ namespace Ktos.DjToKey.MidiDevice
         }
 
         /// <summary>
-        /// Loads information and bindings of a device, sets up handling device events
+        /// Loads information and bindings of a device, sets up
+        /// handling device events
         /// </summary>
         /// <param name="deviceName">Name of a device to be loaded</param>
         public void Load(string deviceName)
@@ -106,42 +106,23 @@ namespace Ktos.DjToKey.MidiDevice
 
             ActiveDevice = deviceName;
 
-            loadControls();
-            loadBindings();
-
             dev.ControlChange += dev_ControlChange;
             dev.NoteOn += dev_NoteOn;
-            if (!dev.IsOpen) dev.Open();
-            dev.StartReceiving(null);
-        }
-
-        private void loadBindings()
-        {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(ActiveDevice) + ".json";
-
             try
             {
-                Bindings = JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+                if (!dev.IsOpen) dev.Open();
+                dev.StartReceiving(null);
             }
-            catch (FileNotFoundException)
+            catch (Midi.DeviceException e)
             {
-                Bindings = new List<ControlBinding>();
+                throw new Plugins.Device.DeviceException("MIDI device exception", e);
             }
-        }
-
-        /// <summary>
-        /// Loads control definitions from file
-        /// </summary>
-        private void loadControls()
-        {
-            string f = @"devices\" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            Controls = JsonConvert.DeserializeObject<IEnumerable<Plugins.Device.Control>>(File.ReadAllText(f));
         }
 
         /// <summary>
         /// Handles ControlChange messages
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">ControlChange MIDI message</param>
         private void dev_ControlChange(ControlChangeMessage msg)
         {
             handleControl(msg.Control.ToString(), msg.Value);
@@ -150,7 +131,9 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Handles MIDI message for buttons or controls
         /// </summary>
-        /// <param name="control">Control ID for searching a script bound to it</param>
+        /// <param name="control">
+        /// Control ID for searching a script bound to it
+        /// </param>
         /// <param name="value">Value sent from MIDI device</param>
         private void handleControl(string control, int value)
         {
@@ -172,7 +155,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Handles pressing button on a device
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">NoteOn MIDI message</param>
         private void dev_NoteOn(NoteOnMessage msg)
         {
             handleControl(((int)msg.Pitch).ToString(), msg.Velocity);
@@ -183,8 +166,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// </summary>
         public void SaveBindings()
         {
-            string f = "bindings-" + ValidFileName.MakeValidFileName(dev.Name) + ".json";
-            File.WriteAllText(f, JsonConvert.SerializeObject(Bindings));
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -201,8 +183,9 @@ namespace Ktos.DjToKey.MidiDevice
                 }
                 catch (Midi.DeviceException)
                 {
-                    // device was removed while application was running or cannot be closed
-                    // we cannot do much about it, so we are just closing
+                    // device was removed while application was
+                    // running or cannot be closed we cannot do much
+                    // about it, so we are just closing
                 }
             }
         }

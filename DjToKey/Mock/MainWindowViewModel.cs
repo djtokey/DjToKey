@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,56 +29,24 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins.Scripts;
-using System.ComponentModel.Composition;
+using Ktos.DjToKey.Models;
+using System.Collections.ObjectModel;
 
-namespace TestPlugin
+namespace Ktos.DjToKey.Mock
 {
     /// <summary>
-    /// A very basic sample of a plugin - when in plugins directory for a DjToKey,
-    /// it automatically registers object called "TestPlugin" with a "DoWork" method
-    /// returning "Hello, world!" message.
+    /// Mocking ViewModel for MainWindow, with only necessary properties
     /// </summary>
-    [Export(typeof(IScriptObject))]
-    public class TestPlugin : IScriptObject
+    internal class MainWindowViewModel
     {
-        public string Description
-        {
-            get
-            {
-                return "A test plugin";
-            }
-        }
+        /// <summary>
+        /// List of all devices supported by the application
+        /// </summary>
+        public ObservableCollection<Device> Devices { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return "TestPlugin";
-            }
-        }
-
-        public object Object
-        {
-            get
-            {
-                return tpi;
-            }
-        }
-
-        private TestPluginImpl tpi;
-
-        public TestPlugin()
-        {
-            tpi = new TestPluginImpl();
-        }
-    }
-
-    public class TestPluginImpl
-    {
-        public string DoWork()
-        {
-            return "Hello, world!";
-        }
+        /// <summary>
+        /// Current device
+        /// </summary>
+        public Device CurrentDevice { get; set; }
     }
 }

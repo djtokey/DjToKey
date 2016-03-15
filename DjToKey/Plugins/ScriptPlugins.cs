@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -35,18 +35,26 @@ using System.ComponentModel.Composition;
 
 namespace Ktos.DjToKey.Plugins
 {
-
+    /// <summary>
+    /// A collection of plugins added to scripts, consists of two
+    /// Lists internally - list of IScriptObject and IScriptType,
+    /// automatically imported by MEF
+    /// </summary>
     internal class ScriptPlugins : IScriptPlugins
     {
+#pragma warning disable 0649
+
         /// <summary>
-        /// List of objects from plugins to be included into script engine when loading.
-        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptObject"/>
+        /// List of objects from plugins to be included into script
+        /// engine when loading. MEF will automatically satisfy this
+        /// list with every class implementing <see cref="IScriptObject"/>
         /// </summary>
         [ImportMany(typeof(IScriptObject))]
         private IEnumerable<IScriptObject> pluginsObjects;
 
         /// <summary>
-        /// List of objects from plugins to be included into script engine when loading
+        /// List of objects from plugins to be included into script
+        /// engine when loading
         /// </summary>
         public IEnumerable<IScriptObject> Objects
         {
@@ -57,14 +65,16 @@ namespace Ktos.DjToKey.Plugins
         }
 
         /// <summary>
-        /// List of types from plugins to be included into script engine when loading.
-        /// MEF will automatically satisfy this list with every class implementing <see cref="IScriptType"/>
+        /// List of types from plugins to be included into script
+        /// engine when loading. MEF will automatically satisfy this
+        /// list with every class implementing <see cref="IScriptType"/>
         /// </summary>
         [ImportMany(typeof(IScriptType))]
         private IEnumerable<IScriptType> pluginsTypes;
 
         /// <summary>
-        /// List of types from plugins to be included into script engine when loading
+        /// List of types from plugins to be included into script
+        /// engine when loading
         /// </summary>
         public IEnumerable<IScriptType> Types
         {
@@ -74,4 +84,6 @@ namespace Ktos.DjToKey.Plugins
             }
         }
     }
+
+#pragma warning restore 0649
 }

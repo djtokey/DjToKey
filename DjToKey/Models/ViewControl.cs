@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,40 +29,39 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Plugins.Scripts;
-using Ktos.DjToKey.Scripts;
-using System;
-using System.Windows.Forms;
+using System.Windows.Media;
 
-namespace Ktos.DjToKey
+namespace Ktos.DjToKey.Models
 {
-    internal static class Program
+    /// <summary>
+    /// Extension of a <see cref="Plugins.Device.Control"/> with
+    /// position in a window included
+    /// </summary>
+    public class ViewControl : Plugins.Device.Control
     {
         /// <summary>
-        /// A script engine used in application
+        /// Defines position of a control in a window, in pixels from Left
         /// </summary>
-        public static ScriptEngine ScriptEngine;
+        public int Left { get; set; }
 
         /// <summary>
-        /// A class used for importing all possible plugins
+        /// Defines position of a control in a window, in pixels from Top
         /// </summary>
-        public static PluginImporter PluginImporter;
+        public int Top { get; set; }
 
         /// <summary>
-        /// The main entry point for the application.
+        /// Control width on a screen
         /// </summary>
-        [STAThread]
-        private static void Main()
-        {
-            PluginImporter = new PluginImporter();
+        public int Width { get; set; }
 
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+        /// <summary>
+        /// Control height on a screen
+        /// </summary>
+        public int Height { get; set; }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-        }
+        /// <summary>
+        /// Control background color
+        /// </summary>
+        public Color Background { get; set; }
     }
 }

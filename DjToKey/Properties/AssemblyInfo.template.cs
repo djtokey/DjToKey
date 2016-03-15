@@ -2,7 +2,7 @@
 [assembly: System.Reflection.AssemblyDescription("DjToKey")]
 [assembly: System.Reflection.AssemblyCompany("Marcin Badurowicz")]
 [assembly: System.Reflection.AssemblyProduct("DjToKey")]
-[assembly: System.Reflection.AssemblyCopyright("Copyright © Marcin Badurowicz 2015")]
+[assembly: System.Reflection.AssemblyCopyright("Copyright © Marcin Badurowicz 2015-2016")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.CLSCompliant(false)]
 

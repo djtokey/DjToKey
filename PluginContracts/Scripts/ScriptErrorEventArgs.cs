@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -38,7 +38,15 @@ namespace Ktos.DjToKey.Plugins.Scripts
     /// </summary>
     public class ScriptErrorEventArgs : EventArgs
     {
+        /// <summary>
+        /// A name of a control which handling caused the exception
+        /// </summary>
         public string Control { get; set; }
+
+        /// <summary>
+        /// An optional message about exception. May be presented to
+        /// the user.
+        /// </summary>
         public string Message { get; set; }
     }
 }

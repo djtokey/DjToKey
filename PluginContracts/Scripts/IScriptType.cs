@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -34,8 +34,8 @@ using System;
 namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// An interface defining a plugin for DjToKey allowing to add a new global type
-    /// into a script engine
+    /// An interface defining a plugin for DjToKey allowing to add a
+    /// new global type into a script engine
     /// </summary>
     public interface IScriptType
     {
@@ -45,7 +45,8 @@ namespace Ktos.DjToKey.Plugins.Scripts
         string Name { get; }
 
         /// <summary>
-        /// The plugin-defined type which will be registered in script engine under name <see cref="Name"/>
+        /// The plugin-defined type which will be registered in script
+        /// engine under name <see cref="Name"/>
         /// </summary>
         Type Type { get; }
     }

@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -31,10 +31,33 @@
 
 namespace Ktos.DjToKey.Plugins.Scripts
 {
+    /// <summary>
+    /// A generic interface for a script handler.
+    /// 
+    /// Script handler is configured with possible script plugins,
+    /// adding new object, types or other functions.
+    /// 
+    /// It also provides <see cref="Execute(Script, object, object)"/>
+    /// method, which runs script with a value and a control.
+    /// </summary>
     public interface IScriptEngine
     {
+        /// <summary>
+        /// Configures script engine adding possible plugins for scripts
+        /// </summary>
+        /// <param name="plugins">
+        /// A collection of additional objects and types for a ScriptEngine
+        /// </param>
         void Configure(IScriptPlugins plugins);
 
+        /// <summary>
+        /// Executes a script within a script engine.
+        /// </summary>
+        /// <param name="s">A script to be executed as a string</param>
+        /// <param name="value">Value from the input device</param>
+        /// <param name="ctrl">
+        /// Object defining control from the input device
+        /// </param>
         void Execute(Script s, object value, object ctrl);
     }
 }

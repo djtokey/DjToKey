@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,15 +29,15 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Device;
 using System.Collections.Generic;
 
-namespace Ktos.DjToKey.Model
+namespace Ktos.DjToKey.Models
 {
     /// <summary>
     /// This class lists all possible devices from all device handlers
-    /// and performs routing to get a handler for a device with specified name
+    /// and performs routing to get a handler for a device with
+    /// specified name
     /// </summary>
     public class AllDevices
     {
@@ -59,7 +59,9 @@ namespace Ktos.DjToKey.Model
         /// <summary>
         /// Creates a new instance of AllDevices
         /// </summary>
-        /// <param name="plugins">List of all plugins of IDeviceHandler type</param>
+        /// <param name="plugins">
+        /// List of all plugins of IDeviceHandler type
+        /// </param>
         public AllDevices(IEnumerable<IDeviceHandler> plugins)
         {
             availableDevices = new List<string>();
@@ -67,7 +69,9 @@ namespace Ktos.DjToKey.Model
 
             if (plugins != null)
                 foreach (var dh in plugins)
+                {
                     availableDevices.AddRange(dh.AvailableDevices);
+                }
         }
 
         /// <summary>

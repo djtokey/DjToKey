@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -31,7 +31,7 @@
 
 using Ktos.DjToKey.Plugins.Scripts;
 using System.ComponentModel.Composition;
-using System.Windows.Forms;
+using System.Windows;
 
 namespace Ktos.DjToKey.Scripts
 {
@@ -41,16 +41,22 @@ namespace Ktos.DjToKey.Scripts
     [Export(typeof(IScriptObject))]
     public class Document : IScriptObject
     {
-        private const string name = "Document";
+        private const string NAME = "Document";
 
+        /// <summary>
+        /// Name of the object in a script engine
+        /// </summary>
         public string Name
         {
             get
             {
-                return name;
+                return NAME;
             }
         }
 
+        /// <summary>
+        /// Object available for a script engine
+        /// </summary>
         public object Object
         {
             get
@@ -61,6 +67,9 @@ namespace Ktos.DjToKey.Scripts
 
         private DocumentImpl dimpl;
 
+        /// <summary>
+        /// Initializes new object for a script engine
+        /// </summary>
         public Document()
         {
             dimpl = new DocumentImpl();
@@ -73,7 +82,8 @@ namespace Ktos.DjToKey.Scripts
     public class DocumentImpl
     {
         /// <summary>
-        /// Named for a sake of consistency with browser implementations, Alert shows message box
+        /// Named for a sake of consistency with browser
+        /// implementations, Alert shows message box
         /// </summary>
         /// <param name="message">A message to be shown</param>
         public void Alert(string message)
