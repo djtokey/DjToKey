@@ -95,5 +95,10 @@ namespace Ktos.DjToKey.Views
         {
             vm.UpdateCurrentScript(tbScript.Text);
         }
+
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            vm.OnClosing();
+        }
     }
 }

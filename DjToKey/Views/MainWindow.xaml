@@ -9,7 +9,7 @@
         Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
         ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" 
         StateChanged="MainWindow_StateChanged" d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}"
-        DataContext="{StaticResource MainWindowViewModel}">
+        DataContext="{StaticResource MainWindowViewModel}" Closing="MetroWindow_Closing">
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
@@ -72,7 +72,9 @@
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StackPanel Grid.Column="1">
-            <TextBox Text="{Binding CurrentScript}" x:Name="tbScript"></TextBox>
+            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" Height="400" FontFamily="Consolas" FontSize="16"></TextBox>
+            </ScrollViewer>
             <Button Content="Save" Click="Button_Click" />
         </StackPanel>
     </Grid>

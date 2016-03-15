@@ -188,8 +188,16 @@ namespace Ktos.DjToKey.ViewModels
 
         public void UpdateCurrentScript(string script)
         {
-            var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == currentlyEditing.ControlId).FirstOrDefault();
-            binding.Script.Text = script;
+            if (currentlyEditing != null)
+            {
+                var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == currentlyEditing.ControlId).FirstOrDefault();
+                binding.Script.Text = script;
+            }
+        }
+
+        public void OnClosing()
+        {
+            saveBindings();
         }
 
         private ViewControl currentlyEditing;
