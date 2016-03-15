@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -44,18 +44,24 @@ namespace Ktos.DjToKey.Plugins.Packaging
 {
     /// <summary>
     /// Class describing package for a device
-    ///
-    /// Device packages have images and control definitions for devices supported by a plugin. Build under
-    /// a Open Packaging Conventions with a extension ".dtkpkg".
+    /// 
+    /// Device packages have images and control definitions for
+    /// devices supported by a plugin. Build under a Open Packaging
+    /// Conventions with a extension ".dtkpkg".
     /// </summary>
     public class DevicePackage
     {
         /// <summary>
-        /// Opens a device package of a given name and loads metadata from it
+        /// Opens a device package of a given name and loads metadata
+        /// from it
         /// </summary>
         /// <param name="fileName">Package file name to be opened</param>
-        /// <param name="deviceName">Device name in a package to load configuration</param>
-        /// <returns>A device package with a single device and whole metadata loaded</returns>
+        /// <param name="deviceName">
+        /// Device name in a package to load configuration
+        /// </param>
+        /// <returns>
+        /// A device package with a single device and whole metadata loaded
+        /// </returns>
         public static DevicePackage Load(string fileName, string deviceName)
         {
             var p = new DevicePackage();
@@ -63,8 +69,9 @@ namespace Ktos.DjToKey.Plugins.Packaging
             p.Metadata = PackageHelper.LoadMetadata(fileName);
             p.PackageFileName = fileName;
 
-            // .dtkpkg files may be device descriptors or other categories, if package describes itself
-            // as not device package, throw exception
+            // .dtkpkg files may be device descriptors or other
+            // categories, if package describes itself as not device
+            // package, throw exception
             if (!string.IsNullOrEmpty(p.Metadata.Category) && p.Metadata.Category != "device")
                 throw new ArgumentException("Package is not a device descriptor package.");
 
@@ -74,11 +81,14 @@ namespace Ktos.DjToKey.Plugins.Packaging
         }
 
         /// <summary>
-        /// Loads a device definition and image from a specified device package
+        /// Loads a device definition and image from a specified
+        /// device package
         /// </summary>
         /// <param name="fileName">Name of a device package file</param>
         /// <param name="deviceName">Name of a device</param>
-        /// <returns>A device object with controls, image, name and other parameters</returns>
+        /// <returns>
+        /// A device object with controls, image, name and other parameters
+        /// </returns>
         public static Models.Device LoadDeviceFromPackage(string fileName, string deviceName)
         {
             // TODO: support for mapping file!
@@ -148,7 +158,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// Loads all devices supported in a device package
         /// </summary>
         /// <param name="fileName">File name of a device package</param>
-        /// <returns>List of all devices supported with their images and control definitions</returns>
+        /// <returns>
+        /// List of all devices supported with their images and
+        /// control definitions
+        /// </returns>
         public static IEnumerable<Models.Device> LoadDevicesFromPackage(string fileName)
         {
             List<Models.Device> devices = new List<Models.Device>();
@@ -238,10 +251,18 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// </summary>
         public Models.Device Device { get; set; }
 
-        /// <summary>Replaces characters in <c>text</c> that are not allowed in
-        /// file names with the specified replacement character.</summary>
-        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>
-        /// <returns>A string that can be used as a filename. If the output string would otherwise be empty, returns "_".</returns>
+        /// <summary>
+        /// Replaces characters in <c>text</c> that are not allowed in
+        /// file names with the specified replacement character.
+        /// </summary>
+        /// <param name="text">
+        /// Text to make into a valid filename. The same string is
+        /// returned if it is valid already.
+        /// </param>
+        /// <returns>
+        /// A string that can be used as a filename. If the output
+        /// string would otherwise be empty, returns "_".
+        /// </returns>
         private static string MakeValidFileName(string text)
         {
             StringBuilder sb = new StringBuilder(text.Length);

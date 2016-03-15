@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -38,15 +38,15 @@ namespace Ktos.DjToKey.Plugins.Device
     /// <summary>
     /// A generic interface of a device handler
     /// 
-    /// Device handler is a class implementing IDeviceHandler, providing
-    /// listing of device names, getting controls attached to it (loaded from
-    /// device package). There are bindings of scripts to controls put
-    /// into IDeviceHandler, as well as a ScriptEngine object which handles
-    /// scripting.
+    /// Device handler is a class implementing IDeviceHandler,
+    /// providing listing of device names, getting controls attached
+    /// to it (loaded from device package). There are bindings of
+    /// scripts to controls put into IDeviceHandler, as well as a
+    /// ScriptEngine object which handles scripting.
     /// 
-    /// Defines two most important methods for a device: <see cref="Load(string)"/>
-    /// and <see cref="Unload"/> which are initializing and deinitializing
-    /// the device, respectively.
+    /// Defines two most important methods for a device: <see
+    /// cref="Load(string)"/> and <see cref="Unload"/> which are
+    /// initializing and deinitializing the device, respectively.
     /// </summary>
     public interface IDeviceHandler
     {
@@ -76,19 +76,23 @@ namespace Ktos.DjToKey.Plugins.Device
         IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
-        /// An event invoked when script error occured when handling
-        /// control
+        /// An event invoked when script error occured when handling control
         /// </summary>
         EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
         /// <summary>
-        /// Loads device based on a specified name and starts listening for its events
+        /// Loads device based on a specified name and starts
+        /// listening for its events
         /// </summary>
-        /// <param name="deviceName">Name of device to be initialized. Useful when handler is working for multiple input devices.</param>
+        /// <param name="deviceName">
+        /// Name of device to be initialized. Useful when handler is
+        /// working for multiple input devices.
+        /// </param>
         void Load(string deviceName);
 
         /// <summary>
-        /// Unloads currently active device and stops listening for its events
+        /// Unloads currently active device and stops listening for
+        /// its events
         /// </summary>
         void Unload();
     }

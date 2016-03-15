@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,28 +29,26 @@
 
 #endregion License
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// A generic interface for a collection of possible
-    /// script object and types to be added to script engine
+    /// A generic interface for a collection of possible script object
+    /// and types to be added to script engine
     /// </summary>
     public interface IScriptPlugins
-    {        
+    {
         /// <summary>
-        /// List of objects from plugins to be included into script engine when loading
+        /// List of objects from plugins to be included into script
+        /// engine when loading
         /// </summary>
         IEnumerable<IScriptObject> Objects { get; }
-        
+
         /// <summary>
-        /// List of types from plugins to be included into script engine when loading
+        /// List of types from plugins to be included into script
+        /// engine when loading
         /// </summary>
-        IEnumerable<IScriptType> Types { get; }        
+        IEnumerable<IScriptType> Types { get; }
     }
 }

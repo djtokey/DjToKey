@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -108,8 +108,9 @@ namespace Ktos.DjToKey.Packaging
 
         /// <summary>
         /// Keywords of device package - list of device names supported
-        ///
-        /// Separated by ";", may use * wildcard to support many devices with same prefix
+        /// 
+        /// Separated by ";", may use * wildcard to support many
+        /// devices with same prefix
         /// </summary>
         public string Keywords
         {
@@ -132,8 +133,9 @@ namespace Ktos.DjToKey.Packaging
 
         /// <summary>
         /// Category of a package
-        ///
-        /// May be "device" is this package is a device description package with images and controls definitions
+        /// 
+        /// May be "device" is this package is a device description
+        /// package with images and controls definitions
         /// </summary>
         public string Category
         {
@@ -158,8 +160,8 @@ namespace Ktos.DjToKey.Packaging
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Handles when property is changed raising <see cref="PropertyChanged"/>
-        /// event.
+        /// Handles when property is changed raising <see
+        /// cref="PropertyChanged"/> event.
         /// 
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>

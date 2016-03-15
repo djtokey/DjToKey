@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -62,7 +62,7 @@ namespace Ktos.DjToKey.Models
                 }
             }
         }
-        
+
         /// <summary>
         /// Collection of all controls supported by the device
         /// </summary>
@@ -105,8 +105,8 @@ namespace Ktos.DjToKey.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Handles when property is changed raising <see cref="PropertyChanged"/>
-        /// event.
+        /// Handles when property is changed raising <see
+        /// cref="PropertyChanged"/> event.
         /// 
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>

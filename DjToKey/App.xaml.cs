@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,8 +29,6 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
-using Ktos.DjToKey.Scripts;
 using System.Windows;
 
 namespace Ktos.DjToKey
@@ -40,10 +38,11 @@ namespace Ktos.DjToKey
     /// </summary>
     public partial class App : Application
     {
-
+        /// <summary>
+        /// Creates a new App instance
+        /// </summary>
         public App()
         {
-            
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

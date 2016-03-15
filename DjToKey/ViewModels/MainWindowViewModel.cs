@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -37,9 +37,9 @@ using Ktos.DjToKey.Plugins.Scripts;
 using Ktos.DjToKey.Scripts;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace Ktos.DjToKey.ViewModels
@@ -63,8 +63,8 @@ namespace Ktos.DjToKey.ViewModels
         private PluginImporter PluginImporter { get; set; }
 
         /// <summary>
-        /// Initializes a new MainWindowViewModel and loads
-        /// all devices from all supported handlers
+        /// Initializes a new MainWindowViewModel and loads all
+        /// devices from all supported handlers
         /// </summary>
         public MainWindowViewModel()
         {
@@ -85,9 +85,8 @@ namespace Ktos.DjToKey.ViewModels
                 }
                 catch (FileNotFoundException)
                 {
-
                 }
-            }            
+            }
         }
 
         private Device findAndLoadDeviceFromPackage(string name)
@@ -121,9 +120,10 @@ namespace Ktos.DjToKey.ViewModels
 
         /// <summary>
         /// Currently active device
-        ///
-        /// When currently active device is changed, previous one's handler is removed,
-        /// current handler is found and loaded, and new bindings for controls are loaded
+        /// 
+        /// When currently active device is changed, previous one's
+        /// handler is removed, current handler is found and loaded,
+        /// and new bindings for controls are loaded
         /// </summary>
         public Device CurrentDevice
         {
@@ -136,7 +136,6 @@ namespace Ktos.DjToKey.ViewModels
             {
                 if (this.currentDevice != value)
                 {
-
                     if (deviceHandler != null)
                     {
                         saveBindings();
@@ -158,8 +157,10 @@ namespace Ktos.DjToKey.ViewModels
 
         private void loadBindings()
         {
-            // TODO: should try to load bindings from this folder, %USERPROFILE% or similar and if there is none
-            // there should be a dialog to select binding file manually or create a new one
+            // TODO: should try to load bindings from this folder,
+            //       %USERPROFILE% or similar and if there is none
+            // there should be a dialog to select binding file
+            // manually or create a new one
             string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
 
             try
@@ -181,7 +182,10 @@ namespace Ktos.DjToKey.ViewModels
             File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
         }
 
-
+        /// <summary>
+        /// Loads script associated with the control and sets it as editable
+        /// </summary>
+        /// <param name="ctrl"></param>
         public void SetCurrentScript(ViewControl ctrl)
         {
             currentlyEditing = ctrl;
@@ -196,6 +200,10 @@ namespace Ktos.DjToKey.ViewModels
             }
         }
 
+        /// <summary>
+        /// Updates currently editable script with new content
+        /// </summary>
+        /// <param name="script"></param>
         public void UpdateCurrentScript(string script)
         {
             if (currentlyEditing != null)
@@ -205,6 +213,9 @@ namespace Ktos.DjToKey.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handles closing the form, saving bindings and similar
+        /// </summary>
         public void OnClosing()
         {
             saveBindings();
@@ -214,6 +225,9 @@ namespace Ktos.DjToKey.ViewModels
 
         private string currentScript;
 
+        /// <summary>
+        /// Currently editable script
+        /// </summary>
         public string CurrentScript
         {
             get
@@ -231,15 +245,14 @@ namespace Ktos.DjToKey.ViewModels
             }
         }
 
-
         /// <summary>
         /// Even run when databound property is changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Handles when property is changed raising <see cref="PropertyChanged"/>
-        /// event.
+        /// Handles when property is changed raising <see
+        /// cref="PropertyChanged"/> event.
         /// 
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>

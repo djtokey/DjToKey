@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -76,14 +76,13 @@ namespace Ktos.DjToKey.MidiDevice
         public IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
-        /// An event invoked when script error occured when handling
-        /// control
+        /// An event invoked when script error occured when handling control
         /// </summary>
         public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
         /// <summary>
-        /// A constructor, intializing script engine and setting list of
-        /// available input devices
+        /// A constructor, intializing script engine and setting list
+        /// of available input devices
         /// </summary>
         public MidiDevice()
         {
@@ -95,7 +94,8 @@ namespace Ktos.DjToKey.MidiDevice
         }
 
         /// <summary>
-        /// Loads information and bindings of a device, sets up handling device events
+        /// Loads information and bindings of a device, sets up
+        /// handling device events
         /// </summary>
         /// <param name="deviceName">Name of a device to be loaded</param>
         public void Load(string deviceName)
@@ -124,7 +124,9 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Handles MIDI message for buttons or controls
         /// </summary>
-        /// <param name="control">Control ID for searching a script bound to it</param>
+        /// <param name="control">
+        /// Control ID for searching a script bound to it
+        /// </param>
         /// <param name="value">Value sent from MIDI device</param>
         private void handleControl(string control, int value)
         {
@@ -174,8 +176,9 @@ namespace Ktos.DjToKey.MidiDevice
                 }
                 catch (Midi.DeviceException)
                 {
-                    // device was removed while application was running or cannot be closed
-                    // we cannot do much about it, so we are just closing
+                    // device was removed while application was
+                    // running or cannot be closed we cannot do much
+                    // about it, so we are just closing
                 }
             }
         }

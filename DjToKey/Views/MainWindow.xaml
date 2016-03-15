@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ktos.DjToKey"        
+        xmlns:local="clr-namespace:Ktos.DjToKey"
         xmlns:p="clr-namespace:Ktos.DjToKey.Resources"
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="{x:Static p:AppResources.AppName}" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
-        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" 
+        ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico"
         StateChanged="MainWindow_StateChanged" d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}"
         DataContext="{StaticResource MainWindowViewModel}" Closing="MetroWindow_Closing">
 
@@ -80,8 +80,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
-            <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" FontFamily="Consolas" FontSize="16" HorizontalScrollBarVisibility="Auto" Grid.Row="0"/>
-            <Button Content="{x:Static p:AppResources.btnSave}" Click="btnSave_Click" Grid.Row="1"/>
+            <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" FontFamily="Consolas" FontSize="16" HorizontalScrollBarVisibility="Auto" Grid.Row="0" />
+            <Button Content="{x:Static p:AppResources.btnSave}" Click="btnSave_Click" Grid.Row="1" />
         </Grid>
     </Grid>
 </Controls:MetroWindow>

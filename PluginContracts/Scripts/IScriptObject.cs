@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -32,8 +32,8 @@
 namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
-    /// An interface defining a basic plugin for DjToKey allowing to add a new global object
-    /// into a script engine
+    /// An interface defining a basic plugin for DjToKey allowing to
+    /// add a new global object into a script engine
     /// </summary>
     public interface IScriptObject
     {
@@ -43,7 +43,8 @@ namespace Ktos.DjToKey.Plugins.Scripts
         string Name { get; }
 
         /// <summary>
-        /// The plugin object which will be registered in script engine under name <see cref="Name"/>
+        /// The plugin object which will be registered in script
+        /// engine under name <see cref="Name"/>
         /// </summary>
         object Object { get; }
     }

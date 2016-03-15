@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,20 +29,18 @@
 
 #endregion License
 
-using Ktos.DjToKey.Plugins;
 using Ktos.DjToKey.Plugins.Scripts;
 using Microsoft.ClearScript.V8;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Ktos.DjToKey.Scripts
 {
     /// <summary>
-    /// Implements a wrapper over a V8 Script Engine
-    /// for handling JavaScript scripts in DjToKey
+    /// Implements a wrapper over a V8 Script Engine for handling
+    /// JavaScript scripts in DjToKey
     /// </summary>
     public class ScriptEngine : IScriptEngine
-    {        
+    {
         /// <summary>
         /// Instance of script engine
         /// </summary>
@@ -55,7 +53,7 @@ namespace Ktos.DjToKey.Scripts
         /// <param name="plugins">A list of plugins for a ScriptEngine</param>
         public void Configure(IScriptPlugins plugins)
         {
-            eng = new V8ScriptEngine();            
+            eng = new V8ScriptEngine();
 
             if (plugins.Objects != null)
             {
@@ -75,12 +73,14 @@ namespace Ktos.DjToKey.Scripts
         }
 
         /// <summary>
-        /// Executes script giving it also values of Control event which caused it and
-        /// its value.
+        /// Executes script giving it also values of Control event
+        /// which caused it and its value.
         /// </summary>
         /// <param name="s">Script to be executed</param>
         /// <param name="value">Value of an handled event</param>
-        /// <param name="ctrl">Object representing control which caused event</param>
+        /// <param name="ctrl">
+        /// Object representing control which caused event
+        /// </param>
         public void Execute(Script s, object value, object ctrl)
         {
             eng.AddHostObject("Control", ctrl);

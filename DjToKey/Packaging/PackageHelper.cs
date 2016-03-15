@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -40,14 +40,17 @@ using System.Linq;
 namespace Ktos.DjToKey.Packaging
 {
     /// <summary>
-    /// A helper class for finding, loading, downloading and checking DjToKey packages
+    /// A helper class for finding, loading, downloading and checking
+    /// DjToKey packages
     /// </summary>
     internal class PackageHelper
     {
         /// <summary>
         /// Loads device package for a specified device
         /// </summary>
-        /// <param name="deviceName">Name of a device to load description package for</param>
+        /// <param name="deviceName">
+        /// Name of a device to load description package for
+        /// </param>
         /// <returns>Loaded package</returns>
         public static DevicePackage LoadDevicePackage(string deviceName)
         {
@@ -57,7 +60,8 @@ namespace Ktos.DjToKey.Packaging
         }
 
         /// <summary>
-        /// Lists file names for all packages which are possible to handle device of a specified name
+        /// Lists file names for all packages which are possible to
+        /// handle device of a specified name
         /// </summary>
         /// <param name="deviceName">Name of a device to be handled</param>
         /// <returns>A list of packages file names</returns>
@@ -105,7 +109,9 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         /// <param name="filesList">List of all device packages</param>
         /// <param name="deviceName">Name of a device to be handled</param>
-        /// <returns>Filename of a package which can handle this device</returns>
+        /// <returns>
+        /// Filename of a package which can handle this device
+        /// </returns>
         public static string FindDevicePackageName(IEnumerable<string> filesList, string deviceName)
         {
             if (filesList.Count() > 0)
@@ -122,9 +128,12 @@ namespace Ktos.DjToKey.Packaging
         }
 
         /// <summary>
-        /// Checks if device is supported by package by checking keywords from package metadata
+        /// Checks if device is supported by package by checking
+        /// keywords from package metadata
         /// </summary>
-        /// <param name="keywords">Keywords extracted from package metadata</param>
+        /// <param name="keywords">
+        /// Keywords extracted from package metadata
+        /// </param>
         /// <param name="deviceName">Name of device</param>
         /// <returns>Returns if device is supported</returns>
         public static bool DeviceSupported(string keywords, string deviceName)
@@ -151,7 +160,10 @@ namespace Ktos.DjToKey.Packaging
         /// Loads all metadata for a specified package
         /// </summary>
         /// <param name="fileName">File name to a package</param>
-        /// <returns>All package metadata - Keywords, Title, Description, Version and Category</returns>
+        /// <returns>
+        /// All package metadata - Keywords, Title, Description,
+        /// Version and Category
+        /// </returns>
         public static PackageMetadata LoadMetadata(string fileName)
         {
             using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))

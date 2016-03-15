@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,20 +29,15 @@
 
 #endregion License
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Ktos.DjToKey.Models
 {
     /// <summary>
-    /// Extension of a <see cref="Plugins.Device.Control"/> with position
-    /// in a window included
+    /// Extension of a <see cref="Plugins.Device.Control"/> with
+    /// position in a window included
     /// </summary>
-    public class ViewControl: Plugins.Device.Control
+    public class ViewControl : Plugins.Device.Control
     {
         /// <summary>
         /// Defines position of a control in a window, in pixels from Left

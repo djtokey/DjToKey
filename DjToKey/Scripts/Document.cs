@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -82,12 +82,13 @@ namespace Ktos.DjToKey.Scripts
     public class DocumentImpl
     {
         /// <summary>
-        /// Named for a sake of consistency with browser implementations, Alert shows message box
+        /// Named for a sake of consistency with browser
+        /// implementations, Alert shows message box
         /// </summary>
         /// <param name="message">A message to be shown</param>
         public void Alert(string message)
         {
-            MessageBox.Show(message);            
+            MessageBox.Show(message);
         }
     }
 }

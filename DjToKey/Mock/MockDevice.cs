@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,28 +29,26 @@
 
 #endregion License
 
-using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins.Device;
-using Ktos.DjToKey.Plugins.Packaging;
 using Ktos.DjToKey.Plugins.Scripts;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.IO;
 using System.Linq;
 using System.Timers;
 
 namespace Ktos.DjToKey
 {
 #if DEBUG
+
     [Export(typeof(IDeviceHandler))]
 #endif
     /// <summary>
     /// Mock Device is a virtual device available only in Debug builds.
     /// 
-    /// It offers 3 virtual controls, every of different type, and handling action of one
-    /// of controls is run 3 seconds after loading device.
+    /// It offers 3 virtual controls, every of different type, and
+    /// handling action of one of controls is run 3 seconds after
+    /// loading device.
     /// </summary>
     public class MockDevice : IDeviceHandler
     {
@@ -80,16 +78,15 @@ namespace Ktos.DjToKey
         public IScriptEngine ScriptEngine { get; set; }
 
         /// <summary>
-        /// An event invoked when script error occured when handling
-        /// control
+        /// An event invoked when script error occured when handling control
         /// </summary>
         public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
         private Timer tim;
 
         /// <summary>
-        /// A constructor, intializing script engine and setting list of
-        /// available input devices
+        /// A constructor, intializing script engine and setting list
+        /// of available input devices
         /// </summary>
         public MockDevice()
         {
@@ -100,12 +97,13 @@ namespace Ktos.DjToKey
         }
 
         /// <summary>
-        /// Loads information and bindings of a device, sets up handling device events
+        /// Loads information and bindings of a device, sets up
+        /// handling device events
         /// </summary>
         /// <param name="deviceName">Name of a device to be loaded</param>
         public void Load(string deviceName)
         {
-            ActiveDevice = deviceName;            
+            ActiveDevice = deviceName;
 
             tim = new Timer();
             tim.Interval = 3000;
@@ -116,7 +114,9 @@ namespace Ktos.DjToKey
         /// <summary>
         /// Handles MIDI message for buttons or controls
         /// </summary>
-        /// <param name="control">Control ID for searching a script bound to it</param>
+        /// <param name="control">
+        /// Control ID for searching a script bound to it
+        /// </param>
         /// <param name="value">Value sent from MIDI device</param>
         private void handleControl(string control, int value)
         {
@@ -135,7 +135,7 @@ namespace Ktos.DjToKey
                     if (ScriptErrorOccured != null) ScriptErrorOccured.Invoke(this, new ScriptErrorEventArgs() { Control = control, Message = e.Message });
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// Unloads the device

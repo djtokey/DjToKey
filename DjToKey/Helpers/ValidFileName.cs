@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -45,12 +45,25 @@ namespace Ktos.DjToKey.Helpers
 
         // Source: http://stackoverflow.com/a/25223884
 
-        /// <summary>Replaces characters in <c>text</c> that are not allowed in
-        /// file names with the specified replacement character.</summary>
-        /// <param name="text">Text to make into a valid filename. The same string is returned if it is valid already.</param>
-        /// <param name="replacement">Replacement character, or null to simply remove bad characters.</param>
-        /// <param name="fancy">Whether to replace quotes and slashes with the non-ASCII characters ” and ⁄.</param>
-        /// <returns>A string that can be used as a filename. If the output string would otherwise be empty, returns "_".</returns>
+        /// <summary>
+        /// Replaces characters in <c>text</c> that are not allowed in
+        /// file names with the specified replacement character.
+        /// </summary>
+        /// <param name="text">
+        /// Text to make into a valid filename. The same string is
+        /// returned if it is valid already.
+        /// </param>
+        /// <param name="replacement">
+        /// Replacement character, or null to simply remove bad characters.
+        /// </param>
+        /// <param name="fancy">
+        /// Whether to replace quotes and slashes with the non-ASCII
+        /// characters ” and ⁄.
+        /// </param>
+        /// <returns>
+        /// A string that can be used as a filename. If the output
+        /// string would otherwise be empty, returns "_".
+        /// </returns>
         public static string MakeValidFileName(string text, char? replacement = '_', bool fancy = true)
         {
             StringBuilder sb = new StringBuilder(text.Length);

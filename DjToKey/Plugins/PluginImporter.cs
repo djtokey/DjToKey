@@ -3,7 +3,7 @@
 /*
  * DjToKey
  *
- * Copyright (C) Marcin Badurowicz 2015
+ * Copyright (C) Marcin Badurowicz 2015-2016
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -40,9 +40,9 @@ using Assembly = System.Reflection.Assembly;
 namespace Ktos.DjToKey.Plugins
 {
     /// <summary>
-    /// This class is responsible for finding and loading all plugins from the their subdirectory
-    /// using MEF.
-    ///
+    /// This class is responsible for finding and loading all plugins
+    /// from the their subdirectory using MEF.
+    /// 
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
     internal class PluginImporter
@@ -74,7 +74,8 @@ namespace Ktos.DjToKey.Plugins
         }
 
         /// <summary>
-        /// Performs loading all plugins, importing them by MEF and loading their metadata
+        /// Performs loading all plugins, importing them by MEF and
+        /// loading their metadata
         /// </summary>
         public PluginImporter()
         {
@@ -82,7 +83,8 @@ namespace Ktos.DjToKey.Plugins
             ScriptPlugins = new ScriptPlugins();
             var catalog = new AggregateCatalog();
 
-            // adds all the parts found in all assemblies in \plugins subdirectory and in current assembly
+            // adds all the parts found in all assemblies in \plugins
+            // subdirectory and in current assembly
             loadedPlugins = new List<Metadata>();
             DirectoryCatalog dirc = null;
             try
@@ -105,8 +107,9 @@ namespace Ktos.DjToKey.Plugins
             }
             catch (ReflectionTypeLoadException)
             {
-                // plugins cannot be loaded due to type mismatch
-                // set dirc to null, so no plugins will be loaded for their metadata
+                // plugins cannot be loaded due to type mismatch set
+                // dirc to null, so no plugins will be loaded for
+                // their metadata
                 dirc = null;
             }
 
@@ -114,7 +117,8 @@ namespace Ktos.DjToKey.Plugins
             {
                 foreach (var f in dirc.LoadedFiles)
                 {
-                    // load plugin assemblies again, only for reflection information, to get their metadata
+                    // load plugin assemblies again, only for
+                    // reflection information, to get their metadata
                     var ass = Assembly.ReflectionOnlyLoadFrom(f);
                     var metadata = ass.GetMetadata();
                     if (metadata != null)

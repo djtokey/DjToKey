@@ -49,7 +49,7 @@ namespace Ktos.DjToKey.Views
         /// Creates a new Window and prepares the Tray Icon
         /// </summary>
         public MainWindow()
-        {            
+        {
             InitializeComponent();
 
             trayIcon = new NotifyIcon();
@@ -59,7 +59,7 @@ namespace Ktos.DjToKey.Views
             trayIcon.Text = DjToKey.Resources.AppResources.AppName;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
-            vm = (DataContext as MainWindowViewModel);
+            vm = DataContext as MainWindowViewModel;
 
             if (vm.Devices.Count == 0)
             {
@@ -77,8 +77,7 @@ namespace Ktos.DjToKey.Views
             if (this.WindowState == WindowState.Minimized)
             {
                 trayIcon.Visible = true;
-                trayIcon.Text = string.Format("{0} - {1}", DjToKey.Resources.AppResources.AppName, vm.CurrentDevice.Name);
-                trayIcon.BalloonTipText = "";
+                trayIcon.Text = string.Format("{0} - {1}", DjToKey.Resources.AppResources.AppName, vm.CurrentDevice.Name);                
                 trayIcon.ShowBalloonTip(1000, DjToKey.Resources.AppResources.AppName, DjToKey.Resources.AppResources.TrayMessage, ToolTipIcon.Info);
                 this.ShowInTaskbar = false;
             }
