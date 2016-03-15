@@ -136,7 +136,7 @@
     <value>Konfiguracja klawiszy</value>
   </data>
   <data name="lbAbout" xml:space="preserve">
-    <value>O programie</value>
+    <value>o programie</value>
   </data>
   <data name="lbDevice" xml:space="preserve">
     <value>Urządzenie MIDI:</value>
@@ -155,5 +155,8 @@
   </data>
   <data name="ScriptErrorMessage" xml:space="preserve">
     <value>Wystąpił błąd w obsłudze zdarzenia dla kontrolki {0}: {1}</value>
+  </data>
+  <data name="TrayMessage" xml:space="preserve">
+    <value>DjToKey będzie teraz pracował w tle.</value>
   </data>
 </root>

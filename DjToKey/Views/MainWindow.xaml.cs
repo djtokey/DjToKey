@@ -72,6 +72,9 @@ namespace Ktos.DjToKey.Views
             if (this.WindowState == WindowState.Minimized)
             {
                 trayIcon.Visible = true;
+                trayIcon.Text = string.Format("{0} - {1}", DjToKey.Resources.AppResources.AppName, vm.CurrentDevice.Name);
+                trayIcon.BalloonTipText = "";
+                trayIcon.ShowBalloonTip(1000, DjToKey.Resources.AppResources.AppName, DjToKey.Resources.AppResources.TrayMessage, ToolTipIcon.Info);
                 this.ShowInTaskbar = false;
             }
             else
@@ -91,7 +94,7 @@ namespace Ktos.DjToKey.Views
             vm.SetCurrentScript((sender as System.Windows.Controls.Border).DataContext as Models.ViewControl);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.UpdateCurrentScript(tbScript.Text);
         }

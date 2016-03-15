@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ktos.DjToKey"        
+        xmlns:p="clr-namespace:Ktos.DjToKey.Resources"
         mc:Ignorable="d"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="DjToKey" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
+        Title="{x:Static p:AppResources.AppName}" Height="700" Width="1200" MinHeight="700" MinWidth="1200"
         ShowIconOnTitleBar="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" ShowMinButton="True" Icon="../dtk.ico" 
         StateChanged="MainWindow_StateChanged" d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}"
         DataContext="{StaticResource MainWindowViewModel}" Closing="MetroWindow_Closing">
@@ -21,7 +22,7 @@
                          Visual="{StaticResource appbar_information}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="about" />
+                    <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="{x:Static p:AppResources.lbAbout}" />
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>
@@ -78,7 +79,7 @@
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <TextBox Text="{Binding CurrentScript}" x:Name="tbScript" AcceptsReturn="True" AcceptsTab="True" Height="400" FontFamily="Consolas" FontSize="16"></TextBox>
             </ScrollViewer>
-            <Button Content="Save" Click="Button_Click" />
+            <Button Content="{x:Static p:AppResources.btnSave}" Click="btnSave_Click" />
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

@@ -22,7 +22,7 @@ namespace Ktos.DjToKey.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppResources {
+    public class AppResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Ktos.DjToKey.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ktos.DjToKey.Resources.AppResources", typeof(AppResources).Assembly);
@@ -51,7 +51,7 @@ namespace Ktos.DjToKey.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015\nIcon used from: https://icons8.com/.
         /// </summary>
-        internal static string About {
+        public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DjToKey.
         /// </summary>
-        internal static string AppName {
+        public static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string btnSave {
+        public static string btnSave {
             get {
                 return ResourceManager.GetString("btnSave", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Error when reading device description file!.
         /// </summary>
-        internal static string ControlFileError {
+        public static string ControlFileError {
             get {
                 return ResourceManager.GetString("ControlFileError", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to No description file found for this MIDI device!.
         /// </summary>
-        internal static string ControlFileNotFound {
+        public static string ControlFileNotFound {
             get {
                 return ResourceManager.GetString("ControlFileNotFound", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Control bindings:.
         /// </summary>
-        internal static string gbBindings {
+        public static string gbBindings {
             get {
                 return ResourceManager.GetString("gbBindings", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon icon {
+        public static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -125,9 +125,9 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
+        ///   Looks up a localized string similar to about.
         /// </summary>
-        internal static string lbAbout {
+        public static string lbAbout {
             get {
                 return ResourceManager.GetString("lbAbout", resourceCulture);
             }
@@ -136,7 +136,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to MIDI device:.
         /// </summary>
-        internal static string lbDevice {
+        public static string lbDevice {
             get {
                 return ResourceManager.GetString("lbDevice", resourceCulture);
             }
@@ -145,7 +145,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Plugins.
         /// </summary>
-        internal static string lbPlugins {
+        public static string lbPlugins {
             get {
                 return ResourceManager.GetString("lbPlugins", resourceCulture);
             }
@@ -154,7 +154,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to MIDI device error!.
         /// </summary>
-        internal static string MidiError {
+        public static string MidiError {
             get {
                 return ResourceManager.GetString("MidiError", resourceCulture);
             }
@@ -163,7 +163,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to No MIDI devices found!.
         /// </summary>
-        internal static string NoMidiMessage {
+        public static string NoMidiMessage {
             get {
                 return ResourceManager.GetString("NoMidiMessage", resourceCulture);
             }
@@ -172,7 +172,7 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Plugins loaded:.
         /// </summary>
-        internal static string PluginsMessage {
+        public static string PluginsMessage {
             get {
                 return ResourceManager.GetString("PluginsMessage", resourceCulture);
             }
@@ -181,9 +181,18 @@ namespace Ktos.DjToKey.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Error occured when handling control {0}: {1}.
         /// </summary>
-        internal static string ScriptErrorMessage {
+        public static string ScriptErrorMessage {
             get {
                 return ResourceManager.GetString("ScriptErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DjToKey will now work in the background..
+        /// </summary>
+        public static string TrayMessage {
+            get {
+                return ResourceManager.GetString("TrayMessage", resourceCulture);
             }
         }
     }

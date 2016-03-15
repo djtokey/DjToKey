@@ -136,7 +136,7 @@
     <value>Control bindings:</value>
   </data>
   <data name="lbAbout" xml:space="preserve">
-    <value>About</value>
+    <value>about</value>
   </data>
   <data name="lbDevice" xml:space="preserve">
     <value>MIDI device:</value>
@@ -159,5 +159,8 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\dtk.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrayMessage" xml:space="preserve">
+    <value>DjToKey will now work in the background.</value>
   </data>
 </root>
