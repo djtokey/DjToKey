@@ -193,11 +193,24 @@ namespace Ktos.DjToKey.ViewModels
                     {
                         deviceHandler.Controls = currentDevice.Controls;
                         deviceHandler.ScriptEngine = this.ScriptEngine;
+                        deviceHandler.ScriptErrorOccured += scriptErrorHandler;                   
 
                         loadBindings();
                     }
                     
                 }
+            }
+        }
+
+        private DateTime lastErrorTime = DateTime.Now;
+        private TimeSpan errorThreshold = TimeSpan.FromSeconds(2); 
+
+        private void scriptErrorHandler(object sender, ScriptErrorEventArgs e)
+        {
+            if (DateTime.Now - lastErrorTime > errorThreshold)
+            {
+                MessageBox.Show(string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message), Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                lastErrorTime = DateTime.Now;
             }
         }
 

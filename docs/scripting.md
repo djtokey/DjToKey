@@ -21,6 +21,9 @@ PascalCase.
 * `Keyboard.KeyPress(key)` - presses a virtual key
 * `Keyboard.TextEntry(string)` - sends text entry to a active window
 * `Keyboard.Sleep(number)` - sleeps for a number of miliseconds
+* `Keyboard.ModifiedKeyStroke(modifierKey, key);` - executes key down on the first key (modifier, like CONTROL, SHIFT, MENU),
+ then presses the key, then releases the modifier key, performing combination of keys in the result, for example CTRL-A.
+
 
 #### KeyCode object
 Keycode object is used to get numeric codes for all keys on your keyboard. Key names are directly imported
@@ -253,3 +256,9 @@ if (Value.Raw == 0) Keyboard.TextEntry("Magic!");
 When button is down it sends a value of 127 and a event is fired. When it is up - it sends
 a value of 0. To achieve only one action, it is fired only when button is going up. Then,
 it uses TextEntry to put some verbatim string into active window.
+
+```JavaScript
+Keyboard.ModifiedKeyStroke(KeyCode.CONTROL, KeyCode.VK_A);
+```
+
+This script performs CTRL-A (usually select all) action, using automated combination of keys.
