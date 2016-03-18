@@ -43,6 +43,7 @@ namespace Ktos.DjToKey
         /// </summary>
         public App()
         {
+            
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
