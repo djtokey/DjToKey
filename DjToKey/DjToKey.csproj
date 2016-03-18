@@ -59,6 +59,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AeroColor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AeroColor.1.0.21\lib\net45\AeroColor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ClearScript, Version=5.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClearScript.Installer.5.4.1.23392\lib\net45\ClearScript.dll</HintPath>
       <Private>True</Private>
@@ -106,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Color.cs" />
     <Compile Include="Mock\MainWindowViewModel.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\ViewControl.cs" />

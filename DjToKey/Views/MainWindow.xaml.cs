@@ -50,7 +50,7 @@ namespace Ktos.DjToKey.Views
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();                        
 
             trayIcon = new NotifyIcon();
             trayIcon.BalloonTipIcon = ToolTipIcon.Info;
@@ -59,7 +59,7 @@ namespace Ktos.DjToKey.Views
             trayIcon.Text = DjToKey.Resources.AppResources.AppName;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
-            vm = DataContext as MainWindowViewModel;
+            vm = DataContext as MainWindowViewModel;            
 
             if (vm.Devices.Count == 0)
             {
