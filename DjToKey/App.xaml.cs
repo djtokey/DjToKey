@@ -29,7 +29,9 @@
 
 #endregion License
 
+using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Ktos.DjToKey
 {
@@ -43,11 +45,30 @@ namespace Ktos.DjToKey
         /// </summary>
         public App()
         {
-            
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            ShowUnhandledException(e.ExceptionObject as Exception);
+        }
+
+        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (!System.Diagnostics.Debugger.IsAttached)
+                ShowUnhandledException(e.Exception);
+        }
+
+        void ShowUnhandledException(Exception e)
+        {            
+            string errorMessage = string.Format("An application error occurred.\nPlease check whether your data is correct and repeat the action. If this error occurs again there seems to be a more serious malfunction in the application, and you better close it.\n\nError:{0}",
+                e.Message + (e.InnerException != null ? "\n" +
+                e.InnerException.Message : null));
+
+            if (MessageBox.Show(errorMessage, "Application Error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+            {
+                Current.Shutdown();
+            }
         }
     }
 }
