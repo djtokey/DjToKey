@@ -73,12 +73,15 @@ namespace Ktos.DjToKey.ViewModels
         {
             PluginImporter = new PluginImporter();
 
-            ScriptEngine = new ScriptEngine();
-            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+            configureScriptEngine();
+            loadDeviceHandlers();
+            loadDevicePackages();
 
-            Devices = new ObservableCollection<Device>();
-            allDevices = new AllDevices(PluginImporter.DevicePlugins.DeviceHandlers);
+            loadAccent();
+        }
 
+        private void loadDevicePackages()
+        {
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
             {
@@ -90,9 +93,19 @@ namespace Ktos.DjToKey.ViewModels
                 {
                 }
             }
+        }
 
-            loadAccent();
-        }        
+        private void loadDeviceHandlers()
+        {
+            Devices = new ObservableCollection<Device>();
+            allDevices = new AllDevices(PluginImporter.DevicePlugins.DeviceHandlers);
+        }
+
+        private void configureScriptEngine()
+        {
+            ScriptEngine = new ScriptEngine();
+            ScriptEngine.Configure(PluginImporter.ScriptPlugins);
+        }
 
         private void loadAccent()
         {

@@ -59,8 +59,8 @@ namespace Ktos.DjToKey
                 ShowUnhandledException(e.Exception);
         }
 
-        void ShowUnhandledException(Exception e)
-        {            
+        private void ShowUnhandledException(Exception e)
+        {
             string errorMessage = string.Format("An application error occurred.\nPlease check whether your data is correct and repeat the action. If this error occurs again there seems to be a more serious malfunction in the application, and you better close it.\n\nError:{0}",
                 e.Message + (e.InnerException != null ? "\n" +
                 e.InnerException.Message : null));

@@ -68,7 +68,16 @@ namespace Ktos.DjToKey.Packaging
         public static IEnumerable<string> ListDevicePackageFileNames(string deviceName)
         {
             string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
-            var appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
+
+            IEnumerable<string> appFolderByName = null;
+            try
+            {
+                appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
+            }
+            catch (DirectoryNotFoundException)
+            {
+                appFolderByName = new List<string>();
+            }
 
             IEnumerable<string> localAppDataByName = null;
             try
@@ -90,7 +99,17 @@ namespace Ktos.DjToKey.Packaging
         /// <returns>Names of all dtkpkg files</returns>
         public static IEnumerable<string> ListAllPackages()
         {
-            var appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
+            // TODO: instead of .\devices, use relative directory
+            IEnumerable<string> appFolderAll = null;
+            try
+            {
+                appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
+            }
+            catch (DirectoryNotFoundException)
+            {
+                appFolderAll = new List<string>();
+            }            
+
             IEnumerable<string> localAppDataAll = null;
             try
             {
