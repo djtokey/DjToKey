@@ -98,36 +98,14 @@ namespace Ktos.DjToKey.ViewModels
         {
             AeroResourceInitializer.Initialize();
 
-            var colors = new Dictionary<string, Color>();
-            colors.Add("Amber", Helpers.Color.FromArgbHex("#FFB17807"));
-            colors.Add("Blue", Helpers.Color.FromArgbHex("#FF086F9E"));
-            colors.Add("Brown", Helpers.Color.FromArgbHex("#FF604220"));
-            colors.Add("Cobalt", Helpers.Color.FromArgbHex("#FF003BB0"));
-            colors.Add("Crimson", Helpers.Color.FromArgbHex("#FF77001B"));
-            colors.Add("Cyan", Helpers.Color.FromArgbHex("#FF1377A7"));
-            colors.Add("Emerald", Helpers.Color.FromArgbHex("#FF006600"));
-            colors.Add("Green", Helpers.Color.FromArgbHex("#FF477D11"));
-            colors.Add("Indigo", Helpers.Color.FromArgbHex("#FF4E00BC"));
-            colors.Add("Lime", Helpers.Color.FromArgbHex("#FF799100"));
-            colors.Add("Magenta", Helpers.Color.FromArgbHex("#FF9F0055"));
-            colors.Add("Mauve", Helpers.Color.FromArgbHex("#FF574766"));
-            colors.Add("Olive", Helpers.Color.FromArgbHex("#FF50634A"));
-            colors.Add("Orange", Helpers.Color.FromArgbHex("#FFB94C00"));
-            colors.Add("Pink", Helpers.Color.FromArgbHex("#FFB45499"));
-            colors.Add("Purple", Helpers.Color.FromArgbHex("#FF5133AB"));
-            colors.Add("Red", Helpers.Color.FromArgbHex("#FFA90E00"));
-            colors.Add("Sienna", Helpers.Color.FromArgbHex("#FF763C21"));
-            colors.Add("Steel", Helpers.Color.FromArgbHex("#FF4A5763"));
-            colors.Add("Taupe", Helpers.Color.FromArgbHex("#FF635939"));
-            colors.Add("Teal", Helpers.Color.FromArgbHex("#FF007E7D"));
-            colors.Add("Violet", Helpers.Color.FromArgbHex("#FF7D00BC"));
-            colors.Add("Yellow", Helpers.Color.FromArgbHex("#FFBBA404"));
-
+            Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
             var c = Helpers.Color.ClosestMatch((Color)Application.Current.Resources["AeroColor"], colors);
 
             var accentDictionary = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", c.Item1), UriKind.RelativeOrAbsolute);
             Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = accentDictionary });
         }
+
+
 
         private Device findAndLoadDeviceFromPackage(string name)
         {

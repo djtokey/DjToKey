@@ -25,7 +25,7 @@ namespace Ktos.DjToKey.Helpers
             return hsb;
         }
 
-        public static System.Windows.Media.Color FromArgbHex(string argb)
+        private static System.Windows.Media.Color FromArgbHex(string argb)
         {
             //#FFB17807;
 
@@ -38,11 +38,12 @@ namespace Ktos.DjToKey.Helpers
         }
 
         /// <summary>
-        /// matches the colour passed as an argument with the closest
-        /// one contained in the list
+        /// Tries to find the closest match between a given color and a
+        /// given list of colors
         /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
+        /// <param name="color">A color to match</param>
+        /// <param name="colors">A list of colors to match</param>
+        /// <returns>The closest color from the list</returns>
         public static Tuple<string, System.Windows.Media.Color> ClosestMatch(System.Windows.Media.Color color, Dictionary<string, System.Windows.Media.Color> colors)
         {
             Hsb hsb = ColorToHsb(color);
@@ -80,6 +81,40 @@ namespace Ktos.DjToKey.Helpers
             }
 
             return temp;
+        }
+
+        /// <summary>
+        /// Gets a list of names and values of available accent colors
+        /// from MahApps.Metro
+        /// </summary>
+        /// <returns>A list of available accent colors</returns>
+        public static Dictionary<string, System.Windows.Media.Color> AvailableAccents()
+        {
+            var colors = new Dictionary<string, System.Windows.Media.Color>();
+            colors.Add("Amber", FromArgbHex("#FFB17807"));
+            colors.Add("Blue", FromArgbHex("#FF086F9E"));
+            colors.Add("Brown", FromArgbHex("#FF604220"));
+            colors.Add("Cobalt", FromArgbHex("#FF003BB0"));
+            colors.Add("Crimson", FromArgbHex("#FF77001B"));
+            colors.Add("Cyan", FromArgbHex("#FF1377A7"));
+            colors.Add("Emerald", FromArgbHex("#FF006600"));
+            colors.Add("Green", FromArgbHex("#FF477D11"));
+            colors.Add("Indigo", FromArgbHex("#FF4E00BC"));
+            colors.Add("Lime", FromArgbHex("#FF799100"));
+            colors.Add("Magenta", FromArgbHex("#FF9F0055"));
+            colors.Add("Mauve", FromArgbHex("#FF574766"));
+            colors.Add("Olive", FromArgbHex("#FF50634A"));
+            colors.Add("Orange", FromArgbHex("#FFB94C00"));
+            colors.Add("Pink", FromArgbHex("#FFB45499"));
+            colors.Add("Purple", FromArgbHex("#FF5133AB"));
+            colors.Add("Red", FromArgbHex("#FFA90E00"));
+            colors.Add("Sienna", FromArgbHex("#FF763C21"));
+            colors.Add("Steel", FromArgbHex("#FF4A5763"));
+            colors.Add("Taupe", FromArgbHex("#FF635939"));
+            colors.Add("Teal", FromArgbHex("#FF007E7D"));
+            colors.Add("Violet", FromArgbHex("#FF7D00BC"));
+            colors.Add("Yellow", FromArgbHex("#FFBBA404"));
+            return colors;
         }
     }
 }
