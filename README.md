@@ -2,6 +2,12 @@ DjToKey
 =======
 
 [![Build status](https://ci.appveyor.com/api/projects/status/0sb4u0damy7p1x79/branch/master?svg=true)](https://ci.appveyor.com/project/ktos/djtokey/branch/master)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ktos/DjToKey/devel/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/ktos/djtokey.svg)]()
+
+An open source mapper from different controllers (currently MIDI) to custom JavaScript scripts for mouse/keyboard simulation.
+
+## Short description
 
 DjToKey allows you to prepare custom scripts fired when some events on your MIDI
 device happens. Originally built for Hercules DJControl MP3 LE device, it allows
@@ -10,11 +16,13 @@ mouse and keyboard simulation and other actions, bound to your DJ console.
 For example, you can bind your deck wheel from DJ console to a mouse wheel. 
 All scripts are written in JavaScript and run on V8 engine.
 
-Copyright (C) Marcin Badurowicz 2015-2016
+## Releases and changelog
 
-* Icon used from: <https://icons8.com/>
-* Script engine: [Microsoft ClearScript](https://clearscript.codeplex.com/)
-* JSON (de)serialization: Newtonsoft.Json
+The current release is [DjToKey version 0.4.0](https://github.com/ktos/DjToKey/releases/download/v0.4/DjToKey-0.4.0.master.2d5bee0.zip).
+
+For the more information (changelog, source code downloads), head over to [releases](https://github.com/ktos/DjToKey/releases) section.
+All releases are only available as ZIP files, there is no installer at the moment.
+All releases are build for the x86 (32-bit) platform.
 
 ## Requirements
 DjToKey requires [Visual C++ Redistruable 2013](https://www.microsoft.com/en-us/download/details.aspx?id=40784)
@@ -43,5 +51,14 @@ You are welcome to contribute to DjToKey! Create issues, Pull Requests, support
 new hardware, add new core features. More informaction is available in the 
 [Contributing](CONTRIBUTING.md) document.
 
+## Additional information
+
+Copyright &copy; Marcin Badurowicz 2015-2016. Licensed under [MIT license](/LICENSE).
+
+* Icon used from: <https://icons8.com/>
+* Script engine: [Microsoft ClearScript](https://clearscript.codeplex.com/)
+* JSON (de)serialization: Newtonsoft.Json
+
 Have a lot of fun.
+
 --ktos
