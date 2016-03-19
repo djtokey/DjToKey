@@ -11,18 +11,20 @@ PluginContracts is versioned differently than DjToKey itself, and with
 SemVer in mind, so this means that after releasing first public version,
 public API will not change without major version change.
 
+The current version of PluginContracts API is 0.9.0.
+
 ## General plugins overview
 Plugins are class libraries (*.dll) built referencing `System.ComponentModel.Composition`
 and `Ktos.DjToKey.Plugins.Contracts` (in a specific version). The Composition
 is needed to mark exported objects and types. DjToKey will try only to load
-files with DLL extension from \plugins directory (relative to application),
-and from %LOCALAPPDATA%\DjToKey\plugins directory (not available yet, as of 0.3.1).
+files with DLL extension from \plugins directory (relative to the application),
+and from %LOCALAPPDATA%\DjToKey\plugins directory.
 
 ## Possible plugins
 There are a few category of plugins you can create:
-* Script objects
-* Script types
-* Device handlers
+* Script objects,
+* Script types,
+* Device handlers.
 
 ### Script objects
 You can add new objects which will be available to scripts run in DjToKey.
@@ -151,5 +153,22 @@ var x = DjButton.Magic - DjButton.Vinyl;
 Document.Alert(x + "!"); // x is now 1
 ```
 
-### Device handler
-(WILL BE HERE SOON) 
+### Device handlers
+The device handler plugin must implement `IDeviceHandler` interface. A device
+handler will provide to the DjToKey the `IEnumerable<string>` of devices
+available to handle. Not all of this device may be actually handled, as this
+list is tested against Device Packages in `\devices` directory. If there is
+no suitable Device Package, device will not be presented to the user.
+
+The most important method for a device handler is the `Load(string deviceName)`,
+executed when user wants to use the device of the specified name. This should
+populate the `IEnumerable<Control> Controls` giving application all possible
+controls for application. The DjToKey will populate `IList<ControlBinding> Bindings`,
+matching scripts with the Controls.
+
+Device handler will be given also the IScriptEngine instance, with the Script Engine,
+and can handle the `EventHandler<ScriptErrorEventArgs> ScriptErrorOccured` event.
+It also have to return currently active device as `ActiveDevice` property.
+
+Method `void Unload()` is executed by the application if the user is closing the
+application or is switching to another device.
