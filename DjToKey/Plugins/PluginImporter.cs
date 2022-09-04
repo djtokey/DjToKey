@@ -118,7 +118,7 @@ namespace Ktos.DjToKey.Plugins
                 {
                     // load plugin assemblies again, only for
                     // reflection information, to get their metadata
-                    var ass = Assembly.ReflectionOnlyLoadFrom(f);
+                    var ass = Assembly.LoadFrom(f);
                     var metadata = ass.GetMetadata();
                     if (metadata != null)
                         loadedPlugins.Add(metadata);
