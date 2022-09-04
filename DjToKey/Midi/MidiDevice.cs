@@ -31,7 +31,8 @@
 
 using Ktos.DjToKey.Plugins.Device;
 using Ktos.DjToKey.Plugins.Scripts;
-using Midi;
+using Midi.Devices;
+using Midi.Messages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -58,7 +59,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// Instance of MIDI input device
         /// </summary>
-        private InputDevice dev;
+        private IInputDevice dev;
 
         /// <summary>
         /// List of scripts bound to controls
@@ -86,8 +87,9 @@ namespace Ktos.DjToKey.MidiDevice
         /// </summary>
         public MidiDevice()
         {
-            AvailableDevices = new List<string>();
-            foreach (var d in InputDevice.InstalledDevices)
+            AvailableDevices = new List<string>();                       
+
+            foreach (var d in DeviceManager.InputDevices)
             {
                 ((List<string>)AvailableDevices).Add(d.Name);
             }
@@ -100,7 +102,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <param name="deviceName">Name of a device to be loaded</param>
         public void Load(string deviceName)
         {
-            var newDevice = InputDevice.InstalledDevices.First(x => x.Name == deviceName);
+            var newDevice = DeviceManager.InputDevices.First(x => x.Name == deviceName);
             if (newDevice != dev)
                 dev = newDevice;
 
@@ -113,7 +115,7 @@ namespace Ktos.DjToKey.MidiDevice
                 if (!dev.IsOpen) dev.Open();
                 dev.StartReceiving(null);
             }
-            catch (Midi.DeviceException e)
+            catch (Midi.Devices.DeviceException e)
             {
                 throw new Plugins.Device.DeviceException("MIDI device exception", e);
             }
@@ -181,7 +183,7 @@ namespace Ktos.DjToKey.MidiDevice
                     dev.StopReceiving();
                     if (dev.IsOpen) dev.Close();
                 }
-                catch (Midi.DeviceException)
+                catch (Midi.Devices.DeviceException)
                 {
                     // device was removed while application was
                     // running or cannot be closed we cannot do much

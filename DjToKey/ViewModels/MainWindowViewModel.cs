@@ -29,7 +29,7 @@
 
 #endregion License
 
-using AeroColor;
+//using AeroColor;
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins;
@@ -109,17 +109,17 @@ namespace Ktos.DjToKey.ViewModels
 
         private void loadAccent()
         {
-            AeroResourceInitializer.Initialize();
+            //AeroResourceInitializer.Initialize();
 
-            Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
-            var c = Helpers.Color.ClosestMatch((Color)Application.Current.Resources["AeroColor"], colors);
+            //Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
+            //var c = Helpers.Color.ClosestMatch((Color)Application.Current.Resources["AeroColor"], colors);
 
-            // Red is the default accent color
-            if (c == null)
-                c = Tuple.Create("Red", Colors.Red);
+            //// Red is the default accent color
+            //if (c == null)
+            //    c = Tuple.Create("Red", Colors.Red);
 
-            var accentDictionary = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", c.Item1), UriKind.RelativeOrAbsolute);
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = accentDictionary });
+            //var accentDictionary = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", c.Item1), UriKind.RelativeOrAbsolute);
+            //Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = accentDictionary });
         }
 
 

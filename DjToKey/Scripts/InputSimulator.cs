@@ -29,10 +29,10 @@
 
 #endregion License
 
+using GregsStack.InputSimulatorStandard;
 using Ktos.DjToKey.Plugins.Scripts;
 using System;
 using System.ComponentModel.Composition;
-using WindowsInput;
 
 namespace Ktos.DjToKey.Scripts
 {
@@ -144,7 +144,7 @@ namespace Ktos.DjToKey.Scripts
         {
             get
             {
-                return typeof(WindowsInput.Native.VirtualKeyCode);
+                return typeof(GregsStack.InputSimulatorStandard.Native.VirtualKeyCode);
             }
         }
     }
