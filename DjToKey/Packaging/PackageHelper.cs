@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
+using System.Reflection;
 
 namespace Ktos.DjToKey.Packaging
 {
@@ -111,11 +112,16 @@ namespace Ktos.DjToKey.Packaging
         /// <returns>Names of all dtkpkg files</returns>
         public static IEnumerable<string> ListAllPackages()
         {
-            // TODO: instead of .\devices, use relative directory
             IEnumerable<string> appFolderAll = null;
             try
             {
-                appFolderAll = Directory.EnumerateFiles(@".\devices", "*.dtkpkg");
+                appFolderAll = Directory.EnumerateFiles(
+                    Path.Combine(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        @".\devices"
+                    ),
+                    "*.dtkpkg"
+                );
             }
             catch (DirectoryNotFoundException)
             {
