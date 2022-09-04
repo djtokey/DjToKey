@@ -35,23 +35,22 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Timers;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace Ktos.DjToKey
 {
 #if DEBUG
 
     [Export(typeof(IDeviceHandler))]
-#endif
-    /// <summary>
-    /// Mock Device is a virtual device available only in Debug builds.
-    ///
-    /// It offers 3 virtual controls, every of different type, and
-    /// handling action of one of controls is run 3 seconds after
-    /// loading device.
-    /// </summary>
     public class MockDevice : IDeviceHandler
     {
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
         /// <summary>
         /// A list of names of available input devices
         /// </summary>
@@ -82,7 +81,9 @@ namespace Ktos.DjToKey
         /// </summary>
         public EventHandler<ScriptErrorEventArgs> ScriptErrorOccured { get; set; }
 
-        private Timer tim;
+        private HwndSource source;
+        private const int HOTKEY_ID = 9000;
+        private const int FsModifiers = 0x0002;
 
         /// <summary>
         /// A constructor, intializing script engine and setting list
@@ -105,13 +106,40 @@ namespace Ktos.DjToKey
         {
             ActiveDevice = deviceName;
 
-            tim = new Timer();
-            tim.Interval = 3000;
-            tim.Elapsed += (s, e) =>
+            IntPtr handle = new WindowInteropHelper(App.Current.MainWindow).Handle;
+            source = HwndSource.FromHwnd(handle);
+            source.AddHook(HwndHook);
+
+            RegisterHotKey(
+                handle,
+                HOTKEY_ID,
+                FsModifiers,
+                (uint)GregsStack.InputSimulatorStandard.Native.VirtualKeyCode.F11
+            );
+        }
+
+        private IntPtr HwndHook(
+            IntPtr hwnd,
+            int msg,
+            IntPtr wParam,
+            IntPtr lParam,
+            ref bool handled
+        )
+        {
+            const int WM_HOTKEY = 0x0312;
+            switch (msg)
             {
-                HandleControl("1", 2);
-            };
-            tim.Start();
+                case WM_HOTKEY:
+                    switch (wParam.ToInt32())
+                    {
+                        case HOTKEY_ID:
+                            HandleControl("1", 2);
+                            handled = true;
+                            break;
+                    }
+                    break;
+            }
+            return IntPtr.Zero;
         }
 
         /// <summary>
@@ -123,7 +151,6 @@ namespace Ktos.DjToKey
         /// <param name="value">Value sent from MIDI device</param>
         private void HandleControl(string control, int value)
         {
-            tim.Stop();
             var binding = Bindings.Where(x => x.Control.ControlId == control).FirstOrDefault();
 
             if (binding != null)
@@ -153,7 +180,9 @@ namespace Ktos.DjToKey
         /// </summary>
         public void Unload()
         {
-            tim.Stop();
+            IntPtr handle = new WindowInteropHelper(App.Current.MainWindow).Handle;
+            UnregisterHotKey(handle, HOTKEY_ID);
         }
     }
+#endif
 }
