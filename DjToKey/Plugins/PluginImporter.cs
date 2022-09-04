@@ -42,7 +42,7 @@ namespace Ktos.DjToKey.Plugins
     /// <summary>
     /// This class is responsible for finding and loading all plugins
     /// from the their subdirectory using MEF.
-    /// 
+    ///
     /// Based on: http://dotnetbyexample.blogspot.com/2010/04/very-basic-mef-sample-using-importmany.html
     /// </summary>
     internal class PluginImporter
@@ -67,10 +67,7 @@ namespace Ktos.DjToKey.Plugins
         /// </summary>
         public IEnumerable<Metadata> Plugins
         {
-            get
-            {
-                return loadedPlugins;
-            }
+            get { return loadedPlugins; }
         }
 
         /// <summary>
@@ -89,7 +86,9 @@ namespace Ktos.DjToKey.Plugins
             DirectoryCatalog dirc = null;
             try
             {
-                dirc = new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins");
+                dirc = new DirectoryCatalog(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\plugins"
+                );
                 catalog.Catalogs.Add(dirc);
             }
             catch (DirectoryNotFoundException)

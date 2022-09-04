@@ -44,7 +44,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
 {
     /// <summary>
     /// Class describing package for a device
-    /// 
+    ///
     /// Device packages have images and control definitions for
     /// devices supported by a plugin. Build under a Open Packaging
     /// Conventions with a extension ".dtkpkg".
@@ -138,16 +138,22 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
                     try
                     {
-                        result.Controls = JsonConvert.DeserializeObject<ObservableCollection<Models.ViewControl>>(definition);
+                        result.Controls = JsonConvert.DeserializeObject<
+                            ObservableCollection<Models.ViewControl>
+                        >(definition);
                     }
                     catch (JsonException)
                     {
-                        throw new FileLoadException("Cannot load device configuration file from package");
+                        throw new FileLoadException(
+                            "Cannot load device configuration file from package"
+                        );
                     }
                 }
                 else
                 {
-                    throw new FileNotFoundException("Device configuration file not found in package.");
+                    throw new FileNotFoundException(
+                        "Device configuration file not found in package."
+                    );
                 }
             }
 
@@ -198,7 +204,10 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     Models.Device x = new Models.Device();
                     x.Name = d;
 
-                    Uri u = new Uri(string.Format("/{0}/definition.json", x.Name), UriKind.Relative);
+                    Uri u = new Uri(
+                        string.Format("/{0}/definition.json", x.Name),
+                        UriKind.Relative
+                    );
 
                     if (pack.PartExists(u))
                     {
@@ -206,7 +215,9 @@ namespace Ktos.DjToKey.Plugins.Packaging
                         using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
                         {
                             string json = reader.ReadToEnd();
-                            x.Controls = JsonConvert.DeserializeObject<ObservableCollection<Models.ViewControl>>(json);
+                            x.Controls = JsonConvert.DeserializeObject<
+                                ObservableCollection<Models.ViewControl>
+                            >(json);
                         }
                     }
 

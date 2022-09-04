@@ -59,10 +59,7 @@ namespace Ktos.DjToKey.Plugins
         /// </summary>
         public IEnumerable<IDeviceHandler> DeviceHandlers
         {
-            get
-            {
-                return deviceHandlers;
-            }
+            get { return deviceHandlers; }
         }
     }
 }

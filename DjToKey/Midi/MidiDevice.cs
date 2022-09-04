@@ -87,7 +87,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// </summary>
         public MidiDevice()
         {
-            AvailableDevices = new List<string>();                       
+            AvailableDevices = new List<string>();
 
             foreach (var d in DeviceManager.InputDevices)
             {
@@ -108,11 +108,12 @@ namespace Ktos.DjToKey.MidiDevice
 
             ActiveDevice = deviceName;
 
-            dev.ControlChange += dev_ControlChange;
-            dev.NoteOn += dev_NoteOn;
+            dev.ControlChange += ControlChange;
+            dev.NoteOn += NoteOn;
             try
             {
-                if (!dev.IsOpen) dev.Open();
+                if (!dev.IsOpen)
+                    dev.Open();
                 dev.StartReceiving(null);
             }
             catch (Midi.Devices.DeviceException e)
@@ -125,9 +126,9 @@ namespace Ktos.DjToKey.MidiDevice
         /// Handles ControlChange messages
         /// </summary>
         /// <param name="msg">ControlChange MIDI message</param>
-        private void dev_ControlChange(ControlChangeMessage msg)
+        private void ControlChange(ControlChangeMessage msg)
         {
-            handleControl(msg.Control.ToString(), msg.Value);
+            HandleControl(msg.Control.ToString(), msg.Value);
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// Control ID for searching a script bound to it
         /// </param>
         /// <param name="value">Value sent from MIDI device</param>
-        private void handleControl(string control, int value)
+        private void HandleControl(string control, int value)
         {
             var binding = Bindings.Where(x => x.Control.ControlId == control).FirstOrDefault();
 
@@ -145,11 +146,19 @@ namespace Ktos.DjToKey.MidiDevice
             {
                 try
                 {
-                    ScriptEngine.Execute(binding.Script, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, Controls.Where(x => x.ControlId == control.ToString()).First());
+                    ScriptEngine.Execute(
+                        binding.Script,
+                        new { Raw = value, Transformed = (value == 127) ? 1 : -1 },
+                        Controls.Where(x => x.ControlId == control.ToString()).First()
+                    );
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {
-                    if (ScriptErrorOccured != null) ScriptErrorOccured.Invoke(this, new ScriptErrorEventArgs() { Control = control, Message = e.Message });
+                    if (ScriptErrorOccured != null)
+                        ScriptErrorOccured.Invoke(
+                            this,
+                            new ScriptErrorEventArgs() { Control = control, Message = e.Message }
+                        );
                 }
             }
         }
@@ -158,9 +167,9 @@ namespace Ktos.DjToKey.MidiDevice
         /// Handles pressing button on a device
         /// </summary>
         /// <param name="msg">NoteOn MIDI message</param>
-        private void dev_NoteOn(NoteOnMessage msg)
+        private void NoteOn(NoteOnMessage msg)
         {
-            handleControl(((int)msg.Pitch).ToString(), msg.Velocity);
+            HandleControl(((int)msg.Pitch).ToString(), msg.Velocity);
         }
 
         /// <summary>
@@ -181,7 +190,8 @@ namespace Ktos.DjToKey.MidiDevice
                 try
                 {
                     dev.StopReceiving();
-                    if (dev.IsOpen) dev.Close();
+                    if (dev.IsOpen)
+                        dev.Close();
                 }
                 catch (Midi.Devices.DeviceException)
                 {

@@ -46,10 +46,7 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public IEnumerable<string> AvailableDevices
         {
-            get
-            {
-                return availableDevices;
-            }
+            get { return availableDevices; }
         }
 
         private List<string> availableDevices;

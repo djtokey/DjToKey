@@ -49,10 +49,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public string Name
         {
-            get
-            {
-                return NAME;
-            }
+            get { return NAME; }
         }
 
         /// <summary>
@@ -60,10 +57,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public object Object
         {
-            get
-            {
-                return simulator.Keyboard;
-            }
+            get { return simulator.Keyboard; }
         }
 
         private InputSimulator simulator;
@@ -90,10 +84,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public string Name
         {
-            get
-            {
-                return NAME;
-            }
+            get { return NAME; }
         }
 
         /// <summary>
@@ -101,10 +92,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public object Object
         {
-            get
-            {
-                return simulator.Mouse;
-            }
+            get { return simulator.Mouse; }
         }
 
         private InputSimulator simulator;
@@ -131,10 +119,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public string Name
         {
-            get
-            {
-                return NAME;
-            }
+            get { return NAME; }
         }
 
         /// <summary>
@@ -142,10 +127,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public Type Type
         {
-            get
-            {
-                return typeof(GregsStack.InputSimulatorStandard.Native.VirtualKeyCode);
-            }
+            get { return typeof(GregsStack.InputSimulatorStandard.Native.VirtualKeyCode); }
         }
     }
 }

@@ -45,11 +45,7 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Title
         {
-            get
-            {
-                return title;
-            }
-
+            get { return title; }
             set
             {
                 if (title != value)
@@ -67,11 +63,7 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Description
         {
-            get
-            {
-                return description;
-            }
-
+            get { return description; }
             set
             {
                 if (description != value)
@@ -89,11 +81,7 @@ namespace Ktos.DjToKey.Packaging
         /// </summary>
         public string Version
         {
-            get
-            {
-                return version;
-            }
-
+            get { return version; }
             set
             {
                 if (version != value)
@@ -108,17 +96,13 @@ namespace Ktos.DjToKey.Packaging
 
         /// <summary>
         /// Keywords of device package - list of device names supported
-        /// 
+        ///
         /// Separated by ";", may use * wildcard to support many
         /// devices with same prefix
         /// </summary>
         public string Keywords
         {
-            get
-            {
-                return keywords;
-            }
-
+            get { return keywords; }
             set
             {
                 if (keywords != value)
@@ -133,17 +117,13 @@ namespace Ktos.DjToKey.Packaging
 
         /// <summary>
         /// Category of a package
-        /// 
+        ///
         /// May be "device" is this package is a device description
         /// package with images and controls definitions
         /// </summary>
         public string Category
         {
-            get
-            {
-                return category;
-            }
-
+            get { return category; }
             set
             {
                 if (this.category != value)
@@ -162,7 +142,7 @@ namespace Ktos.DjToKey.Packaging
         /// <summary>
         /// Handles when property is changed raising <see
         /// cref="PropertyChanged"/> event.
-        /// 
+        ///
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>
         /// <param name="name">Name of a changed property</param>

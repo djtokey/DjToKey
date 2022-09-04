@@ -50,7 +50,7 @@ namespace Ktos.DjToKey.Views
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();                        
+            InitializeComponent();
 
             trayIcon = new NotifyIcon();
             trayIcon.BalloonTipIcon = ToolTipIcon.Info;
@@ -59,11 +59,16 @@ namespace Ktos.DjToKey.Views
             trayIcon.Text = DjToKey.Resources.AppResources.AppName;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
-            vm = DataContext as MainWindowViewModel;            
+            vm = DataContext as MainWindowViewModel;
 
             if (vm.Devices.Count == 0)
             {
-                System.Windows.MessageBox.Show(DjToKey.Resources.AppResources.NoMidiMessage, DjToKey.Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(
+                    DjToKey.Resources.AppResources.NoMidiMessage,
+                    DjToKey.Resources.AppResources.AppName,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
 
@@ -77,8 +82,17 @@ namespace Ktos.DjToKey.Views
             if (this.WindowState == WindowState.Minimized)
             {
                 trayIcon.Visible = true;
-                trayIcon.Text = string.Format("{0} - {1}", DjToKey.Resources.AppResources.AppName, vm.CurrentDevice.Name);                
-                trayIcon.ShowBalloonTip(1000, DjToKey.Resources.AppResources.AppName, DjToKey.Resources.AppResources.TrayMessage, ToolTipIcon.Info);
+                trayIcon.Text = string.Format(
+                    "{0} - {1}",
+                    DjToKey.Resources.AppResources.AppName,
+                    vm.CurrentDevice.Name
+                );
+                trayIcon.ShowBalloonTip(
+                    1000,
+                    DjToKey.Resources.AppResources.AppName,
+                    DjToKey.Resources.AppResources.TrayMessage,
+                    ToolTipIcon.Info
+                );
                 this.ShowInTaskbar = false;
             }
             else
@@ -93,9 +107,14 @@ namespace Ktos.DjToKey.Views
             vm.About();
         }
 
-        private void Border_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_MouseLeftButtonUp(
+            object sender,
+            System.Windows.Input.MouseButtonEventArgs e
+        )
         {
-            vm.SetCurrentScript((sender as System.Windows.Controls.Border).DataContext as Models.ViewControl);
+            vm.SetCurrentScript(
+                (sender as System.Windows.Controls.Border).DataContext as Models.ViewControl
+            );
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

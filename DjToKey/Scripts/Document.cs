@@ -48,10 +48,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public string Name
         {
-            get
-            {
-                return NAME;
-            }
+            get { return NAME; }
         }
 
         /// <summary>
@@ -59,10 +56,7 @@ namespace Ktos.DjToKey.Scripts
         /// </summary>
         public object Object
         {
-            get
-            {
-                return dimpl;
-            }
+            get { return dimpl; }
         }
 
         private DocumentImpl dimpl;

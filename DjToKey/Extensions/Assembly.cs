@@ -51,7 +51,10 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>Returns assembly file version as a string</returns>
         public static string GetVersion(this System.Reflection.Assembly assembly)
         {
-            return customAttributeToString(assembly, typeof(System.Reflection.AssemblyFileVersionAttribute));
+            return CustomAttributeToString(
+                assembly,
+                typeof(System.Reflection.AssemblyFileVersionAttribute)
+            );
         }
 
         /// <summary>
@@ -61,7 +64,10 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>Returns assembly title as a string</returns>
         public static string GetTitle(this System.Reflection.Assembly assembly)
         {
-            return customAttributeToString(assembly, typeof(System.Reflection.AssemblyTitleAttribute));
+            return CustomAttributeToString(
+                assembly,
+                typeof(System.Reflection.AssemblyTitleAttribute)
+            );
         }
 
         /// <summary>
@@ -71,7 +77,10 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>Returns assembly description as a string</returns>
         public static string GetDescription(this System.Reflection.Assembly assembly)
         {
-            return customAttributeToString(assembly, typeof(System.Reflection.AssemblyDescriptionAttribute));
+            return CustomAttributeToString(
+                assembly,
+                typeof(System.Reflection.AssemblyDescriptionAttribute)
+            );
         }
 
         /// <summary>
@@ -81,7 +90,10 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>Returns assembly copyright as a string</returns>
         public static string GetCopyright(this System.Reflection.Assembly assembly)
         {
-            return customAttributeToString(assembly, typeof(System.Reflection.AssemblyCopyrightAttribute));
+            return CustomAttributeToString(
+                assembly,
+                typeof(System.Reflection.AssemblyCopyrightAttribute)
+            );
         }
 
         /// <summary>
@@ -95,10 +107,16 @@ namespace Ktos.DjToKey.Extensions
         /// <returns>
         /// Value of desired assembly attribute as a string
         /// </returns>
-        private static string customAttributeToString(System.Reflection.Assembly assembly, Type attributeType)
+        private static string CustomAttributeToString(
+            System.Reflection.Assembly assembly,
+            Type attributeType
+        )
         {
             string s = null;
-            var u = assembly.GetCustomAttributesData().Where(x => x.AttributeType == attributeType).FirstOrDefault();
+            var u = assembly
+                .GetCustomAttributesData()
+                .Where(x => x.AttributeType == attributeType)
+                .FirstOrDefault();
             if (u != null)
             {
                 // attributes are being converted to string, so they

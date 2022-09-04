@@ -47,9 +47,13 @@ namespace Ktos.Build
         {
             get
             {
-                return (Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false)[0] as
-                AssemblyInformationalVersionAttribute).InformationalVersion;
+                return (
+                    Assembly
+                        .GetExecutingAssembly()
+                        .GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false)[
+                        0
+                    ] as AssemblyInformationalVersionAttribute
+                ).InformationalVersion;
             }
         }
 
@@ -60,9 +64,12 @@ namespace Ktos.Build
         {
             get
             {
-                return (Assembly.GetExecutingAssembly()
-                .GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0] as
-                AssemblyFileVersionAttribute).Version;
+                return (
+                    Assembly
+                        .GetExecutingAssembly()
+                        .GetCustomAttributes(typeof(AssemblyFileVersionAttribute), false)[0]
+                    as AssemblyFileVersionAttribute
+                ).Version;
             }
         }
     }

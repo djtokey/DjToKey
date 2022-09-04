@@ -29,8 +29,6 @@
 
 #endregion License
 
-//using AeroColor;
-using ControlzEx.Theming;
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins;
@@ -44,7 +42,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 
 namespace Ktos.DjToKey.ViewModels
 {
@@ -74,44 +71,37 @@ namespace Ktos.DjToKey.ViewModels
         {
             PluginImporter = new PluginImporter();
 
-            configureScriptEngine();
-            loadDeviceHandlers();
-            loadDevicePackages();
-
-            loadAccent();
+            ConfigureScriptEngine();
+            LoadDeviceHandlers();
+            LoadDevicePackages();
         }
 
-        private void loadDevicePackages()
+        private void LoadDevicePackages()
         {
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
             {
                 try
                 {
-                    Devices.Add(findAndLoadDeviceFromPackage(d));
+                    Devices.Add(LoadDeviceFromPackage(d));
                 }
                 catch (FileNotFoundException) { }
             }
         }
 
-        private void loadDeviceHandlers()
+        private void LoadDeviceHandlers()
         {
             Devices = new ObservableCollection<Device>();
             allDevices = new AllDevices(PluginImporter.DevicePlugins.DeviceHandlers);
         }
 
-        private void configureScriptEngine()
+        private void ConfigureScriptEngine()
         {
             ScriptEngine = new ScriptEngine();
             ScriptEngine.Configure(PluginImporter.ScriptPlugins);
         }
 
-        private void loadAccent()
-        {
-            //AeroResourceInitializer.Initialize();
-        }
-
-        private Device findAndLoadDeviceFromPackage(string name)
+        private Device LoadDeviceFromPackage(string name)
         {
             var d = PackageHelper.LoadDevicePackage(name);
             return d.Device;
@@ -166,7 +156,7 @@ namespace Ktos.DjToKey.ViewModels
                 {
                     if (deviceHandler != null)
                     {
-                        saveBindings();
+                        SaveBindings();
                         deviceHandler.Unload();
                     }
 
@@ -192,9 +182,9 @@ namespace Ktos.DjToKey.ViewModels
                     {
                         deviceHandler.Controls = currentDevice.Controls;
                         deviceHandler.ScriptEngine = this.ScriptEngine;
-                        deviceHandler.ScriptErrorOccured += scriptErrorHandler;
+                        deviceHandler.ScriptErrorOccured += HandleScriptError;
 
-                        loadBindings();
+                        LoadBindings();
                     }
                 }
             }
@@ -203,7 +193,7 @@ namespace Ktos.DjToKey.ViewModels
         private DateTime lastErrorTime = DateTime.Now;
         private TimeSpan errorThreshold = TimeSpan.FromSeconds(2);
 
-        private void scriptErrorHandler(object sender, ScriptErrorEventArgs e)
+        private void HandleScriptError(object sender, ScriptErrorEventArgs e)
         {
             if (DateTime.Now - lastErrorTime > errorThreshold)
             {
@@ -217,7 +207,7 @@ namespace Ktos.DjToKey.ViewModels
             }
         }
 
-        private void loadBindings()
+        private void LoadBindings()
         {
             // TODO: should try to load bindings from this folder,
             //       %USERPROFILE% or similar and if there is none
@@ -243,7 +233,7 @@ namespace Ktos.DjToKey.ViewModels
         /// <summary>
         /// Saves bindings to file
         /// </summary>
-        private void saveBindings()
+        private void SaveBindings()
         {
             if (currentDevice != null)
             {
@@ -304,7 +294,7 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         public void OnClosing()
         {
-            saveBindings();
+            SaveBindings();
         }
 
         private ViewControl currentlyEditing;

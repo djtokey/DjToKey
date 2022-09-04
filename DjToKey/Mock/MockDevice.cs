@@ -45,7 +45,7 @@ namespace Ktos.DjToKey
 #endif
     /// <summary>
     /// Mock Device is a virtual device available only in Debug builds.
-    /// 
+    ///
     /// It offers 3 virtual controls, every of different type, and
     /// handling action of one of controls is run 3 seconds after
     /// loading device.
@@ -107,7 +107,10 @@ namespace Ktos.DjToKey
 
             tim = new Timer();
             tim.Interval = 3000;
-            tim.Elapsed += (s, e) => { handleControl("1", 2); };
+            tim.Elapsed += (s, e) =>
+            {
+                HandleControl("1", 2);
+            };
             tim.Start();
         }
 
@@ -118,7 +121,7 @@ namespace Ktos.DjToKey
         /// Control ID for searching a script bound to it
         /// </param>
         /// <param name="value">Value sent from MIDI device</param>
-        private void handleControl(string control, int value)
+        private void HandleControl(string control, int value)
         {
             tim.Stop();
             var binding = Bindings.Where(x => x.Control.ControlId == control).FirstOrDefault();
@@ -128,11 +131,19 @@ namespace Ktos.DjToKey
                 try
                 {
                     var ctrl = Controls.ToList().Where(x => x.ControlId == control).First();
-                    ScriptEngine.Execute(binding.Script, new { Raw = value, Transformed = (value == 127) ? 1 : -1 }, ctrl);
+                    ScriptEngine.Execute(
+                        binding.Script,
+                        new { Raw = value, Transformed = (value == 127) ? 1 : -1 },
+                        ctrl
+                    );
                 }
                 catch (Microsoft.ClearScript.ScriptEngineException e)
                 {
-                    if (ScriptErrorOccured != null) ScriptErrorOccured.Invoke(this, new ScriptErrorEventArgs() { Control = control, Message = e.Message });
+                    if (ScriptErrorOccured != null)
+                        ScriptErrorOccured.Invoke(
+                            this,
+                            new ScriptErrorEventArgs() { Control = control, Message = e.Message }
+                        );
                 }
             }
         }

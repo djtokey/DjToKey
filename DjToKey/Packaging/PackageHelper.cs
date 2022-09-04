@@ -72,7 +72,10 @@ namespace Ktos.DjToKey.Packaging
             IEnumerable<string> appFolderByName = null;
             try
             {
-                appFolderByName = Directory.EnumerateFiles(@".\devices", safeDeviceName + ".dtkpkg");
+                appFolderByName = Directory.EnumerateFiles(
+                    @".\devices",
+                    safeDeviceName + ".dtkpkg"
+                );
             }
             catch (DirectoryNotFoundException)
             {
@@ -82,14 +85,23 @@ namespace Ktos.DjToKey.Packaging
             IEnumerable<string> localAppDataByName = null;
             try
             {
-                localAppDataByName = Directory.EnumerateFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"DjToKey\devices", safeDeviceName + ".dtkpkg"));
+                localAppDataByName = Directory.EnumerateFiles(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        @"DjToKey\devices",
+                        safeDeviceName + ".dtkpkg"
+                    )
+                );
             }
             catch (DirectoryNotFoundException)
             {
                 localAppDataByName = new List<string>();
             }
 
-            var files = Enumerable.Concat(Enumerable.Concat(appFolderByName, localAppDataByName), ListAllPackages());
+            var files = Enumerable.Concat(
+                Enumerable.Concat(appFolderByName, localAppDataByName),
+                ListAllPackages()
+            );
             return files;
         }
 
@@ -108,12 +120,18 @@ namespace Ktos.DjToKey.Packaging
             catch (DirectoryNotFoundException)
             {
                 appFolderAll = new List<string>();
-            }            
+            }
 
             IEnumerable<string> localAppDataAll = null;
             try
             {
-                localAppDataAll = Directory.EnumerateFiles(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"DjToKey\devices"), "*.dtkpkg");
+                localAppDataAll = Directory.EnumerateFiles(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                        @"DjToKey\devices"
+                    ),
+                    "*.dtkpkg"
+                );
             }
             catch (DirectoryNotFoundException)
             {
@@ -138,7 +156,7 @@ namespace Ktos.DjToKey.Packaging
                 foreach (string f in filesList)
                 {
                     var mt = LoadMetadata(f);
-                    if (DeviceSupported(mt.Keywords, deviceName))
+                    if (IsDeviceSupported(mt.Keywords, deviceName))
                         return f;
                 }
             }
@@ -155,7 +173,7 @@ namespace Ktos.DjToKey.Packaging
         /// </param>
         /// <param name="deviceName">Name of device</param>
         /// <returns>Returns if device is supported</returns>
-        public static bool DeviceSupported(string keywords, string deviceName)
+        public static bool IsDeviceSupported(string keywords, string deviceName)
         {
             string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
 
@@ -165,11 +183,16 @@ namespace Ktos.DjToKey.Packaging
             var devices = keywords.Split(';');
             foreach (string d in devices)
             {
-                if (d.StartsWith("*") && deviceName.EndsWith(d)) return true;
-                if (d.EndsWith("*") && deviceName.StartsWith(d)) return true;
-                if (d == deviceName) return true;
-                if (d == safeDeviceName) return true;
-                if (d.ToLower() == safeDeviceName) return true;
+                if (d.StartsWith("*") && deviceName.EndsWith(d))
+                    return true;
+                if (d.EndsWith("*") && deviceName.StartsWith(d))
+                    return true;
+                if (d == deviceName)
+                    return true;
+                if (d == safeDeviceName)
+                    return true;
+                if (d.ToLower() == safeDeviceName)
+                    return true;
             }
 
             return false;

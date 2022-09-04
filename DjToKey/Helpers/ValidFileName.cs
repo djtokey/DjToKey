@@ -64,7 +64,11 @@ namespace Ktos.DjToKey.Helpers
         /// A string that can be used as a filename. If the output
         /// string would otherwise be empty, returns "_".
         /// </returns>
-        public static string MakeValidFileName(string text, char? replacement = '_', bool fancy = true)
+        public static string MakeValidFileName(
+            string text,
+            char? replacement = '_',
+            bool fancy = true
+        )
         {
             StringBuilder sb = new StringBuilder(text.Length);
             var invalids = _invalids ?? (_invalids = Path.GetInvalidFileNameChars());
@@ -84,9 +88,12 @@ namespace Ktos.DjToKey.Helpers
 
                     if (fancy)
                     {
-                        if (c == '"') repl = '”'; // U+201D right double quotation mark
-                        else if (c == '\'') repl = '’'; // U+2019 right single quotation mark
-                        else if (c == '/') repl = '⁄'; // U+2044 fraction slash
+                        if (c == '"')
+                            repl = '”'; // U+201D right double quotation mark
+                        else if (c == '\'')
+                            repl = '’'; // U+2019 right single quotation mark
+                        else if (c == '/')
+                            repl = '⁄'; // U+2044 fraction slash
                     }
 
                     if (repl != '\0')

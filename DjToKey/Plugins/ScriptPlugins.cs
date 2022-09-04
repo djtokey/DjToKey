@@ -58,10 +58,7 @@ namespace Ktos.DjToKey.Plugins
         /// </summary>
         public IEnumerable<IScriptObject> Objects
         {
-            get
-            {
-                return pluginsObjects;
-            }
+            get { return pluginsObjects; }
         }
 
         /// <summary>
@@ -78,10 +75,7 @@ namespace Ktos.DjToKey.Plugins
         /// </summary>
         public IEnumerable<IScriptType> Types
         {
-            get
-            {
-                return pluginsTypes;
-            }
+            get { return pluginsTypes; }
         }
     }
 

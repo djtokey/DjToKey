@@ -48,11 +48,7 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-
+            get { return _name; }
             set
             {
                 if (_name != value)
@@ -75,11 +71,7 @@ namespace Ktos.DjToKey.Models
         /// </summary>
         public BitmapImage Image
         {
-            get
-            {
-                return _image;
-            }
-
+            get { return _image; }
             set
             {
                 if (_image != value)
@@ -107,7 +99,7 @@ namespace Ktos.DjToKey.Models
         /// <summary>
         /// Handles when property is changed raising <see
         /// cref="PropertyChanged"/> event.
-        /// 
+        ///
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>
         /// <param name="name">Name of a changed property</param>
