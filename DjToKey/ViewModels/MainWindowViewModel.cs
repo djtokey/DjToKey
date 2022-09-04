@@ -237,7 +237,7 @@ namespace Ktos.DjToKey.ViewModels
         /// <summary>
         /// Saves bindings to file
         /// </summary>
-        private void SaveBindings()
+        public void SaveBindings()
         {
             if (currentDevice != null)
             {

@@ -133,6 +133,7 @@ namespace Ktos.DjToKey.Views
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             vm.UpdateCurrentScript(tbScript.Text);
+            vm.SaveBindings();
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
