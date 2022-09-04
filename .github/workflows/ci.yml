@@ -30,11 +30,15 @@ jobs:
       with:
         fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
 
-    # Use Nerdbank.GitVersioning to set version variables: https://github.com/AArnott/nbgv
-    - name: Use Nerdbank.GitVersioning to set version variables
-      uses: aarnott/nbgv@v0.3
+    # Use GitVersion
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
       with:
-        setAllVars: true
+        versionSpec: '5.x'
+
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
 
     # Install the .NET Core workload
     - name: Install .NET Core
@@ -52,7 +56,7 @@ jobs:
 
     # Build the application
     - name: Build
-      run: dotnet build -r $env:RuntimeIdentifier -c $env:Configuration $env:Wpf_Project_Path
+      run: dotnet build -r $env:RuntimeIdentifier -c $env:Configuration /p:InformationalVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:Version=${{ steps.gitversion.outputs.semVer }} $env:Wpf_Project_Path
       env:
         Configuration: Debug
         RuntimeIdentifier: win-${{ matrix.targetplatform }}
