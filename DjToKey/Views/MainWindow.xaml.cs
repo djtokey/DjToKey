@@ -29,6 +29,7 @@
 
 #endregion License
 
+using Ktos.DjToKey.Resources;
 using Ktos.DjToKey.ViewModels;
 using MahApps.Metro.Controls;
 using System;
@@ -42,8 +43,20 @@ namespace Ktos.DjToKey.Views
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        private NotifyIcon trayIcon;
+        private static NotifyIcon trayIcon;
         private MainWindowViewModel vm;
+
+        internal static void Toast(string message)
+        {
+            var visible = trayIcon.Visible;
+
+            if (!visible)
+                trayIcon.Visible = true;
+
+            trayIcon.ShowBalloonTip(100, AppResources.AppName, message, ToolTipIcon.Info);
+
+            trayIcon.Visible = visible;
+        }
 
         /// <summary>
         /// Creates a new Window and prepares the Tray Icon

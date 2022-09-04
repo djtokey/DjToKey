@@ -30,6 +30,7 @@
 #endregion License
 
 using Ktos.DjToKey.Plugins.Scripts;
+using Ktos.DjToKey.Views;
 using System.ComponentModel.Composition;
 using System.Windows;
 
@@ -39,9 +40,9 @@ namespace Ktos.DjToKey.Scripts
     /// Class representing Document object available for scripts
     /// </summary>
     [Export(typeof(IScriptObject))]
-    public class Document : IScriptObject
+    public class Message : IScriptObject
     {
-        private const string NAME = "Document";
+        private const string NAME = "Message";
 
         /// <summary>
         /// Name of the object in a script engine
@@ -59,30 +60,38 @@ namespace Ktos.DjToKey.Scripts
             get { return dimpl; }
         }
 
-        private DocumentImpl dimpl;
+        private MessageImpl dimpl;
 
         /// <summary>
         /// Initializes new object for a script engine
         /// </summary>
-        public Document()
+        public Message()
         {
-            dimpl = new DocumentImpl();
+            dimpl = new MessageImpl();
         }
     }
 
     /// <summary>
     /// Document class has methods for showing messages
     /// </summary>
-    public class DocumentImpl
+    public class MessageImpl
     {
         /// <summary>
-        /// Named for a sake of consistency with browser
-        /// implementations, Alert shows message box
+        /// Shows a simple message box
         /// </summary>
         /// <param name="message">A message to be shown</param>
-        public void Alert(string message)
+        public void Show(string message)
         {
             MessageBox.Show(message);
+        }
+
+        /// <summary>
+        /// Shows a toast message
+        /// </summary>
+        /// <param name="message">A message to be shown</param>
+        public void Toast(string message)
+        {
+            MainWindow.Toast(message);
         }
     }
 }

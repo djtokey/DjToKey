@@ -1,33 +1,37 @@
-Scripting
-=========
+# Scripting
 
-Scripts are written in JavaScript and are being evaluated when event 
-happens. All script errors are shown in proper message boxes, but
-only if event is active.
+Scripts are written in JavaScript and are being evaluated when event happens.
+All script errors are shown in proper message boxes, but only if event is
+active.
 
 ## Script objects available
 
-There is a set of a few objects for manipulating mouse and keyboard
-from your script. You need to note object and function names are
-case sensitive and are taken from C# backend, so it is why are in
-PascalCase.
+There is a set of a few objects for manipulating mouse and keyboard from your
+script. You need to note object and function names are case sensitive and are
+taken from C# backend, so it is why are in PascalCase.
 
-### Document object
-* `Document.Alert(string)` - shows message on a screen
+### Message object
+
+* `Message.Show(string)` - shows message on a screen
+* `Message.Toast(string)` - shows a notification toast
 
 ### Keyboard object
-* `Keyboard.KeyDown(key)` - executes key down on a virtual key. List of keycodes are available in KeyCode object,
+
+* `Keyboard.KeyDown(key)` - executes key down on a virtual key. List of keycodes
+  are available in KeyCode object,
 * `Keyboard.KeyUp(key)` - executes key up
 * `Keyboard.KeyPress(key)` - presses a virtual key
 * `Keyboard.TextEntry(string)` - sends text entry to a active window
 * `Keyboard.Sleep(number)` - sleeps for a number of miliseconds
-* `Keyboard.ModifiedKeyStroke(modifierKey, key);` - executes key down on the first key (modifier, like CONTROL, SHIFT, MENU),
- then presses the key, then releases the modifier key, performing combination of keys in the result, for example CTRL-A.
-
+* `Keyboard.ModifiedKeyStroke(modifierKey, key)` - executes key down on the
+ first key (modifier, like CONTROL, SHIFT, MENU), then presses the key, then
+ releases the modifier key, performing combination of keys in the result, for
+ example CTRL-A.
 
 #### KeyCode object
-Keycode object is used to get numeric codes for all keys on your keyboard. Key names are directly imported
-from Windows API, so one may find them confusing.
+
+Keycode object is used to get numeric codes for all keys on your keyboard. Key
+names are directly imported from Windows API, so one may find them confusing.
 
 * `KeyCode.CANCEL` - Control-break processing
 * `KeyCode.BACK` - BACKSPACE key
@@ -38,8 +42,10 @@ from Windows API, so one may find them confusing.
 * `KeyCode.CONTROL` - CTRL key
 * `KeyCode.MENU` - ALT key
 * `KeyCode.PAUSE` - PAUSE key
-* `KeyCode.CAPITAL` - CAPS LOCK key* `KeyCode.KANA` - Input Method Editor (IME) Kana mode
-* `KeyCode.HANGEUL` - IME Hanguel mode (maintained for compatibility; use HANGUL)
+* `KeyCode.CAPITAL` - CAPS LOCK key* `KeyCode.KANA` - Input Method Editor (IME)
+  Kana mode
+* `KeyCode.HANGEUL` - IME Hanguel mode (maintained for compatibility; use
+  HANGUL)
 * `KeyCode.HANGUL` - IME Hangul mode
 * `KeyCode.JUNJA` - IME Junja mode
 * `KeyCode.FINAL` - IME final mode
@@ -148,12 +154,18 @@ from Windows API, so one may find them confusing.
 * `KeyCode.F24` - F24 key
 * `KeyCode.NUMLOCK` - NUM LOCK key
 * `KeyCode.SCROLL` - SCROLL LOCK key
-* `KeyCode.LSHIFT` - Left SHIFT key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
-* `KeyCode.RSHIFT` - Right SHIFT key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
-* `KeyCode.LCONTROL` - Left CONTROL key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
-* `KeyCode.RCONTROL` - Right CONTROL key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
-* `KeyCode.LMENU` - Left MENU key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
-* `KeyCode.RMENU` - Right MENU key - Used only as parameters to GetAsyncKeyState() and GetKeyState()
+* `KeyCode.LSHIFT` - Left SHIFT key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
+* `KeyCode.RSHIFT` - Right SHIFT key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
+* `KeyCode.LCONTROL` - Left CONTROL key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
+* `KeyCode.RCONTROL` - Right CONTROL key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
+* `KeyCode.LMENU` - Left MENU key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
+* `KeyCode.RMENU` - Right MENU key - Used only as parameters to
+  GetAsyncKeyState() and GetKeyState()
 * `KeyCode.BROWSER_BACK` - Windows 2000/XP: Browser Back key
 * `KeyCode.BROWSER_FORWARD` - Windows 2000/XP: Browser Forward key
 * `KeyCode.BROWSER_REFRESH` - Windows 2000/XP: Browser Refresh key
@@ -172,21 +184,34 @@ from Windows API, so one may find them confusing.
 * `KeyCode.LAUNCH_MEDIA_SELECT` - Windows 2000/XP: Select Media key
 * `KeyCode.LAUNCH_APP1` - Windows 2000/XP: Start Application 1 key
 * `KeyCode.LAUNCH_APP2` - Windows 2000/XP: Start Application 2 key
-* `KeyCode.OEM_1` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the ';:' key 
+* `KeyCode.OEM_1` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the ';:' key 
 * `KeyCode.OEM_PLUS` - Windows 2000/XP: For any country/region, the '+' key
 * `KeyCode.OEM_COMMA` - Windows 2000/XP: For any country/region, the ',' key
 * `KeyCode.OEM_MINUS` - Windows 2000/XP: For any country/region, the '-' key
 * `KeyCode.OEM_PERIOD` - Windows 2000/XP: For any country/region, the '.' key
-* `KeyCode.OEM_2` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the '/?' key 
-* `KeyCode.OEM_3` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the '`~' key 
-* `KeyCode.OEM_4` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the '[{' key
-* `KeyCode.OEM_5` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the '\|' key
-* `KeyCode.OEM_6` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the ']}' key
-* `KeyCode.OEM_7` - Used for miscellaneous characters; it can vary by keyboard. Windows 2000/XP: For the US standard keyboard, the 'single-quote/double-quote' key
+* `KeyCode.OEM_2` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the '/?' key 
+* `KeyCode.OEM_3` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the '`~' key 
+* `KeyCode.OEM_4` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the '[{' key
+* `KeyCode.OEM_5` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the '\|' key
+* `KeyCode.OEM_6` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the ']}' key
+* `KeyCode.OEM_7` - Used for miscellaneous characters; it can vary by keyboard.
+  Windows 2000/XP: For the US standard keyboard, the 'single-quote/double-quote'
+  key
 * `KeyCode.OEM_8` - Used for miscellaneous characters; it can vary by keyboard.
-* `KeyCode.OEM_102` - Windows 2000/XP: Either the angle bracket key or the backslash key on the RT 102-key keyboard
-* `KeyCode.PROCESSKEY` - Windows 95/98/Me, Windows NT 4.0, Windows 2000/XP: IME PROCESS key
-* `KeyCode.PACKET` - Windows 2000/XP: Used to pass Unicode characters as if they were keystrokes. The PACKET key is the low word of a 32-bit Virtual Key value used for non-keyboard input methods. For more information, see Remark in KEYBDINPUT, SendInput, WM_KEYDOWN, and WM_KEYUP
+* `KeyCode.OEM_102` - Windows 2000/XP: Either the angle bracket key or the
+  backslash key on the RT 102-key keyboard
+* `KeyCode.PROCESSKEY` - Windows 95/98/Me, Windows NT 4.0, Windows 2000/XP: IME
+  PROCESS key
+* `KeyCode.PACKET` - Windows 2000/XP: Used to pass Unicode characters as if they
+  were keystrokes. The PACKET key is the low word of a 32-bit Virtual Key value
+  used for non-keyboard input methods. For more information, see Remark in
+  KEYBDINPUT, SendInput, WM_KEYDOWN, and WM_KEYUP
 * `KeyCode.ATTN` - Attn key
 * `KeyCode.CRSEL` - CrSel key
 * `KeyCode.EXSEL` - ExSel key
@@ -198,13 +223,16 @@ from Windows API, so one may find them confusing.
 * `KeyCode.OEM_CLEAR` - Clear key
 
 ### Mouse object
-* `Mouse.HorizontalScroll(number)` - scrolls for a number of lines - negative goes down, positive - up
+
+* `Mouse.HorizontalScroll(number)` - scrolls for a number of lines - negative
+  goes down, positive - up
 * `Mouse.VerticalScroll(number)` - scroll horizontally for a number of lines
 * `Mouse.LeftButtonClick()` - simulates left button click
 * `Mouse.LeftButtonDoubleClick()` - left button double click
 * `Mouse.LeftButtonDown()` - left button down
 * `Mouse.LeftButtonUp()` - left button up
-* `Mouse.MoveMouseTo(number, number)` - moves cursor to a position X, Y on the screen, respectively 
+* `Mouse.MoveMouseTo(number, number)` - moves cursor to a position X, Y on the
+  screen, respectively 
 * `Mouse.MoveMouseBy(number, number)` - moves mouse cursor by a given delta
 * `Mouse.RightButtonClick()` - simulates right mouse button
 * `Mouse.RightButtonDoubleClick()`
@@ -216,49 +244,59 @@ from Windows API, so one may find them confusing.
 * `Mouse.XButtonUp()`
 
 ### Control object
-When handling an event, there is Control object available which has some information about
-what control has been pressed and what is it's id, name and type. Value of a signal is in 
-Value object.
+
+When handling an event, there is Control object available which has some
+information about what control has been pressed and what is it's id, name and
+type. Value of a signal is in Value object.
 
 * `Control.ControlId` - ID of control activated
 * `Control.ControlName` - name of control or button
-* `Control.ControlType` - type of control - Analog (0-127), Digital (-1, 1) or Button
+* `Control.ControlType` - type of control - Analog (0-127), Digital (-1, 1) or
+  Button
 
 ### Value object
+
 Value is an object with value send from MIDI device
 
 * `Value.Raw` - raw value send from the interface
-* `Value.Transformed` - if the value is 127, this returns 1, else -1. It is useful in situations
-where there is some control returning only Digital values (127 and 0 or 127 and 1), you don't
-have to work on value to get meaning, it is done automatically.
+* `Value.Transformed` - if the value is 127, this returns 1, else -1. It is
+useful in situations where there is some control returning only Digital values
+(127 and 0 or 127 and 1), you don't have to work on value to get meaning, it is
+done automatically.
 
 ### Global object
-`Global` is an object with two functions: 
+
+`Global` is an object with two functions:
+
 * `Set(key, value)` - sets (or adds) a key with a given value,
 * `Get(key)` - retrieves a value for a given key.
 
-It is common between all scripts in application, so you can set some value and use it in other
-scripts. It is preserved during whole application life, emptied at startup.
+It is common between all scripts in application, so you can set some value and
+use it in other scripts. It is preserved during whole application life, emptied
+at startup.
 
 ## Examples
+
 ```JavaScript
 Mouse.VerticalScroll(Value.Transformed)
 ```
 
-This script is taking value send from the device and translates it into either 1 or -1. And then
-runs VerticalScroll function which simulates vertical scrolling. Positive value is scrolling up,
-while negative - down.
+This script is taking value send from the device and translates it into either 1
+or -1. And then runs VerticalScroll function which simulates vertical scrolling.
+Positive value is scrolling up, while negative - down.
 
 ```JavaScript
 if (Value.Raw == 0) Keyboard.TextEntry("Magic!");
 ```
 
-When button is down it sends a value of 127 and a event is fired. When it is up - it sends
-a value of 0. To achieve only one action, it is fired only when button is going up. Then,
-it uses TextEntry to put some verbatim string into active window.
+When button is down it sends a value of 127 and a event is fired. When it is up
+it sends a value of 0. To achieve only one action, it is fired only when button
+is going up. Then, it uses TextEntry to put some verbatim string into active
+window.
 
 ```JavaScript
 Keyboard.ModifiedKeyStroke(KeyCode.CONTROL, KeyCode.VK_A);
 ```
 
-This script performs CTRL-A (usually select all) action, using automated combination of keys.
+This script performs CTRL-A (usually select all) action, using automated
+combination of keys.
