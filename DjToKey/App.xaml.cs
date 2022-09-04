@@ -29,8 +29,11 @@
 
 #endregion License
 
+using ControlzEx.Theming;
 using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Ktos.DjToKey
@@ -48,12 +51,30 @@ namespace Ktos.DjToKey
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            SetThemeToAccentColor();
+        }
+
+        private static void SetThemeToAccentColor()
+        {
+            var s = (SystemParameters.WindowGlassBrush as SolidColorBrush).Color;
+            Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
+            var c = Helpers.Color.ClosestMatch(s, colors);
+            ThemeManager.Current.ChangeTheme(App.Current, $"Light.{c.Item1}");
+        }
+
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             ShowUnhandledException(e.ExceptionObject as Exception);
         }
 
-        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private void App_DispatcherUnhandledException(
+            object sender,
+            DispatcherUnhandledExceptionEventArgs e
+        )
         {
             if (!System.Diagnostics.Debugger.IsAttached)
                 ShowUnhandledException(e.Exception);
@@ -61,11 +82,19 @@ namespace Ktos.DjToKey
 
         private void ShowUnhandledException(Exception e)
         {
-            string errorMessage = string.Format("An application error occurred.\nPlease check whether your data is correct and repeat the action. If this error occurs again there seems to be a more serious malfunction in the application, and you better close it.\n\nError:{0}",
-                e.Message + (e.InnerException != null ? "\n" +
-                e.InnerException.Message : null));
+            string errorMessage = string.Format(
+                "An application error occurred.\nPlease check whether your data is correct and repeat the action. If this error occurs again there seems to be a more serious malfunction in the application, and you better close it.\n\nError:{0}",
+                e.Message + (e.InnerException != null ? "\n" + e.InnerException.Message : null)
+            );
 
-            if (MessageBox.Show(errorMessage, "Application Error", MessageBoxButton.OK, MessageBoxImage.Error) == MessageBoxResult.OK)
+            if (
+                MessageBox.Show(
+                    errorMessage,
+                    "Application Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                ) == MessageBoxResult.OK
+            )
             {
                 Current.Shutdown();
             }

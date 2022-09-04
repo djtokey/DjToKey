@@ -30,6 +30,7 @@
 #endregion License
 
 //using AeroColor;
+using ControlzEx.Theming;
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins;
@@ -89,9 +90,7 @@ namespace Ktos.DjToKey.ViewModels
                 {
                     Devices.Add(findAndLoadDeviceFromPackage(d));
                 }
-                catch (FileNotFoundException)
-                {
-                }
+                catch (FileNotFoundException) { }
             }
         }
 
@@ -110,19 +109,7 @@ namespace Ktos.DjToKey.ViewModels
         private void loadAccent()
         {
             //AeroResourceInitializer.Initialize();
-
-            //Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
-            //var c = Helpers.Color.ClosestMatch((Color)Application.Current.Resources["AeroColor"], colors);
-
-            //// Red is the default accent color
-            //if (c == null)
-            //    c = Tuple.Create("Red", Colors.Red);
-
-            //var accentDictionary = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", c.Item1), UriKind.RelativeOrAbsolute);
-            //Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = accentDictionary });
         }
-
-
 
         private Device findAndLoadDeviceFromPackage(string name)
         {
@@ -141,9 +128,19 @@ namespace Ktos.DjToKey.ViewModels
             var version = Build.GitVersion.SemVer;
 #endif
 
-            var mess = string.Format(Resources.AppResources.About, Resources.AppResources.AppName, version).Replace("\\n", "\n");
+            var mess = string.Format(
+                    Resources.AppResources.About,
+                    Resources.AppResources.AppName,
+                    version
+                )
+                .Replace("\\n", "\n");
 
-            MessageBox.Show(mess, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(
+                mess,
+                Resources.AppResources.AppName,
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
         }
 
         /// <summary>
@@ -155,18 +152,14 @@ namespace Ktos.DjToKey.ViewModels
 
         /// <summary>
         /// Currently active device
-        /// 
+        ///
         /// When currently active device is changed, previous one's
         /// handler is removed, current handler is found and loaded,
         /// and new bindings for controls are loaded
         /// </summary>
         public Device CurrentDevice
         {
-            get
-            {
-                return currentDevice;
-            }
-
+            get { return currentDevice; }
             set
             {
                 if (this.currentDevice != value)
@@ -183,33 +176,43 @@ namespace Ktos.DjToKey.ViewModels
                     deviceHandler = allDevices.FindHandler(currentDevice.Name);
                     try
                     {
-                        if (deviceHandler != null) deviceHandler.Load(currentDevice.Name);                        
+                        if (deviceHandler != null)
+                            deviceHandler.Load(currentDevice.Name);
                     }
                     catch (DeviceException)
                     {
-                        MessageBox.Show(Resources.AppResources.MidiError, Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(
+                            Resources.AppResources.MidiError,
+                            Resources.AppResources.AppName,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
                     }
                     finally
                     {
                         deviceHandler.Controls = currentDevice.Controls;
                         deviceHandler.ScriptEngine = this.ScriptEngine;
-                        deviceHandler.ScriptErrorOccured += scriptErrorHandler;                   
+                        deviceHandler.ScriptErrorOccured += scriptErrorHandler;
 
                         loadBindings();
                     }
-                    
                 }
             }
         }
 
         private DateTime lastErrorTime = DateTime.Now;
-        private TimeSpan errorThreshold = TimeSpan.FromSeconds(2); 
+        private TimeSpan errorThreshold = TimeSpan.FromSeconds(2);
 
         private void scriptErrorHandler(object sender, ScriptErrorEventArgs e)
         {
             if (DateTime.Now - lastErrorTime > errorThreshold)
             {
-                MessageBox.Show(string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message), Resources.AppResources.AppName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message),
+                    Resources.AppResources.AppName,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
                 lastErrorTime = DateTime.Now;
             }
         }
@@ -220,11 +223,14 @@ namespace Ktos.DjToKey.ViewModels
             //       %USERPROFILE% or similar and if there is none
             // there should be a dialog to select binding file
             // manually or create a new one
-            string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
+            string f =
+                "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
 
             try
             {
-                deviceHandler.Bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<IList<ControlBinding>>(File.ReadAllText(f));
+                deviceHandler.Bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<
+                    IList<ControlBinding>
+                >(File.ReadAllText(f));
                 if (deviceHandler.Bindings == null)
                     deviceHandler.Bindings = new List<ControlBinding>();
             }
@@ -241,8 +247,14 @@ namespace Ktos.DjToKey.ViewModels
         {
             if (currentDevice != null)
             {
-                string f = "bindings-" + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name) + ".json";
-                File.WriteAllText(f, Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings));
+                string f =
+                    "bindings-"
+                    + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name)
+                    + ".json";
+                File.WriteAllText(
+                    f,
+                    Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings)
+                );
             }
         }
 
@@ -253,14 +265,22 @@ namespace Ktos.DjToKey.ViewModels
         public void SetCurrentScript(ViewControl ctrl)
         {
             currentlyEditing = ctrl;
-            var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == ctrl.ControlId).FirstOrDefault();
+            var binding = deviceHandler.Bindings
+                .Where(x => x.Control.ControlId == ctrl.ControlId)
+                .FirstOrDefault();
 
             if (binding != null)
                 CurrentScript = binding.Script.Text;
             else
             {
                 CurrentScript = string.Empty;
-                deviceHandler.Bindings.Add(new ControlBinding { Control = ctrl, Script = new Script() { Text = CurrentScript } });
+                deviceHandler.Bindings.Add(
+                    new ControlBinding
+                    {
+                        Control = ctrl,
+                        Script = new Script() { Text = CurrentScript }
+                    }
+                );
             }
         }
 
@@ -272,7 +292,9 @@ namespace Ktos.DjToKey.ViewModels
         {
             if (currentlyEditing != null)
             {
-                var binding = deviceHandler.Bindings.Where(x => x.Control.ControlId == currentlyEditing.ControlId).FirstOrDefault();
+                var binding = deviceHandler.Bindings
+                    .Where(x => x.Control.ControlId == currentlyEditing.ControlId)
+                    .FirstOrDefault();
                 binding.Script.Text = script;
             }
         }
@@ -294,11 +316,7 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         public string CurrentScript
         {
-            get
-            {
-                return currentScript;
-            }
-
+            get { return currentScript; }
             private set
             {
                 if (this.currentScript != value)
@@ -317,7 +335,7 @@ namespace Ktos.DjToKey.ViewModels
         /// <summary>
         /// Handles when property is changed raising <see
         /// cref="PropertyChanged"/> event.
-        /// 
+        ///
         /// Part of <see cref="INotifyPropertyChanged"/> implementation
         /// </summary>
         /// <param name="name">Name of a changed property</param>

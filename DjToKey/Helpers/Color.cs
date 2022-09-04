@@ -14,13 +14,23 @@ namespace Ktos.DjToKey.Helpers
 
         private static System.Drawing.Color ToDrawingColor(System.Windows.Media.Color mediacolor)
         {
-            return System.Drawing.Color.FromArgb(mediacolor.A, mediacolor.R, mediacolor.G, mediacolor.B);
+            return System.Drawing.Color.FromArgb(
+                mediacolor.A,
+                mediacolor.R,
+                mediacolor.G,
+                mediacolor.B
+            );
         }
 
         private static Hsb ColorToHsb(System.Windows.Media.Color color)
         {
             var c = ToDrawingColor(color);
-            var hsb = new Hsb { H = c.GetHue(), S = c.GetSaturation(), B = c.GetBrightness() };
+            var hsb = new Hsb
+            {
+                H = c.GetHue(),
+                S = c.GetSaturation(),
+                B = c.GetBrightness()
+            };
 
             return hsb;
         }
@@ -44,7 +54,10 @@ namespace Ktos.DjToKey.Helpers
         /// <param name="color">A color to match</param>
         /// <param name="colors">A list of colors to match</param>
         /// <returns>The closest color from the list</returns>
-        public static Tuple<string, System.Windows.Media.Color> ClosestMatch(System.Windows.Media.Color color, Dictionary<string, System.Windows.Media.Color> colors)
+        public static (string, System.Windows.Media.Color) ClosestMatch(
+            System.Windows.Media.Color color,
+            Dictionary<string, System.Windows.Media.Color> colors
+        )
         {
             Hsb hsb = ColorToHsb(color);
 
@@ -55,13 +68,13 @@ namespace Ktos.DjToKey.Helpers
             double ndf = 0;
             double distance = 255;
 
-            Tuple<string, System.Windows.Media.Color> temp = null;
+            (string, System.Windows.Media.Color) temp = ("Red", System.Windows.Media.Colors.Red);
 
             foreach (var c in colors)
             {
                 if (color == c.Value)
                 {
-                    return Tuple.Create(c.Key, c.Value);
+                    return (c.Key, c.Value);
                 }
 
                 Hsb cur = ColorToHsb(c.Value);
@@ -76,7 +89,7 @@ namespace Ktos.DjToKey.Helpers
                 if (ndf < distance)
                 {
                     distance = ndf;
-                    temp = Tuple.Create(c.Key, c.Value);
+                    temp = (c.Key, c.Value);
                 }
             }
 
