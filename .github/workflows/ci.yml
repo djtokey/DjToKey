@@ -56,7 +56,7 @@ jobs:
 
     # Build the application
     - name: Build
-      run: dotnet build -r $env:RuntimeIdentifier -c $env:Configuration /p:InformationalVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:Version=${{ steps.gitversion.outputs.semVer }} $env:Wpf_Project_Path
+      run: dotnet build -r $env:RuntimeIdentifier -c $env:Configuration /p:InformationalVersion=${{ steps.gitversion.outputs.fullSemVer }} /p:Version=${{ steps.gitversion.outputs.semVer }} --self-contained $env:Wpf_Project_Path
       env:
         Configuration: Debug
         RuntimeIdentifier: win-${{ matrix.targetplatform }}
