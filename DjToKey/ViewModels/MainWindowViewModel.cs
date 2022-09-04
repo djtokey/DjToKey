@@ -63,6 +63,8 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         private PluginImporter PluginImporter { get; set; }
 
+        public IEnumerable<Metadata> LoadedPlugins => PluginImporter.Plugins;
+
         /// <summary>
         /// Initializes a new MainWindowViewModel and loads all
         /// devices from all supported handlers
@@ -106,6 +108,8 @@ namespace Ktos.DjToKey.ViewModels
             var d = PackageHelper.LoadDevicePackage(name);
             return d.Device;
         }
+
+        public string Version => Build.GitVersion.SemVer;
 
         /// <summary>
         /// Shows About window

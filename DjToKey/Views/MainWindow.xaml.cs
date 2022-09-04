@@ -104,7 +104,7 @@ namespace Ktos.DjToKey.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            vm.About();
+            (Flyouts.Items[0] as Flyout).IsOpen = true;
         }
 
         private void Border_MouseLeftButtonUp(

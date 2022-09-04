@@ -61,11 +61,20 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1}\n\nThis is a very basic MIDI-controller to script mapper. It allows you to prepare custom scripts for moving mouse, pressing keys and similar things, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.\n\nCopyright (C) Marcin Badurowicz 2015-2016\nIcon used from: https://icons8.com/.
+        ///   Looks up a localized string similar to DjToKey is a mapper between MIDI commands and custom scripts. It allows you to prepare custom scripts for moving mouse, pressing keys and so on, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel..
         /// </summary>
         public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/DjToKey/DjToKey.
+        /// </summary>
+        public static string AboutLink {
+            get {
+                return ResourceManager.GetString("AboutLink", resourceCulture);
             }
         }
         
@@ -106,6 +115,16 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright ⓒ Marcin Badurowicz 2015-2022
+        ///Icon used from: https://icons8.com/.
+        /// </summary>
+        public static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Control bindings:.
         /// </summary>
         public static string gbBindings {
@@ -121,6 +140,15 @@ namespace Ktos.DjToKey.Resources {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed plugins:.
+        /// </summary>
+        public static string InstalledPlugins {
+            get {
+                return ResourceManager.GetString("InstalledPlugins", resourceCulture);
             }
         }
         
