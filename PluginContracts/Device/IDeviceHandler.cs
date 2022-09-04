@@ -37,13 +37,13 @@ namespace Ktos.DjToKey.Plugins.Device
 {
     /// <summary>
     /// A generic interface of a device handler
-    /// 
+    ///
     /// Device handler is a class implementing IDeviceHandler,
     /// providing listing of device names, getting controls attached
     /// to it (loaded from device package). There are bindings of
     /// scripts to controls put into IDeviceHandler, as well as a
     /// ScriptEngine object which handles scripting.
-    /// 
+    ///
     /// Defines two most important methods for a device: <see
     /// cref="Load(string)"/> and <see cref="Unload"/> which are
     /// initializing and deinitializing the device, respectively.

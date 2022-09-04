@@ -33,10 +33,10 @@ namespace Ktos.DjToKey.Plugins.Scripts
 {
     /// <summary>
     /// A generic interface for a script handler.
-    /// 
+    ///
     /// Script handler is configured with possible script plugins,
     /// adding new object, types or other functions.
-    /// 
+    ///
     /// It also provides <see cref="Execute(Script, object, object)"/>
     /// method, which runs script with a value and a control.
     /// </summary>

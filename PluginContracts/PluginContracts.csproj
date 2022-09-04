@@ -4,10 +4,16 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Ktos.DjToKey.Plugins</RootNamespace>
     <AssemblyName>Ktos.DjToKey.Plugins.Contracts</AssemblyName>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Description>The library with all common elements for building plugins for DjToKey.</Description>
+    <PackageId>DjToKey.Plugins.Contracs</PackageId>
+    <Authors>Marcin Badurowicz</Authors>
+    <Copyright>Copyright ⓒ Marcin Badurowicz 2015-2022</Copyright>
+    <PackageVersion>1.0</PackageVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>djtokey</PackageTags>
+    <PackageProjectUrl>https://github.com/djtokey/DjToKey</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/djtokey/DjToKey</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
 </Project>
