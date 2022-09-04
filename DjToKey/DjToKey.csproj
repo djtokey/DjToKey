@@ -6,11 +6,15 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>dtk.ico</ApplicationIcon>
     <ApplicationManifest>DjToKey.manifest</ApplicationManifest>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>  
   <ItemGroup>
     <None Update="Devices\DJControl_MP3_LE_MIDI.dtkpkg">
