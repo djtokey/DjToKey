@@ -30,7 +30,6 @@
 #endregion License
 
 using Ktos.DjToKey.Packaging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,6 +37,7 @@ using System.IO;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Media.Imaging;
 
 namespace Ktos.DjToKey.Plugins.Packaging
@@ -138,7 +138,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
 
                     try
                     {
-                        result.Controls = JsonConvert.DeserializeObject<
+                        result.Controls = JsonSerializer.Deserialize<
                             ObservableCollection<Models.ViewControl>
                         >(definition);
                     }
@@ -215,7 +215,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                         using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
                         {
                             string json = reader.ReadToEnd();
-                            x.Controls = JsonConvert.DeserializeObject<
+                            x.Controls = JsonSerializer.Deserialize<
                                 ObservableCollection<Models.ViewControl>
                             >(json);
                         }
