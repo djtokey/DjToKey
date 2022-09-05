@@ -105,6 +105,8 @@
 
         <ui:ContentDialog
             x:Name="scriptDialog"
+            CloseButtonClick="CloseDialog"
+            CloseButtonText="{x:Static p:AppResources.Close}"
             PrimaryButtonClick="btnSave_Click"
             PrimaryButtonText="{x:Static p:AppResources.Save}">
             <ave:TextEditor
@@ -120,7 +122,7 @@
         <ui:ContentDialog
             x:Name="aboutDialog"
             Title="{x:Static p:AppResources.About}"
-            PrimaryButtonClick="aboutDialog_Click"
+            PrimaryButtonClick="CloseDialog"
             PrimaryButtonText="{x:Static p:AppResources.Close}">
 
             <StackPanel Margin="10" Orientation="Vertical">
@@ -152,8 +154,7 @@
                                 <StackPanel Margin="3" Orientation="Horizontal">
                                     <TextBlock>
                                         <Run Text="{Binding Title}" />
-                                        (<Run Text="{Binding Description}" />
-                                        )<Run Text="{Binding Version}" />
+                                        <Run Text="{Binding Version}" />
                                     </TextBlock>
                                 </StackPanel>
                             </DataTemplate>

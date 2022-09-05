@@ -200,9 +200,9 @@ namespace Ktos.DjToKey.Views
             vm.OnClosing();
         }
 
-        private void aboutDialog_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void CloseDialog(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            aboutDialog.Hide();
+            sender.Hide();
         }
     }
 }
