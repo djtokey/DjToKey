@@ -45,6 +45,10 @@ using System.Linq;
 using System.Xml;
 using System.IO;
 using System.Reflection;
+using ICSharpCode.AvalonEdit.CodeCompletion;
+using System.Windows.Input;
+using System.Collections.Generic;
+using Ktos.DjToKey.Helpers;
 
 namespace Ktos.DjToKey.Views
 {
@@ -105,6 +109,45 @@ namespace Ktos.DjToKey.Views
                     HighlightingManager.Instance
                 );
             }
+
+            tbScript.TextArea.TextEntering += textEditor_TextArea_TextEntering;
+            tbScript.TextArea.TextEntered += textEditor_TextArea_TextEntered;
+        }
+
+        CompletionWindow completionWindow;
+
+        void textEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text == ".")
+            {
+                // Open code completion after the user has pressed dot:
+                completionWindow = new CompletionWindow(tbScript.TextArea);
+                IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
+
+                foreach (var item in CompletionData.GetCompletion(e.Text))
+                    data.Add(item);
+
+                completionWindow.Show();
+                completionWindow.Closed += delegate
+                {
+                    completionWindow = null;
+                };
+            }
+        }
+
+        void textEditor_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length > 0 && completionWindow != null)
+            {
+                if (!char.IsLetterOrDigit(e.Text[0]))
+                {
+                    // Whenever a non-letter is typed while the completion window is open,
+                    // insert the currently selected element.
+                    completionWindow.CompletionList.RequestInsertion(e);
+                }
+            }
+            // Do not set e.Handled=true.
+            // We still want to insert the character that was typed.
         }
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
