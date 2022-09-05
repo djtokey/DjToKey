@@ -35,6 +35,8 @@ using System;
 using System.Windows;
 using System.Windows.Forms;
 using ModernWpf.Controls;
+using System.Windows.Navigation;
+using System.Diagnostics;
 
 namespace Ktos.DjToKey.Views
 {
@@ -48,7 +50,12 @@ namespace Ktos.DjToKey.Views
 
         internal static void Toast(string message)
         {
-            trayIcon.ShowBalloonTip(100, AppResources.AppName, message, ToolTipIcon.Info);            
+            trayIcon.ShowBalloonTip(100, AppResources.AppName, message, ToolTipIcon.Info);
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
         }
 
         /// <summary>
@@ -61,8 +68,8 @@ namespace Ktos.DjToKey.Views
             trayIcon = new NotifyIcon();
             trayIcon.BalloonTipIcon = ToolTipIcon.Info;
 
-            trayIcon.Icon = DjToKey.Resources.AppResources.icon;
-            trayIcon.Text = DjToKey.Resources.AppResources.AppName;
+            trayIcon.Icon = AppResources.icon;
+            trayIcon.Text = AppResources.AppName;
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
             vm = DataContext as MainWindowViewModel;
@@ -70,8 +77,8 @@ namespace Ktos.DjToKey.Views
             if (vm.Devices.Count == 0)
             {
                 System.Windows.MessageBox.Show(
-                    DjToKey.Resources.AppResources.NoMidiMessage,
-                    DjToKey.Resources.AppResources.AppName,
+                    AppResources.NoMidiMessage,
+                    AppResources.AppName,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );

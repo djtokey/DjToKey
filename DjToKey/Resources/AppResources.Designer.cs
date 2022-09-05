@@ -61,7 +61,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DjToKey is a mapper between MIDI commands and custom scripts. It allows you to prepare custom scripts for moving mouse, pressing keys and so on, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel..
+        ///   Looks up a localized string similar to About.
         /// </summary>
         public static string About {
             get {
@@ -75,6 +75,15 @@ namespace Ktos.DjToKey.Resources {
         public static string AboutLink {
             get {
                 return ResourceManager.GetString("AboutLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DjToKey is a mapper between MIDI commands and custom scripts. It allows you to prepare custom scripts for moving mouse, pressing keys and so on, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel..
+        /// </summary>
+        public static string AboutText {
+            get {
+                return ResourceManager.GetString("AboutText", resourceCulture);
             }
         }
         
@@ -162,29 +171,11 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string lbAbout {
-            get {
-                return ResourceManager.GetString("lbAbout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to MIDI device:.
         /// </summary>
         public static string lbDevice {
             get {
                 return ResourceManager.GetString("lbDevice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Plugins.
-        /// </summary>
-        public static string lbPlugins {
-            get {
-                return ResourceManager.GetString("lbPlugins", resourceCulture);
             }
         }
         
@@ -203,6 +194,15 @@ namespace Ktos.DjToKey.Resources {
         public static string NoMidiMessage {
             get {
                 return ResourceManager.GetString("NoMidiMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string Plugins {
+            get {
+                return ResourceManager.GetString("Plugins", resourceCulture);
             }
         }
         

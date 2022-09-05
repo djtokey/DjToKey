@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
+  <data name="AboutText" xml:space="preserve">
     <value>DjToKey is a mapper between MIDI commands and custom scripts. It allows you to prepare custom scripts for moving mouse, pressing keys and so on, fired every time some action on your MIDI device occurs. For example, you can bind your Deck from DJ console to a mouse wheel.</value>
   </data>
   <data name="AppName" xml:space="preserve">
@@ -135,13 +135,13 @@
   <data name="gbBindings" xml:space="preserve">
     <value>Control bindings:</value>
   </data>
-  <data name="lbAbout" xml:space="preserve">
+  <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
   <data name="lbDevice" xml:space="preserve">
     <value>MIDI device:</value>
   </data>
-  <data name="lbPlugins" xml:space="preserve">
+  <data name="Plugins" xml:space="preserve">
     <value>Plugins</value>
   </data>
   <data name="MidiError" xml:space="preserve">
