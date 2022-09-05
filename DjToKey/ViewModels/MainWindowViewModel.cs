@@ -66,7 +66,7 @@ namespace Ktos.DjToKey.ViewModels
 
         public IEnumerable<Metadata> LoadedPlugins => PluginImporter.Plugins;
 
-        public IList<PackageMetadata> AvailablePackages { get; private set; }
+        public IList<PackageMetadata> AvailableDevicePackages { get; private set; }
 
         /// <summary>
         /// Initializes a new MainWindowViewModel and loads all
@@ -76,6 +76,7 @@ namespace Ktos.DjToKey.ViewModels
         {
             PluginImporter = new PluginImporter();
 
+            GetAvailableDevicePackages();
             ConfigureScriptEngine();
             LoadDeviceHandlers();
             LoadDevicePackages();
@@ -83,11 +84,6 @@ namespace Ktos.DjToKey.ViewModels
 
         private void LoadDevicePackages()
         {
-            AvailablePackages = PackageHelper
-                .ListAllPackages()
-                .Select(x => PackageHelper.LoadMetadata(x))
-                .ToList();
-
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
             {
@@ -97,6 +93,14 @@ namespace Ktos.DjToKey.ViewModels
                 }
                 catch (FileNotFoundException) { }
             }
+        }
+
+        private void GetAvailableDevicePackages()
+        {
+            AvailableDevicePackages = PackageHelper
+                .GetAllDevicePackages()
+                .Select(x => PackageHelper.LoadMetadata(x))
+                .ToList();
         }
 
         private void LoadDeviceHandlers()

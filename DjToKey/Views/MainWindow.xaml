@@ -161,12 +161,11 @@
 
                 <TextBlock Margin="0,10,0,0" Text="{x:Static p:AppResources.InstalledDevicePackages}" />
                 <ScrollViewer>
-                    <ListBox Height="100" ItemsSource="{Binding AvailablePackages}">
+                    <ListBox Height="100" ItemsSource="{Binding AvailableDevicePackages}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">
                                     <TextBlock Text="{Binding Title}" />
-                                    <TextBlock Text="{Binding Description}" />
                                     <TextBlock Text="{Binding Version}" />
                                 </StackPanel>
                             </DataTemplate>

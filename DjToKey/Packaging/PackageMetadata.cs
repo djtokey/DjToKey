@@ -134,6 +134,8 @@ namespace Ktos.DjToKey.Packaging
             }
         }
 
+        public string[] SupportedDevices => Category.Split(';');
+
         /// <summary>
         /// Raised when any property is changed
         /// </summary>

@@ -31,6 +31,7 @@
 
 using Ktos.DjToKey.Helpers;
 using Ktos.DjToKey.Plugins.Packaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -104,7 +105,7 @@ namespace Ktos.DjToKey.Packaging
 
             var files = Enumerable.Concat(
                 Enumerable.Concat(appFolderByName, localAppDataByName),
-                ListAllPackages()
+                GetAllDevicePackages()
             );
             return files;
         }
@@ -113,41 +114,51 @@ namespace Ktos.DjToKey.Packaging
         /// Lists all dtkpkg files
         /// </summary>
         /// <returns>Names of all dtkpkg files</returns>
-        public static IEnumerable<string> ListAllPackages()
+        public static IEnumerable<string> GetAllDevicePackages()
         {
-            IEnumerable<string> appFolderAll = null;
+            List<string> packages = new();
+
             try
             {
-                appFolderAll = Directory.EnumerateFiles(
+                var appFolderDtks = Directory.EnumerateFiles(
                     Path.Combine(
                         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                         @".\devices"
                     ),
                     "*.dtkpkg"
                 );
-            }
-            catch (DirectoryNotFoundException)
-            {
-                appFolderAll = new List<string>();
-            }
+                packages.AddRange(appFolderDtks);
 
-            IEnumerable<string> localAppDataAll = null;
-            try
-            {
-                localAppDataAll = Directory.EnumerateFiles(
+                var appFolderUnpackaged = Directory.EnumerateDirectories(
+                    Path.Combine(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        "devices"
+                    ),
+                    "*"
+                );
+                packages.AddRange(appFolderUnpackaged);
+
+                var localAppDataDtks = Directory.EnumerateFiles(
                     Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                         @"DjToKey\devices"
                     ),
                     "*.dtkpkg"
                 );
-            }
-            catch (DirectoryNotFoundException)
-            {
-                localAppDataAll = new List<string>();
-            }
+                packages.AddRange(localAppDataDtks);
 
-            return Enumerable.Concat(appFolderAll, localAppDataAll);
+                var localAppDataUnpackaged = Directory.EnumerateDirectories(
+                    Path.Combine(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        @".\devices"
+                    ),
+                    "*"
+                );
+                packages.AddRange(localAppDataUnpackaged);
+            }
+            catch (DirectoryNotFoundException) { }
+
+            return packages;
         }
 
         /// <summary>
@@ -217,16 +228,26 @@ namespace Ktos.DjToKey.Packaging
         /// </returns>
         public static PackageMetadata LoadMetadata(string fileName)
         {
-            using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
+            if (Directory.Exists(fileName))
             {
-                return new PackageMetadata()
+                // unpackaged device definition
+                return JsonConvert.DeserializeObject<PackageMetadata>(
+                    File.ReadAllText(Path.Combine(fileName, "./metadata.json"))
+                );
+            }
+            else
+            {
+                using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
                 {
-                    Keywords = pack.PackageProperties.Keywords,
-                    Title = pack.PackageProperties.Title,
-                    Description = pack.PackageProperties.Description,
-                    Version = pack.PackageProperties.Version,
-                    Category = pack.PackageProperties.Category
-                };
+                    return new PackageMetadata()
+                    {
+                        Keywords = pack.PackageProperties.Keywords,
+                        Title = pack.PackageProperties.Title,
+                        Description = pack.PackageProperties.Description,
+                        Version = pack.PackageProperties.Version,
+                        Category = pack.PackageProperties.Category
+                    };
+                }
             }
         }
     }
