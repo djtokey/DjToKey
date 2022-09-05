@@ -29,26 +29,23 @@
 
 #endregion License
 
-using Ktos.DjToKey.Resources;
-using Ktos.DjToKey.ViewModels;
-using System;
-using System.Windows;
-using System.Windows.Forms;
-using ModernWpf.Controls;
-using System.Windows.Navigation;
-using System.Diagnostics;
-using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
-using System.Xml;
+using Ktos.DjToKey.Helpers;
+using Ktos.DjToKey.Resources;
+using Ktos.DjToKey.ViewModels;
+using ModernWpf.Controls;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using ICSharpCode.AvalonEdit.CodeCompletion;
+using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
-using System.Collections.Generic;
-using Ktos.DjToKey.Helpers;
+using System.Windows.Navigation;
+using System.Xml;
 
 namespace Ktos.DjToKey.Views
 {
@@ -114,13 +111,12 @@ namespace Ktos.DjToKey.Views
             tbScript.TextArea.TextEntered += textEditor_TextArea_TextEntered;
         }
 
-        CompletionWindow completionWindow;
+        private CompletionWindow completionWindow;
 
-        void textEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        private void textEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
             if (e.Text == ".")
             {
-                // Open code completion after the user has pressed dot:
                 completionWindow = new CompletionWindow(tbScript.TextArea);
                 IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
 
@@ -135,19 +131,15 @@ namespace Ktos.DjToKey.Views
             }
         }
 
-        void textEditor_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        private void textEditor_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {
             if (e.Text.Length > 0 && completionWindow != null)
             {
                 if (!char.IsLetterOrDigit(e.Text[0]))
                 {
-                    // Whenever a non-letter is typed while the completion window is open,
-                    // insert the currently selected element.
                     completionWindow.CompletionList.RequestInsertion(e);
                 }
             }
-            // Do not set e.Handled=true.
-            // We still want to insert the character that was typed.
         }
 
         private void TrayIcon_DoubleClick(object sender, EventArgs e)
