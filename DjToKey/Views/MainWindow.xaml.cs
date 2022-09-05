@@ -74,7 +74,7 @@ namespace Ktos.DjToKey.Views
 
             vm = DataContext as MainWindowViewModel;
 
-            if (vm.Devices.Count == 0)
+            if (vm.AvailableDevices.Count == 0)
             {
                 System.Windows.MessageBox.Show(
                     AppResources.NoMidiMessage,

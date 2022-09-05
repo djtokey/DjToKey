@@ -45,7 +45,7 @@
             Content="&#xe713;"
             FontSize="13" />
 
-        <TabControl ItemsSource="{Binding Devices}" SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
+        <TabControl ItemsSource="{Binding AvailableDevices}" SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
@@ -150,9 +150,11 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Title}" />
-                                    <TextBlock Text="{Binding Description}" />
-                                    <TextBlock Text="{Binding Version}" />
+                                    <TextBlock>
+                                        <Run Text="{Binding Title}" />
+                                        (<Run Text="{Binding Description}" />
+                                        )<Run Text="{Binding Version}" />
+                                    </TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -165,8 +167,10 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Title}" />
-                                    <TextBlock Text="{Binding Version}" />
+                                    <TextBlock>
+                                        <Run Text="{Binding Metadata.Title}" />
+                                        <Run Text="{Binding Metadata.Version}" />
+                                    </TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

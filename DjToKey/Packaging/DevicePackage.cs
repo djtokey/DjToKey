@@ -29,7 +29,7 @@
 
 #endregion License
 
-using Ktos.DjToKey.Packaging;
+using Ktos.DjToKey.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 
-namespace Ktos.DjToKey.Plugins.Packaging
+namespace Ktos.DjToKey.Packaging
 {
     /// <summary>
     /// Class describing package for a device
@@ -52,35 +52,6 @@ namespace Ktos.DjToKey.Plugins.Packaging
     public class DevicePackage
     {
         /// <summary>
-        /// Opens a device package of a given name and loads metadata
-        /// from it
-        /// </summary>
-        /// <param name="fileName">Package file name to be opened</param>
-        /// <param name="deviceName">
-        /// Device name in a package to load configuration
-        /// </param>
-        /// <returns>
-        /// A device package with a single device and whole metadata loaded
-        /// </returns>
-        public static DevicePackage Load(string fileName, string deviceName)
-        {
-            var p = new DevicePackage();
-
-            p.Metadata = PackageHelper.LoadMetadata(fileName);
-            p.PackageFileName = fileName;
-
-            // .dtkpkg files may be device descriptors or other
-            // categories, if package describes itself as not device
-            // package, throw exception
-            if (!string.IsNullOrEmpty(p.Metadata.Category) && p.Metadata.Category != "device")
-                throw new ArgumentException("Package is not a device descriptor package.");
-
-            p.Device = LoadDeviceFromPackage(fileName, deviceName);
-
-            return p;
-        }
-
-        /// <summary>
         /// Loads a device definition and image from a specified
         /// device package
         /// </summary>
@@ -89,17 +60,80 @@ namespace Ktos.DjToKey.Plugins.Packaging
         /// <returns>
         /// A device object with controls, image, name and other parameters
         /// </returns>
-        public static Models.Device LoadDeviceFromPackage(string fileName, string deviceName)
+        public static Models.Device LoadDeviceDefinitionFromPackage(
+            DevicePackage package,
+            string deviceName
+        )
         {
-            // TODO: support for mapping file!
             Models.Device result = new Models.Device();
             result.Name = deviceName;
 
-            deviceName = MakeValidFileName(deviceName).ToLower();
+            if (package.IsPackaged)
+                LoadFromPackage(package, result);
+            else
+                LoadUnpackaged(package, result);
 
-            using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
+            return result;
+        }
+
+        private static void LoadUnpackaged(DevicePackage package, Device result)
+        {
+            var definitionPath = System.IO.Path.Combine(package.Path, "definition.json");
+            var imagePath = System.IO.Path.Combine(package.Path, "image.png");
+
+            if (System.IO.File.Exists(imagePath))
             {
-                Uri u = new Uri(string.Format("/{0}/image.png", deviceName), UriKind.Relative);
+                var imageStream = new MemoryStream();
+                File.Open(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read)
+                    .CopyTo(imageStream);
+
+                try
+                {
+                    result.Image = new BitmapImage();
+                    result.Image.BeginInit();
+                    result.Image.StreamSource = imageStream;
+                    result.Image.CacheOption = BitmapCacheOption.OnLoad;
+                    result.Image.EndInit();
+                    result.Image.Freeze();
+                }
+                catch
+                {
+                    throw new FileLoadException("Error when loading image file for a device");
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException("Device image file not found in package.");
+            }
+
+            if (File.Exists(definitionPath))
+            {
+                var definition = File.ReadAllText(definitionPath);
+
+                try
+                {
+                    result.Controls = JsonConvert.DeserializeObject<
+                        ObservableCollection<Models.ViewControl>
+                    >(definition);
+                }
+                catch (JsonException)
+                {
+                    throw new FileLoadException(
+                        "Cannot load device configuration file from package"
+                    );
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException("Device configuration file not found in package.");
+            }
+        }
+
+        private static void LoadFromPackage(DevicePackage package, Device result)
+        {
+            using (var pack = Package.Open(package.Path, FileMode.Open, FileAccess.Read))
+            {
+                Uri u = new Uri("/device/image.png", UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
@@ -125,7 +159,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     throw new FileNotFoundException("Device image file not found in package.");
                 }
 
-                u = new Uri(string.Format("/{0}/definition.json", deviceName), UriKind.Relative);
+                u = new Uri("/device/definition.json", UriKind.Relative);
 
                 if (pack.PartExists(u))
                 {
@@ -156,152 +190,64 @@ namespace Ktos.DjToKey.Plugins.Packaging
                     );
                 }
             }
+        }
+
+        public static DevicePackage LoadMetadata(string fileName)
+        {
+            var result = new DevicePackage();
+
+            if (Directory.Exists(fileName))
+            {
+                // unpackaged device definition
+                result.Metadata = JsonConvert.DeserializeObject<Metadata>(
+                    File.ReadAllText(System.IO.Path.Combine(fileName, "./metadata.json"))
+                );
+
+                result.IsPackaged = false;
+            }
+            else
+            {
+                result.IsPackaged = true;
+                using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
+                {
+                    result.Metadata = new Metadata()
+                    {
+                        Keywords = pack.PackageProperties.Keywords,
+                        Title = pack.PackageProperties.Title,
+                        Description = pack.PackageProperties.Description,
+                        Version = pack.PackageProperties.Version,
+                        Category = pack.PackageProperties.Category
+                    };
+                }
+            }
+
+            result.Path = fileName;
+
+            if (result.Metadata.Category != "device")
+                throw new InvalidOperationException("Invalid package, not device package.");
 
             return result;
         }
 
         /// <summary>
-        /// Loads all devices supported in a device package
-        /// </summary>
-        /// <param name="fileName">File name of a device package</param>
-        /// <returns>
-        /// List of all devices supported with their images and
-        /// control definitions
-        /// </returns>
-        public static IEnumerable<Models.Device> LoadDevicesFromPackage(string fileName)
-        {
-            List<Models.Device> devices = new List<Models.Device>();
-
-            using (var pack = Package.Open(fileName, FileMode.Open))
-            {
-                List<string> devicesInPackage = new List<string>();
-
-                foreach (var p in pack.GetParts())
-                {
-                    string x = p.Uri.ToString().TrimStart('/');
-
-                    if (x == "map.json")
-                        continue;
-
-                    x = x.Remove(x.IndexOf('/'));
-
-                    if (x != "_rels" && x != "package")
-                        devicesInPackage.Add(x);
-                }
-
-                // TODO: map file handling
-                /*
-                if (pack.PartExists(new Uri("/map.json", UriKind.Relative)))
-                {
-                    using (TextReader tr = new StreamReader(pack.GetPart(new Uri("/map.json", UriKind.Relative)).GetStream()))
-                    {
-                        mapFile.Map = tr.ReadToEnd();
-                    }
-                }*/
-
-                foreach (var d in devicesInPackage.Distinct())
-                {
-                    Models.Device x = new Models.Device();
-                    x.Name = d;
-
-                    Uri u = new Uri(
-                        string.Format("/{0}/definition.json", x.Name),
-                        UriKind.Relative
-                    );
-
-                    if (pack.PartExists(u))
-                    {
-                        var f = pack.GetPart(u).GetStream();
-                        using (StreamReader reader = new StreamReader(f, Encoding.UTF8))
-                        {
-                            string json = reader.ReadToEnd();
-                            x.Controls = JsonConvert.DeserializeObject<
-                                ObservableCollection<Models.ViewControl>
-                            >(json);
-                        }
-                    }
-
-                    u = new Uri(string.Format("/{0}/image.png", x.Name), UriKind.Relative);
-
-                    if (pack.PartExists(u))
-                    {
-                        BitmapImage bitmap;
-
-                        using (var stream = pack.GetPart(u).GetStream())
-                        {
-                            bitmap = new BitmapImage();
-                            bitmap.BeginInit();
-                            bitmap.StreamSource = stream;
-                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                            bitmap.EndInit();
-                            bitmap.Freeze();
-                        }
-
-                        x.Image = bitmap;
-                    }
-
-                    devices.Add(x);
-                }
-            }
-
-            return devices;
-        }
-
-        /// <summary>
         /// File name of a package file
         /// </summary>
-        public string PackageFileName { get; private set; }
+        public string Path { get; private set; }
+
+        /// <summary>
+        /// Is the package as a file or a loose directory
+        /// </summary>
+        public bool IsPackaged { get; set; }
 
         /// <summary>
         /// Device package metadata
         /// </summary>
-        public PackageMetadata Metadata { get; set; }
+        public Metadata Metadata { get; set; }
 
         /// <summary>
-        /// Loaded device from a package
+        /// List of all supported devices by this device package
+        /// (may use wildcards)
         /// </summary>
-        public Models.Device Device { get; set; }
-
-        /// <summary>
-        /// Replaces characters in <c>text</c> that are not allowed in
-        /// file names with the specified replacement character.
-        /// </summary>
-        /// <param name="text">
-        /// Text to make into a valid filename. The same string is
-        /// returned if it is valid already.
-        /// </param>
-        /// <returns>
-        /// A string that can be used as a filename. If the output
-        /// string would otherwise be empty, returns "_".
-        /// </returns>
-        private static string MakeValidFileName(string text)
-        {
-            StringBuilder sb = new StringBuilder(text.Length);
-            var invalids = Path.GetInvalidFileNameChars();
-
-            char repl = '_';
-
-            // space is also changed into replacementchar
-            Array.Resize(ref invalids, invalids.Length + 1);
-            invalids[invalids.Length - 1] = ' ';
-
-            bool changed = false;
-            for (int i = 0; i < text.Length; i++)
-            {
-                char c = text[i];
-                if (invalids.Contains(c))
-                {
-                    changed = true;
-                    sb.Append(repl);
-                }
-                else
-                    sb.Append(c);
-            }
-
-            if (sb.Length == 0)
-                return "_";
-
-            return changed ? sb.ToString() : text;
-        }
+        public string[] SupportedDevices => Metadata.Keywords.Split(';');
     }
 }

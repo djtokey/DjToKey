@@ -49,7 +49,7 @@ namespace Ktos.DjToKey.MidiDevice
         /// <summary>
         /// A list of names of available input devices
         /// </summary>
-        public IEnumerable<string> AvailableDevices { get; private set; }
+        public IEnumerable<string> AvailableDeviceNames { get; private set; }
 
         /// <summary>
         /// The name of a selected device
@@ -87,11 +87,11 @@ namespace Ktos.DjToKey.MidiDevice
         /// </summary>
         public MidiDevice()
         {
-            AvailableDevices = new List<string>();
+            AvailableDeviceNames = new List<string>();
 
             foreach (var d in DeviceManager.InputDevices)
             {
-                ((List<string>)AvailableDevices).Add(d.Name);
+                ((List<string>)AvailableDeviceNames).Add(d.Name);
             }
         }
 

@@ -54,7 +54,7 @@ namespace Ktos.DjToKey
         /// <summary>
         /// A list of names of available input devices
         /// </summary>
-        public IEnumerable<string> AvailableDevices { get; private set; }
+        public IEnumerable<string> AvailableDeviceNames { get; private set; }
 
         /// <summary>
         /// The name of a selected device
@@ -91,10 +91,7 @@ namespace Ktos.DjToKey
         /// </summary>
         public MockDevice()
         {
-            var l = new List<string>();
-            l.Add("TEST");
-
-            AvailableDevices = l;
+            AvailableDeviceNames = new List<string> { "mock-6a5e6dfb" };
         }
 
         /// <summary>

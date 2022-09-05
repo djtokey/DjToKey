@@ -29,6 +29,7 @@
 
 #endregion License
 
+using Ktos.DjToKey.Devices;
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
 using Ktos.DjToKey.Plugins;
@@ -51,7 +52,7 @@ namespace Ktos.DjToKey.ViewModels
     /// </summary>
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
-        private AllDevices allDevices;
+        private DeviceManager deviceManager;
         private IDeviceHandler deviceHandler;
 
         /// <summary>
@@ -64,9 +65,14 @@ namespace Ktos.DjToKey.ViewModels
         /// </summary>
         private PluginImporter PluginImporter { get; set; }
 
-        public IEnumerable<Metadata> LoadedPlugins => PluginImporter.Plugins;
+        public IEnumerable<Plugins.Metadata> LoadedPlugins => PluginImporter.Plugins;
 
-        public IList<PackageMetadata> AvailableDevicePackages { get; private set; }
+        /// <summary>
+        /// List of all devices supported by the application
+        /// </summary>
+        public IList<Device> AvailableDevices => deviceManager.AvailableDevices;
+        public IList<DevicePackage> AvailableDevicePackages =>
+            deviceManager.AvailableDevicePackages;
 
         /// <summary>
         /// Initializes a new MainWindowViewModel and loads all
@@ -76,49 +82,10 @@ namespace Ktos.DjToKey.ViewModels
         {
             PluginImporter = new PluginImporter();
 
-            GetAvailableDevicePackages();
-            ConfigureScriptEngine();
-            LoadDeviceHandlers();
-            LoadDevicePackages();
-        }
-
-        private void LoadDevicePackages()
-        {
-            // lists all devices and loads their device packages automatically
-            foreach (var d in allDevices.AvailableDevices)
-            {
-                try
-                {
-                    Devices.Add(LoadDeviceFromPackage(d));
-                }
-                catch (FileNotFoundException) { }
-            }
-        }
-
-        private void GetAvailableDevicePackages()
-        {
-            AvailableDevicePackages = PackageHelper
-                .GetAllDevicePackages()
-                .Select(x => PackageHelper.LoadMetadata(x))
-                .ToList();
-        }
-
-        private void LoadDeviceHandlers()
-        {
-            Devices = new ObservableCollection<Device>();
-            allDevices = new AllDevices(PluginImporter.DevicePlugins.DeviceHandlers);
-        }
-
-        private void ConfigureScriptEngine()
-        {
             ScriptEngine = new ScriptEngine();
             ScriptEngine.Configure(PluginImporter.ScriptPlugins);
-        }
 
-        private Device LoadDeviceFromPackage(string name)
-        {
-            var d = PackageHelper.LoadDevicePackage(name);
-            return d.Device;
+            deviceManager = new DeviceManager(PluginImporter.DevicePlugins.DeviceHandlers);
         }
 
         public string Version => Build.GitVersion.SemVer;
@@ -149,10 +116,22 @@ namespace Ktos.DjToKey.ViewModels
             );
         }
 
-        /// <summary>
-        /// List of all devices supported by the application
-        /// </summary>
-        public ObservableCollection<Device> Devices { get; set; }
+        private DateTime lastErrorTime = DateTime.Now;
+        private TimeSpan errorThreshold = TimeSpan.FromSeconds(2);
+
+        private void HandleScriptError(object sender, ScriptErrorEventArgs e)
+        {
+            if (DateTime.Now - lastErrorTime > errorThreshold)
+            {
+                MessageBox.Show(
+                    string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message),
+                    Resources.AppResources.AppName,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                lastErrorTime = DateTime.Now;
+            }
+        }
 
         private Device currentDevice;
 
@@ -176,10 +155,17 @@ namespace Ktos.DjToKey.ViewModels
                         deviceHandler.Unload();
                     }
 
+                    var package = DevicePackage.LoadDeviceDefinitionFromPackage(
+                        value.Package,
+                        value.Name
+                    );
+
                     currentDevice = value;
+                    currentDevice.Controls = package.Controls;
+                    currentDevice.Image = package.Image;
                     OnPropertyChanged(nameof(CurrentDevice));
 
-                    deviceHandler = allDevices.FindHandler(currentDevice.Name);
+                    deviceHandler = currentDevice.Handler;
                     try
                     {
                         if (deviceHandler != null)
@@ -203,23 +189,6 @@ namespace Ktos.DjToKey.ViewModels
                         LoadBindings();
                     }
                 }
-            }
-        }
-
-        private DateTime lastErrorTime = DateTime.Now;
-        private TimeSpan errorThreshold = TimeSpan.FromSeconds(2);
-
-        private void HandleScriptError(object sender, ScriptErrorEventArgs e)
-        {
-            if (DateTime.Now - lastErrorTime > errorThreshold)
-            {
-                MessageBox.Show(
-                    string.Format(Resources.AppResources.ScriptErrorMessage, e.Control, e.Message),
-                    Resources.AppResources.AppName,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-                lastErrorTime = DateTime.Now;
             }
         }
 

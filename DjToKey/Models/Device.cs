@@ -29,6 +29,8 @@
 
 #endregion License
 
+using Ktos.DjToKey.Packaging;
+using Ktos.DjToKey.Plugins.Device;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
@@ -90,6 +92,9 @@ namespace Ktos.DjToKey.Models
         {
             return Name;
         }
+
+        public IDeviceHandler Handler { get; set; }
+        public DevicePackage Package { get; set; }
 
         /// <summary>
         /// Event run when any property is changed

@@ -30,7 +30,6 @@
 #endregion License
 
 using Ktos.DjToKey.Helpers;
-using Ktos.DjToKey.Plugins.Packaging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -45,76 +44,13 @@ namespace Ktos.DjToKey.Packaging
     /// A helper class for finding, loading, downloading and checking
     /// DjToKey packages
     /// </summary>
-    internal class PackageHelper
+    internal static class PackageHelper
     {
         /// <summary>
-        /// Loads device package for a specified device
-        /// </summary>
-        /// <param name="deviceName">
-        /// Name of a device to load description package for
-        /// </param>
-        /// <returns>Loaded package</returns>
-        public static DevicePackage LoadDevicePackage(string deviceName)
-        {
-            IEnumerable<string> files = ListDevicePackageFileNames(deviceName);
-
-            return DevicePackage.Load(FindDevicePackageName(files, deviceName), deviceName);
-        }
-
-        /// <summary>
-        /// Lists file names for all packages which are possible to
-        /// handle device of a specified name
-        /// </summary>
-        /// <param name="deviceName">Name of a device to be handled</param>
-        /// <returns>A list of packages file names</returns>
-        public static IEnumerable<string> ListDevicePackageFileNames(string deviceName)
-        {
-            string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
-
-            IEnumerable<string> appFolderByName = null;
-            try
-            {
-                appFolderByName = Directory.EnumerateFiles(
-                    Path.Combine(
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                        @".\devices"
-                    ),
-                    safeDeviceName + ".dtkpkg"
-                );
-            }
-            catch (DirectoryNotFoundException)
-            {
-                appFolderByName = new List<string>();
-            }
-
-            IEnumerable<string> localAppDataByName = null;
-            try
-            {
-                localAppDataByName = Directory.EnumerateFiles(
-                    Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                        @"DjToKey\devices",
-                        safeDeviceName + ".dtkpkg"
-                    )
-                );
-            }
-            catch (DirectoryNotFoundException)
-            {
-                localAppDataByName = new List<string>();
-            }
-
-            var files = Enumerable.Concat(
-                Enumerable.Concat(appFolderByName, localAppDataByName),
-                GetAllDevicePackages()
-            );
-            return files;
-        }
-
-        /// <summary>
-        /// Lists all dtkpkg files
+        /// Lists all device package files and directories
         /// </summary>
         /// <returns>Names of all dtkpkg files</returns>
-        public static IEnumerable<string> GetAllDevicePackages()
+        public static IEnumerable<string> GetAllDevicePackageFileNames()
         {
             List<string> packages = new();
 
@@ -162,29 +98,6 @@ namespace Ktos.DjToKey.Packaging
         }
 
         /// <summary>
-        /// Finds a first package which can handle a device
-        /// </summary>
-        /// <param name="filesList">List of all device packages</param>
-        /// <param name="deviceName">Name of a device to be handled</param>
-        /// <returns>
-        /// Filename of a package which can handle this device
-        /// </returns>
-        public static string FindDevicePackageName(IEnumerable<string> filesList, string deviceName)
-        {
-            if (filesList.Count() > 0)
-            {
-                foreach (string f in filesList)
-                {
-                    var mt = LoadMetadata(f);
-                    if (IsDeviceSupported(mt.Keywords, deviceName))
-                        return f;
-                }
-            }
-
-            throw new FileNotFoundException("No suitable package file found for this device");
-        }
-
-        /// <summary>
         /// Checks if device is supported by package by checking
         /// keywords from package metadata
         /// </summary>
@@ -193,19 +106,18 @@ namespace Ktos.DjToKey.Packaging
         /// </param>
         /// <param name="deviceName">Name of device</param>
         /// <returns>Returns if device is supported</returns>
-        public static bool IsDeviceSupported(string keywords, string deviceName)
+        public static bool IsDeviceSupported(this DevicePackage package, string deviceName)
         {
             string safeDeviceName = ValidFileName.MakeValidFileName(deviceName).ToLower();
 
-            if (string.IsNullOrEmpty(keywords))
+            if (package.SupportedDevices.Length == 0)
                 return false;
 
-            var devices = keywords.Split(';');
-            foreach (string d in devices)
+            foreach (string d in package.SupportedDevices)
             {
-                if (d.StartsWith("*") && deviceName.EndsWith(d))
+                if (d.StartsWith("*") && deviceName.EndsWith(d.Replace("*", "")))
                     return true;
-                if (d.EndsWith("*") && deviceName.StartsWith(d))
+                if (d.EndsWith("*") && deviceName.StartsWith(d.Replace("*", "")))
                     return true;
                 if (d == deviceName)
                     return true;
@@ -226,12 +138,12 @@ namespace Ktos.DjToKey.Packaging
         /// All package metadata - Keywords, Title, Description,
         /// Version and Category
         /// </returns>
-        public static PackageMetadata LoadMetadata(string fileName)
+        public static Metadata LoadMetadata(string fileName)
         {
             if (Directory.Exists(fileName))
             {
                 // unpackaged device definition
-                return JsonConvert.DeserializeObject<PackageMetadata>(
+                return JsonConvert.DeserializeObject<Metadata>(
                     File.ReadAllText(Path.Combine(fileName, "./metadata.json"))
                 );
             }
@@ -239,7 +151,7 @@ namespace Ktos.DjToKey.Packaging
             {
                 using (var pack = Package.Open(fileName, FileMode.Open, FileAccess.Read))
                 {
-                    return new PackageMetadata()
+                    return new Metadata()
                     {
                         Keywords = pack.PackageProperties.Keywords,
                         Title = pack.PackageProperties.Title,

@@ -36,7 +36,7 @@ namespace Ktos.DjToKey.Packaging
     /// <summary>
     /// Class describing all metadata available for the package
     /// </summary>
-    public class PackageMetadata : INotifyPropertyChanged
+    public class Metadata : INotifyPropertyChanged
     {
         private string title;
 
@@ -134,7 +134,7 @@ namespace Ktos.DjToKey.Packaging
             }
         }
 
-        public string[] SupportedDevices => Category.Split(';');
+        public string[] SupportedDevices => Keywords.Split(';');
 
         /// <summary>
         /// Raised when any property is changed
