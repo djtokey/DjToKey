@@ -31,17 +31,17 @@
 
 using Ktos.DjToKey.Resources;
 using Ktos.DjToKey.ViewModels;
-using MahApps.Metro.Controls;
 using System;
 using System.Windows;
 using System.Windows.Forms;
+using ModernWpf.Controls;
 
 namespace Ktos.DjToKey.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : Window
     {
         private static NotifyIcon trayIcon;
         private MainWindowViewModel vm;
@@ -117,7 +117,7 @@ namespace Ktos.DjToKey.Views
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            (Flyouts.Items[0] as Flyout).IsOpen = true;
+            aboutDialog.ShowAsync();
         }
 
         private void Border_MouseLeftButtonUp(
@@ -128,17 +128,24 @@ namespace Ktos.DjToKey.Views
             vm.SetCurrentScript(
                 (sender as System.Windows.Controls.Border).DataContext as Models.ViewControl
             );
+            scriptDialog.ShowAsync();
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void btnSave_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             vm.UpdateCurrentScript(tbScript.Text);
             vm.SaveBindings();
+            sender.Hide();
         }
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             vm.OnClosing();
+        }
+
+        private void aboutDialog_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            aboutDialog.Hide();
         }
     }
 }

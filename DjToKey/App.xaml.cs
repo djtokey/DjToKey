@@ -29,7 +29,6 @@
 
 #endregion License
 
-using ControlzEx.Theming;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -63,7 +62,7 @@ namespace Ktos.DjToKey
             var s = (SystemParameters.WindowGlassBrush as SolidColorBrush).Color;
             Dictionary<string, Color> colors = Helpers.Color.AvailableAccents();
             var c = Helpers.Color.ClosestMatch(s, colors);
-            ThemeManager.Current.ChangeTheme(App.Current, $"Light.{c.Item1}");
+            //ThemeManager.Current.ChangeTheme(App.Current, $"Light.{c.Item1}");
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

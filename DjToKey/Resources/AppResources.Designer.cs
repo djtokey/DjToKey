@@ -88,11 +88,11 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Close.
         /// </summary>
-        public static string btnSave {
+        public static string Close {
             get {
-                return ResourceManager.GetString("btnSave", resourceCulture);
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -144,6 +144,15 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installed device packages:.
+        /// </summary>
+        public static string InstalledDevicePackages {
+            get {
+                return ResourceManager.GetString("InstalledDevicePackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installed plugins:.
         /// </summary>
         public static string InstalledPlugins {
@@ -153,7 +162,7 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to about.
+        ///   Looks up a localized string similar to About.
         /// </summary>
         public static string lbAbout {
             get {
@@ -203,6 +212,15 @@ namespace Ktos.DjToKey.Resources {
         public static string PluginsMessage {
             get {
                 return ResourceManager.GetString("PluginsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
