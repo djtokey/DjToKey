@@ -59,7 +59,7 @@ namespace Ktos.DjToKey.Packaging
                 var appFolderDtks = Directory.EnumerateFiles(
                     Path.Combine(
                         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                        @".\devices"
+                        "devices"
                     ),
                     "*.dtkpkg"
                 );

@@ -37,6 +37,14 @@ using System.Windows.Forms;
 using ModernWpf.Controls;
 using System.Windows.Navigation;
 using System.Diagnostics;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
+using System.Xml;
+using System.IO;
+using System.Reflection;
 
 namespace Ktos.DjToKey.Views
 {
@@ -81,6 +89,20 @@ namespace Ktos.DjToKey.Views
                     AppResources.AppName,
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
+                );
+            }
+
+            var highlightFile = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "JavaScript.xshd"
+            );
+            using (Stream s = File.OpenRead(Path.GetFullPath(highlightFile)))
+            using (var reader = new XmlTextReader(s))
+            {
+                var xshd = HighlightingLoader.LoadXshd(reader);
+                tbScript.SyntaxHighlighting = HighlightingLoader.Load(
+                    xshd,
+                    HighlightingManager.Instance
                 );
             }
         }

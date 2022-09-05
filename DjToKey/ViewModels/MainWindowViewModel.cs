@@ -29,6 +29,8 @@
 
 #endregion License
 
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using Ktos.DjToKey.Devices;
 using Ktos.DjToKey.Models;
 using Ktos.DjToKey.Packaging;
@@ -245,15 +247,15 @@ namespace Ktos.DjToKey.ViewModels
                 .FirstOrDefault();
 
             if (binding != null)
-                CurrentScript = binding.Script.Text;
+                CurrentScript = new TextDocument { Text = binding.Script.Text };
             else
             {
-                CurrentScript = string.Empty;
+                CurrentScript = new TextDocument();
                 deviceHandler.Bindings.Add(
                     new ControlBinding
                     {
                         Control = ctrl,
-                        Script = new Script() { Text = CurrentScript }
+                        Script = new Script() { Text = CurrentScript.Text }
                     }
                 );
             }
@@ -284,12 +286,12 @@ namespace Ktos.DjToKey.ViewModels
 
         private ViewControl currentlyEditing;
 
-        private string currentScript;
+        private TextDocument currentScript;
 
         /// <summary>
         /// Currently editable script
         /// </summary>
-        public string CurrentScript
+        public TextDocument CurrentScript
         {
             get { return currentScript; }
             private set

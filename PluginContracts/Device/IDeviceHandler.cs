@@ -53,7 +53,7 @@ namespace Ktos.DjToKey.Plugins.Device
         /// <summary>
         /// A list of names of available input devices
         /// </summary>
-        IEnumerable<string> AvailableDevices { get; }
+        IEnumerable<string> AvailableDeviceNames { get; }
 
         /// <summary>
         /// The name of a selected device
