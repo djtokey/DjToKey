@@ -123,7 +123,7 @@
   <data name="AppName" xml:space="preserve">
     <value>DjToKey</value>
   </data>
-  <data name="btnSave" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="ControlFileError" xml:space="preserve">
@@ -136,7 +136,7 @@
     <value>Control bindings:</value>
   </data>
   <data name="lbAbout" xml:space="preserve">
-    <value>about</value>
+    <value>About</value>
   </data>
   <data name="lbDevice" xml:space="preserve">
     <value>MIDI device:</value>
@@ -172,5 +172,11 @@ Icon used from: https://icons8.com/</value>
   </data>
   <data name="InstalledPlugins" xml:space="preserve">
     <value>Installed plugins:</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="InstalledDevicePackages" xml:space="preserve">
+    <value>Installed device packages:</value>
   </data>
 </root>

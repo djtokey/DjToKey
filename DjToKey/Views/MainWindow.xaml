@@ -1,29 +1,29 @@
-﻿<Controls:MetroWindow
+﻿<Window
     x:Class="Ktos.DjToKey.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Ktos.DjToKey"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:Ktos.DjToKey.Resources"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="{x:Static p:AppResources.AppName}"
-    Width="1200"
-    Height="700"
-    MinWidth="1200"
-    MinHeight="700"
+    Width="900"
+    Height="600"
+    MinWidth="900"
+    MinHeight="600"
     d:DataContext="{d:DesignData /Mock/MockMainWindow.xaml}"
+    ui:TitleBar.ExtendViewIntoTitleBar="True"
+    ui:WindowHelper.UseModernWindowStyle="True"
     Closing="MetroWindow_Closing"
     DataContext="{StaticResource MainWindowViewModel}"
     Icon="../dtk.ico"
     ResizeMode="CanMinimize"
-    ShowIconOnTitleBar="True"
-    ShowMinButton="True"
     StateChanged="MainWindow_StateChanged"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
-    <Controls:MetroWindow.RightWindowCommands>
+    <!--<Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Click="About_Click">
                 <StackPanel Orientation="Horizontal">
@@ -42,18 +42,32 @@
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>-->
+
+
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="914" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <ui:TitleBarButton
+            x:Name="ForwardButton"
+            Width="50"
+            Margin="480,-560,0,0"
+            Padding="16,0"
+            Panel.ZIndex="1"
+            Click="About_Click"
+            Content="&#xe946;"
+            FontSize="13" />
 
-        <Controls:MetroAnimatedSingleRowTabControl
-            Grid.Column="0"
-            ItemsSource="{Binding Devices}"
-            SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
+        <ui:TitleBarButton
+            x:Name="SettingsButton"
+            Width="50"
+            Margin="580,-560,0,0"
+            Padding="16,0"
+            Panel.ZIndex="1"
+            Click="About_Click"
+            Content="&#xe713;"
+            FontSize="13" />
+
+        <TabControl ItemsSource="{Binding Devices}" SelectedItem="{Binding CurrentDevice, Mode=TwoWay}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />
@@ -107,61 +121,50 @@
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>
-        </Controls:MetroAnimatedSingleRowTabControl>
+        </TabControl>
 
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
+        <ui:ContentDialog
+            x:Name="scriptDialog"
+            PrimaryButtonClick="btnSave_Click"
+            PrimaryButtonText="{x:Static p:AppResources.Save}">
             <TextBox
                 x:Name="tbScript"
-                Grid.Row="0"
+                Width="400"
+                Height="400"
                 AcceptsReturn="True"
                 AcceptsTab="True"
                 FontFamily="Consolas"
                 FontSize="16"
                 HorizontalScrollBarVisibility="Auto"
                 Text="{Binding CurrentScript, Mode=OneWay}" />
-            <Button
-                Grid.Row="1"
-                Click="btnSave_Click"
-                Content="{x:Static p:AppResources.btnSave}" />
-        </Grid>
-    </Grid>
+        </ui:ContentDialog>
 
-    <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl>
-            <Controls:Flyout
-                Width="450"
-                Header="{x:Static p:AppResources.lbAbout}"
-                IsModal="True"
-                Position="Right">
-                <StackPanel Margin="10" Orientation="Vertical">
-                    <TextBlock FontSize="{StaticResource MahApps.Font.Size.Flyout.Header}" Text="{x:Static p:AppResources.AppName}" />
-                    <TextBlock FontSize="{StaticResource MahApps.Font.Size.Default}" Text="{Binding Version, StringFormat='Version {0}'}" />
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="{StaticResource MahApps.Font.Size.Content}"
-                        Text="{x:Static p:AppResources.About}"
-                        TextWrapping="Wrap" />
-                    <TextBlock
-                        Margin="0,5,0,0"
-                        FontSize="{StaticResource MahApps.Font.Size.Content}"
-                        Text="{x:Static p:AppResources.Copyright}"
-                        TextWrapping="Wrap" />
+        <ui:ContentDialog
+            x:Name="aboutDialog"
+            Title="{x:Static p:AppResources.lbAbout}"
+            PrimaryButtonClick="aboutDialog_Click"
+            PrimaryButtonText="{x:Static p:AppResources.Close}">
 
-                    <TextBlock
-                        Margin="0,5,0,0"
-                        FontSize="{StaticResource MahApps.Font.Size.Content}"
-                        Text="{x:Static p:AppResources.AboutLink}"
-                        TextWrapping="Wrap" />
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock Text="{x:Static p:AppResources.AppName}" />
+                <TextBlock Text="{Binding Version, StringFormat='Version {0}'}" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Text="{x:Static p:AppResources.About}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Text="{x:Static p:AppResources.Copyright}"
+                    TextWrapping="Wrap" />
 
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        FontSize="{StaticResource MahApps.Font.Size.Default}"
-                        Text="{x:Static p:AppResources.InstalledPlugins}" />
-                    <ListBox ItemsSource="{Binding LoadedPlugins}">
+                <TextBlock
+                    Margin="0,10,0,0"
+                    Text="{x:Static p:AppResources.AboutLink}"
+                    TextWrapping="Wrap" />
+
+                <TextBlock Margin="0,10,0,0" Text="{x:Static p:AppResources.InstalledPlugins}" />
+                <ScrollViewer>
+                    <ListBox Height="100" ItemsSource="{Binding LoadedPlugins}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">
@@ -172,11 +175,26 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                </ScrollViewer>
 
-                </StackPanel>
-            </Controls:Flyout>
+                <TextBlock Margin="0,10,0,0" Text="{x:Static p:AppResources.InstalledPlugins}" />
+                <ScrollViewer>
+                    <ListBox Height="100" ItemsSource="{Binding LoadedPlugins}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="3" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Title}" />
+                                    <TextBlock Text="{Binding Description}" />
+                                    <TextBlock Text="{Binding Version}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+            </StackPanel>
+        </ui:ContentDialog>
+    </Grid>
 
 
-        </Controls:FlyoutsControl>
-    </Controls:MetroWindow.Flyouts>
-</Controls:MetroWindow>
+
+</Window>
