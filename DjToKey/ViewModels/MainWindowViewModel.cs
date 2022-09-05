@@ -41,8 +41,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Ktos.DjToKey.ViewModels
 {
@@ -223,9 +223,9 @@ namespace Ktos.DjToKey.ViewModels
 
             try
             {
-                deviceHandler.Bindings = JsonSerializer.Deserialize<IList<ControlBinding>>(
-                    File.ReadAllText(f)
-                );
+                deviceHandler.Bindings = Newtonsoft.Json.JsonConvert.DeserializeObject<
+                    IList<ControlBinding>
+                >(File.ReadAllText(f));
                 if (deviceHandler.Bindings == null)
                     deviceHandler.Bindings = new List<ControlBinding>();
             }
@@ -246,7 +246,10 @@ namespace Ktos.DjToKey.ViewModels
                     "bindings-"
                     + Helpers.ValidFileName.MakeValidFileName(currentDevice.Name)
                     + ".json";
-                File.WriteAllText(f, JsonSerializer.Serialize(deviceHandler.Bindings));
+                File.WriteAllText(
+                    f,
+                    Newtonsoft.Json.JsonConvert.SerializeObject(deviceHandler.Bindings)
+                );
             }
         }
 
