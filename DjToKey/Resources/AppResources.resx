@@ -179,4 +179,10 @@ Icon used from: https://icons8.com/</value>
   <data name="InstalledDevicePackages" xml:space="preserve">
     <value>Installed device packages:</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ShowTrayMessage" xml:space="preserve">
+    <value>Show message when minimized to tray</value>
+  </data>
 </root>

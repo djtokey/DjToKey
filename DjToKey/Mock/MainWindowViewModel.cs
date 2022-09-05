@@ -30,6 +30,8 @@
 #endregion License
 
 using Ktos.DjToKey.Models;
+using Ktos.DjToKey.ViewModels;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Ktos.DjToKey.Mock
@@ -39,14 +41,22 @@ namespace Ktos.DjToKey.Mock
     /// </summary>
     internal class MainWindowViewModel
     {
-        /// <summary>
-        /// List of all devices supported by the application
-        /// </summary>
-        public ObservableCollection<Device> Devices { get; set; }
+        public IEnumerable<Plugins.Metadata> LoadedPlugins =>
+            new List<Plugins.Metadata>
+            {
+                new Plugins.Metadata { Title = "Mock plugin", Version = "1.0" }
+            };
 
-        /// <summary>
-        /// Current device
-        /// </summary>
-        public Device CurrentDevice { get; set; }
+        private List<Device> devices = new List<Device>
+        {
+            new Device { Name = "Mock", Controls = new ObservableCollection<ViewControl>() }
+        };
+        public IList<Device> AvailableDevices => devices;
+        public Device CurrentDevice => devices[0];
+
+        public string Version => "1.0.0-mock";
+
+        public SettingsViewModel Settings =>
+            new SettingsViewModel { ShowMessageWhenMinimized = true };
     }
 }

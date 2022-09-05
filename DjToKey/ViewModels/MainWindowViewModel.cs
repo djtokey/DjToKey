@@ -88,6 +88,9 @@ namespace Ktos.DjToKey.ViewModels
             ScriptEngine.Configure(PluginImporter.ScriptPlugins);
 
             deviceManager = new DeviceManager(PluginImporter.DevicePlugins.DeviceHandlers);
+
+            Settings = new SettingsViewModel();
+            Settings.Load();
         }
 
         public string Version => Build.GitVersion.SemVer;
@@ -194,6 +197,21 @@ namespace Ktos.DjToKey.ViewModels
             }
         }
 
+        private SettingsViewModel settingsViewModel;
+        public SettingsViewModel Settings
+        {
+            get { return settingsViewModel; }
+            set
+            {
+                if (this.settingsViewModel != value)
+                {
+                    settingsViewModel = value;
+                    settingsViewModel.Load();
+                    OnPropertyChanged(nameof(Settings));
+                }
+            }
+        }
+
         private void LoadBindings()
         {
             // TODO: should try to load bindings from this folder,
@@ -282,6 +300,7 @@ namespace Ktos.DjToKey.ViewModels
         public void OnClosing()
         {
             SaveBindings();
+            Settings.Save();
         }
 
         private ViewControl currentlyEditing;

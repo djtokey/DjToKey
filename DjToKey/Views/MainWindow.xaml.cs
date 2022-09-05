@@ -154,15 +154,19 @@ namespace Ktos.DjToKey.Views
                 trayIcon.Visible = true;
                 trayIcon.Text = string.Format(
                     "{0} - {1}",
-                    DjToKey.Resources.AppResources.AppName,
+                    AppResources.AppName,
                     vm.CurrentDevice.Name
                 );
-                trayIcon.ShowBalloonTip(
-                    1000,
-                    DjToKey.Resources.AppResources.AppName,
-                    DjToKey.Resources.AppResources.TrayMessage,
-                    ToolTipIcon.Info
-                );
+
+                if (vm.Settings.ShowMessageWhenMinimized)
+                {
+                    trayIcon.ShowBalloonTip(
+                        1000,
+                        AppResources.AppName,
+                        AppResources.TrayMessage,
+                        ToolTipIcon.Info
+                    );
+                }
                 this.ShowInTaskbar = false;
             }
             else
@@ -203,6 +207,11 @@ namespace Ktos.DjToKey.Views
         private void CloseDialog(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             sender.Hide();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            settingsDialog.ShowAsync();
         }
     }
 }

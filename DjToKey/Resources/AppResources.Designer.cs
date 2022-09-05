@@ -234,6 +234,24 @@ namespace Ktos.DjToKey.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show message when minimized to tray.
+        /// </summary>
+        public static string ShowTrayMessage {
+            get {
+                return ResourceManager.GetString("ShowTrayMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DjToKey will now work in the background..
         /// </summary>
         public static string TrayMessage {
