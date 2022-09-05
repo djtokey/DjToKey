@@ -48,14 +48,7 @@ namespace Ktos.DjToKey.Views
 
         internal static void Toast(string message)
         {
-            var visible = trayIcon.Visible;
-
-            if (!visible)
-                trayIcon.Visible = true;
-
-            trayIcon.ShowBalloonTip(100, AppResources.AppName, message, ToolTipIcon.Info);
-
-            trayIcon.Visible = visible;
+            trayIcon.ShowBalloonTip(100, AppResources.AppName, message, ToolTipIcon.Info);            
         }
 
         /// <summary>
