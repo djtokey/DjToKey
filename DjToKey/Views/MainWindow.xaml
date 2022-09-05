@@ -143,7 +143,10 @@
 
                 <TextBlock Margin="0,10,0,0" Text="{x:Static p:AppResources.InstalledPlugins}" />
                 <ScrollViewer>
-                    <ListBox Height="100" ItemsSource="{Binding LoadedPlugins}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                    <ListBox
+                        Height="100"
+                        d:ItemsSource="{d:SampleData ItemCount=5}"
+                        ItemsSource="{Binding LoadedPlugins}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">
@@ -158,7 +161,7 @@
 
                 <TextBlock Margin="0,10,0,0" Text="{x:Static p:AppResources.InstalledDevicePackages}" />
                 <ScrollViewer>
-                    <ListBox Height="100" ItemsSource="{Binding LoadedPlugins}">
+                    <ListBox Height="100" ItemsSource="{Binding AvailablePackages}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="3" Orientation="Horizontal">

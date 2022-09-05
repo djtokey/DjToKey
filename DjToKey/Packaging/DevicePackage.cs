@@ -142,7 +142,7 @@ namespace Ktos.DjToKey.Plugins.Packaging
                             ObservableCollection<Models.ViewControl>
                         >(definition);
                     }
-                    catch (JsonException)
+                    catch (JsonException e)
                     {
                         throw new FileLoadException(
                             "Cannot load device configuration file from package"

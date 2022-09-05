@@ -74,7 +74,10 @@ namespace Ktos.DjToKey.Packaging
             try
             {
                 appFolderByName = Directory.EnumerateFiles(
-                    @".\devices",
+                    Path.Combine(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        @".\devices"
+                    ),
                     safeDeviceName + ".dtkpkg"
                 );
             }

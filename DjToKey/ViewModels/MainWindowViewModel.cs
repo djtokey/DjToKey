@@ -66,6 +66,8 @@ namespace Ktos.DjToKey.ViewModels
 
         public IEnumerable<Metadata> LoadedPlugins => PluginImporter.Plugins;
 
+        public IList<PackageMetadata> AvailablePackages { get; private set; }
+
         /// <summary>
         /// Initializes a new MainWindowViewModel and loads all
         /// devices from all supported handlers
@@ -81,6 +83,11 @@ namespace Ktos.DjToKey.ViewModels
 
         private void LoadDevicePackages()
         {
+            AvailablePackages = PackageHelper
+                .ListAllPackages()
+                .Select(x => PackageHelper.LoadMetadata(x))
+                .ToList();
+
             // lists all devices and loads their device packages automatically
             foreach (var d in allDevices.AvailableDevices)
             {
