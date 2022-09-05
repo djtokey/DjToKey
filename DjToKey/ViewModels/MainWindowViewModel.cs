@@ -95,32 +95,6 @@ namespace Ktos.DjToKey.ViewModels
 
         public string Version => Build.GitVersion.SemVer;
 
-        /// <summary>
-        /// Shows About window
-        /// </summary>
-        public void About()
-        {
-#if DEBUG
-            var version = Build.GitVersion.FullSemVer;
-#else
-            var version = Build.GitVersion.SemVer;
-#endif
-
-            var mess = string.Format(
-                    Resources.AppResources.About,
-                    Resources.AppResources.AppName,
-                    version
-                )
-                .Replace("\\n", "\n");
-
-            MessageBox.Show(
-                mess,
-                Resources.AppResources.AppName,
-                MessageBoxButton.OK,
-                MessageBoxImage.Information
-            );
-        }
-
         private DateTime lastErrorTime = DateTime.Now;
         private TimeSpan errorThreshold = TimeSpan.FromSeconds(2);
 
